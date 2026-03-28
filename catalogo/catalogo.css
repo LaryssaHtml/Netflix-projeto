@@ -1,0 +1,788 @@
+:root {
+    --netflix-red: #E50914;
+    --dark-bg: #141414;
+    --text-color: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: var(--dark-bg);
+    color: var(--text-color);
+    overflow-x: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+a {
+    text-decoration: none;
+    color: #e5e5e5;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #b3b3b3;
+}
+
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 4%;
+    height: 70px;
+    z-index: 1000;
+    background-color: var(--dark-bg);
+}
+
+.navbar-left,
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.logo {
+    width: 92px;
+    margin-right: 25px;
+    cursor: pointer;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    font-size: 13px;
+}
+
+.nav-links .active {
+    font-weight: bold;
+    color: white;
+}
+
+.icon {
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.kids-link {
+    font-size: 15px;
+}
+
+.nav-notification {
+    position: relative;
+    cursor: pointer;
+}
+
+.notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -8px;
+    background-color: var(--netflix-red);
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-menu {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.profile-icon {
+    width: 32px;
+    border-radius: 4px;
+}
+
+/* Sliders */
+.sliders-container {
+    padding: 0 4%;
+    padding-top: 100px;
+    /* Space for navbar */
+    position: relative;
+    z-index: 3;
+    padding-bottom: 100px;
+}
+
+.slider-section {
+    margin-bottom: 3.5vw;
+}
+
+.slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 12px;
+}
+
+.slider-title {
+    font-size: 1.25vw;
+    font-weight: bold;
+    color: #e5e5e5;
+    line-height: 1.25vw;
+}
+
+.slider-indicators {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 4px;
+}
+
+.slider-indicators div {
+    width: 12px;
+    height: 2px;
+    background-color: #4d4d4d;
+}
+
+.slider-indicators div.active {
+    background-color: #aaa;
+}
+
+.movie-row {
+    display: flex;
+    gap: 8px;
+    /* Small gap between movie cards */
+    overflow-x: visible;
+    /* Let the expanded cards paint outside this box vertically */
+    padding: 10px 4% 50px 4%;
+    /* Added bottom padding to hold the expanding modal */
+    margin: 0 -4%;
+    /* Pull edges back out so we don't double up padding from container */
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.movie-row::-webkit-scrollbar {
+    display: none;
+}
+
+.movie-card {
+    min-width: 250px;
+    width: 250px;
+    height: 140px;
+    background-color: #222;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s, border-radius 0.3s 0s, z-index 0s 0.3s, box-shadow 0.3s 0s;
+    position: relative;
+    z-index: 1;
+    transform-origin: center center;
+    /* Default origin */
+}
+
+/* Modifiers applied by JavaScript to prevent edge clipping */
+.movie-card.origin-left {
+    transform-origin: left center;
+}
+
+.movie-card.origin-right {
+    transform-origin: right center;
+}
+
+.movie-card:hover {
+    transform: scale(1.6) translateY(-5%);
+    /* Reduced vertical translation since container has more padding */
+    z-index: 99;
+    border-radius: 6px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s, border-radius 0.3s 0.6s, box-shadow 0.3s 0.6s, z-index 0s 0s;
+}
+
+.movie-card img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+    transition: opacity 0.3s ease, border-radius 0.3s;
+    z-index: 2;
+}
+
+.movie-card iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    border-radius: 4px;
+    transition: opacity 0.3s ease, border-radius 0.3s;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.movie-card iframe.playing {
+    opacity: 1;
+    z-index: 3;
+    border-radius: 6px 6px 0 0;
+}
+
+.movie-card:hover img {
+    border-radius: 6px 6px 0 0;
+    transition: border-radius 0s 0.6s;
+}
+
+.movie-card img.playing-video {
+    opacity: 0;
+}
+
+/* Card Details Modal */
+.card-details {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #181818;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    padding: 18px 16px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s 0s, visibility 0.3s 0s;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.9);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 2;
+    cursor: default;
+}
+
+.movie-card:hover .card-details {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.2s 0.6s, visibility 0s 0.6s;
+}
+
+
+
+.details-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left-buttons,
+.right-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #2b2b2b;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 14px;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+.btn-icon:hover {
+    border-color: white;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn-play-icon {
+    background-color: white;
+    color: black;
+    border: none;
+}
+
+.btn-play-icon:hover {
+    background-color: #e6e6e6;
+}
+
+.btn-play-icon i {
+    margin-left: 2px;
+}
+
+.details-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.match-score {
+    color: #46d369;
+}
+
+.age-badge {
+    background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: white;
+    padding: 1px 3px;
+    border-radius: 2px;
+    font-family: Arial, sans-serif;
+}
+
+.age-badge.red-accent {
+    background-color: #d32f2f;
+    border: none;
+    font-weight: bold;
+}
+
+.resolution {
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 1px 3px;
+    border-radius: 2px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.duration {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.details-tags {
+    display: flex;
+    gap: 6px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.9);
+    margin-top: 4px;
+}
+
+.details-tags span:not(:last-child)::after {
+    content: "•";
+    color: #666;
+    margin-left: 6px;
+}
+
+/* Badges */
+.badge-top10 {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 22px;
+    height: 28px;
+    background-color: var(--netflix-red);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    z-index: 4;
+    border-bottom-left-radius: 2px;
+    box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.badge-top10 span.top {
+    font-size: 7px;
+    letter-spacing: 0.5px;
+    line-height: 8px;
+}
+
+.badge-top10 span.number {
+    font-size: 13px;
+    line-height: 13px;
+}
+
+.badge-bottom {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 2px 4px;
+    font-size: 10px;
+    font-weight: bold;
+    border-radius: 2px;
+    z-index: 4;
+    white-space: nowrap;
+    text-transform: uppercase;
+}
+
+.movie-card.has-progress .badge-bottom {
+    bottom: 12px;
+}
+
+.badge-bottom.red {
+    background-color: var(--netflix-red);
+    color: white;
+}
+
+.badge-bottom.white {
+    background-color: white;
+    color: black;
+}
+
+/* Progress bar */
+.progress-bar-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: rgba(100, 100, 100, 0.7);
+    z-index: 5;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.progress-value {
+    height: 100%;
+    background-color: var(--netflix-red);
+    border-bottom-left-radius: 4px;
+}
+
+/* --- AJUSTES DE RESPONSIVIDADE (MOBILE) --- */
+
+@media (max-width: 768px) {
+    /* 1. Navbar: Ajustar logo e ícones para não amontoar */
+    .navbar {
+        padding: 0 15px;
+        height: 60px;
+    }
+
+    /* Desativa o zoom dos cards no mobile para não bugar o touch */
+    .movie-card:hover {
+        transform: none !important;
+        z-index: 1;
+    }
+    
+    /* Se você quiser que o card brilhe levemente ao tocar, use :active */
+    .movie-card:active {
+        opacity: 0.7;
+    }
+
+    .logo {
+        width: 80px;
+        margin-right: 10px;
+    }
+
+    .navbar-right {
+        gap: 12px; /* Diminui o espaço entre os ícones da direita */
+    }
+
+    .kids-link {
+        display: none; /* Esconde o texto "Doutor" em telas muito pequenas para dar espaço */
+    }
+
+    /* 2. Hero: Ajustar título e empilhar botões */
+    .hero {
+        padding: 20px;
+        height: 70vh; /* Diminui um pouco a altura no celular */
+        justify-content: center; /* Centraliza o conteúdo verticalmente se preferir */
+    }
+
+    .hero-title {
+        font-size: 2.2rem;
+    }
+
+    .hero-description {
+        font-size: 1rem;
+        line-height: 1.4;
+    }
+
+    .hero-buttons {
+        display: flex;
+        flex-direction: column; /* Botões um em cima do outro */
+        gap: 10px;
+    }
+
+    .hero-buttons button {
+        width: 100%; /* Botões ocupam a largura toda */
+        margin-right: 0;
+        padding: 12px;
+    }
+
+    /* 3. Modal: Ajustar para ocupar quase a tela toda */
+    .modal-content {
+        width: 95%; /* Quase largura total */
+        max-height: 90vh;
+        overflow-y: auto; /* Permite scroll se o texto for longo */
+    }
+
+    .modal iframe, 
+    #modal-poster {
+        height: 200px; /* Diminui a altura da mídia no celular */
+    }
+
+    .modal-info h2 {
+        font-size: 1.5rem;
+    }
+
+    /* 4. Botão de Play Vivo no Mobile */
+    .btn-vivid {
+        padding: 8px 20px;
+        font-size: 0.9rem;
+        bottom: 15px;
+        left: 15px;
+    }
+
+    /* 5. Rodapé: Ajustar para 2 colunas */
+    .footer-links {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+}
+
+/* Ajuste para telas muito pequenas (iPhone SE, etc) */
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 1.8rem;
+    }
+    
+    .footer-links {
+        grid-template-columns: 1fr; /* Uma única coluna no rodapé */
+    }
+}
+
+/* Footer */
+footer {
+    padding: 0 4%;
+    color: #737373;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+.footer-content {
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+.footer-content p {
+    margin-bottom: 30px;
+}
+
+.footer-links {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 15px;
+}
+
+.footer-links a {
+    color: #737373;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .footer-links {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+   
+  .hero {
+    min-height: 60vh;
+    padding: 24px;
+    margin-top: 60px;
+    align-items: flex-end;
+    background-position: center top;
+  }
+
+  .hero::after {
+    background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0.25));
+  }
+
+  .hero-content {
+    max-width: 100%;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-description {
+    font-size: 0.95rem;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-buttons button {
+    width: 100%;
+  }
+
+}
+
+
+.hero {
+  height: 80vh;
+  background-image: url('https://is1-ssl.mzstatic.com/image/thumb/JDfvRSswwERxrtlXfSorfA/1200x675.jpg');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 60px;
+  margin-top: 80px;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(0,0,0,0.8), transparent);
+}
+
+.hero-content {
+  position: relative;
+  max-width: 500px;
+  z-index: 2;
+}
+
+.hero-title {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.hero-description {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  color: #ccc;
+}
+
+.hero-buttons button {
+  margin-right: 10px;
+  padding: 10px 20px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.btn-play {
+  background: white;
+  color: black;
+}
+
+.btn-info {
+  background: rgba(109, 109, 110, 0.7);
+  color: white;
+}
+
+
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background: #141414;
+  width: 80%;
+  max-width: 800px;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.modal iframe {
+  width: 100%;
+  height: 300px;
+}
+
+.modal-info {
+  padding: 20px;
+  color: white;
+}
+
+/* Espaçamento extra abaixo da sinopse */
+.modal-info .synopsis {
+  margin-bottom: 25px; /* Empurra a lista para baixo */
+  color: #ccc;
+  line-height: 1.5;
+}
+
+/* Reseta e estiliza a lista de metadados */
+.modal-info .meta-list {
+  list-style: none; /* Remove as bolinhas */
+  padding: 0;
+  margin: 0;
+}
+
+/* Espaçamento entre cada item da lista (resolve o 'muito coladas') */
+.modal-info .meta-list li {
+  margin-bottom: 8px; /* Distância sutil e elegante entre Elenco/Gênero etc */
+  font-size: 0.95rem;
+  color: #aaa;
+}
+
+.modal-info .meta-list li strong {
+  color: white; /* Deixa o rótulo (Gênero, Elenco) mais forte */
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 35px; /* Aumentei um pouco para facilitar o clique */
+  color: white;
+  cursor: pointer;
+  z-index: 9999; /* Valor bem alto para ficar na frente de tudo */
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.8); /* Sombra para aparecer no fundo branco */
+}
+
+/* O estilo do botão interno vivido */
+.btn-vivid {
+  /* O gradiente imitando sua imagem de referência (Ciano -> Roxo/Azul) */
+  background: linear-gradient(135deg, #00e0ff 0%, #7e3fff 100%);
+  color: white; /* Texto branco */
+  border: none; /* Remove a borda padrão de botão */
+  border-radius: 6px; /* Cantos arredondados suaves */
+  padding: 12px 28px; /* Espaçamento interno generoso */
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-transform: uppercase; /* Letras maiúsculas */
+  cursor: pointer;
+  
+  /* Sombra para dar profundidade e efeito 'neon' */
+  box-shadow: 0 4px 15px rgba(0, 224, 255, 0.4);
+  
+  /* Transição suave para quando passar o mouse */
+  transition: transform 0.2s, box-shadow 0.2s;
+  
+  /* Mantém os estilos inline que já tínhamos (position etc) */
+  position: absolute;
+  bottom: 25px;
+  left: 25px;
+  display: none; /* Começa escondido, o JS mostra */
+  z-index: 5;
+}
+
+/* Efeito ao passar o mouse */
+.btn-vivid:hover {
+  transform: scale(1.05); /* Aumenta ligeiramente de tamanho */
+  box-shadow: 0 6px 20px rgba(0, 224, 255, 0.6); /* Sombra mais forte */
+}

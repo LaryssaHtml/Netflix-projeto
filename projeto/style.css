@@ -1,0 +1,586 @@
+/* Estilos inspirados na Netflix */
+@font-face {
+    font-family: 'DoctorWhoFont'; /* Nome que você escolheu */
+    src: url('../fonts/Doctor-Who.ttf'); /* Caminho exato do arquivo */
+}
+
+:root {
+    --bg: radial-gradient(circle at center, #0a192f 0%, #000000 80%);
+    --text: #ffffff;
+    --muted: #6a6a6a;
+    --border: #6a6a6a;
+    --caption: #808080;
+    --button-bg: transparent;
+    --button-border: #6a6a6a;
+    --button-text: #6a6a6a;
+    --hover-caption-bg: linear-gradient(to right, #ffffff, #ffffff);
+    --hover-caption-color: #ffffff;
+}
+
+body.light {
+    --bg: radial-gradient(circle at center, #e9effa 0%, #d8e2f2 80%);
+    --text: #121212;
+    --muted: #2f3f57;
+    --border: #2f3f57;
+    --caption: #4f5f7b;
+    --button-bg: rgba(255, 255, 255, 0.15);
+    --button-border: #2f3f57;
+    --button-text: #2f3f57;
+    --hover-caption-bg: linear-gradient(to right, #000000, #7126BD);
+    --hover-caption-color: #6a09cc;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../assets/wallpaper-2.jpeg');
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    opacity: 0;
+    filter: blur(10px);
+    z-index: -1;
+    transition: opacity 1s ease, filter 1s ease;
+}
+
+body.light::before {
+    opacity: 0.2;
+    filter: blur(0px);
+    animation: weepingAngelPulse 4s ease-in-out infinite;
+}
+
+body.dark {
+    --bg: radial-gradient(circle at center, #0a192f 0%, #000000 80%);
+    --text: #ffffff;
+    --muted: #6a6a6a;
+    --border: #6a6a6a;
+    --caption: #808080;
+    --button-bg: transparent;
+    --button-border: #6a6a6a;
+    --button-text: #6a6a6a;
+}
+
+body {
+    cursor: url('../assets/cursor-sonic.png') 16 16, auto;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+
+
+header {
+    /* Centraliza o texto dentro do header */
+    text-align: center;
+    /* Adiciona margem inferior de 2 rem para espaçamento leve dos perfis */
+    margin-bottom: 2rem;
+}
+
+h1 {
+    /* Define o tamanho da fonte como 3 rem (relativo) */
+    font-size: 3rem;
+    /* Define o peso da fonte como 400 (normal) */
+    font-weight: 400;
+    /* Remove margens do título */
+    margin: 0;
+}
+
+main {
+    /* Define o layout como flexbox */
+    display: flex;
+    /* Organiza os itens em coluna */
+    flex-direction: column;
+    /* Centraliza os itens horizontalmente */
+    align-items: center;
+}
+
+.profile-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    cursor: url('../assets/cursor-2.png') 16 16, pointer; /*Cursor*/
+}
+
+.profiles {
+    display: flex;
+    justify-content: center;
+}
+
+.listas-perfis {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+
+.profiles li {
+    cursor: url('../assets/cursor-2.png') 16 16, pointer; /*Cursor pra selecionar os perfis*/
+    list-style: none;
+}
+
+.profile {
+    /* Centraliza o texto dentro de cada perfil */
+    text-align: center;
+    /* Muda o cursor para pointer ao passar o mouse */
+    cursor: url('../assets/cursor-2.png') 16 16, pointer;
+     /* Adiciona transição suave para transformações */
+}
+
+
+
+figure {
+    /* Remove margens da figure */
+    margin: 0;
+}
+
+img {
+    /* Define a largura da imagem como 143px */
+    width: 143px;
+    /* Define a altura da imagem como 143px */
+    height: 143px;
+
+    /* Remove o arredondamento para deixar quadrado */
+    border-radius: 8px;
+    /* Ajusta a imagem para cobrir o espaço sem distorcer */
+    object-fit: cover;
+    /* Adiciona borda transparente de 3px */
+    border: 3px solid transparent;
+    /* Adiciona transição suave para a cor da borda */
+    transition: border-color 0.3s ease;
+}
+
+.profile:hover img {
+    /* Muda a cor da borda para branco no hover */
+    border-color: #ffffff;
+}
+
+figcaption {
+    /* Adiciona margem superior de 0.5 rem */
+    margin-top: 0.5rem;
+    /* Define o tamanho da fonte como 1.2 rem */
+    font-size: 1.2rem;
+    /* Define o peso da fonte como 300 (leve) */
+    font-weight: 300;
+    color: var(--caption); /* Define a cor inicial como cinza */
+    transition: color 0.3s ease; /* Transição suave para a cor */
+}
+
+.profile:hover figcaption {
+    /* Muda a cor do texto para branco quando o mouse passa pelo perfil */
+    color: var(--hover-caption-color);
+    background: var(--hover-caption-bg);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.manage-profiles {
+    display: inline-block;
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    border: 1px solid var(--button-border);
+    padding: 0.6rem 2rem;
+    margin-top: 4rem;
+    cursor: url('../assets/cursor-2.png') 16 16, pointer;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    font-weight: 300;
+    transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+.manage-profiles:hover {
+    /* Muda a borda para branco no hover */
+    border-color: #ffffff;
+   color: #ffffff; /* Muda a cor do texto para branco no hover */
+}
+
+body.light .manage-profiles:hover {
+    border-color: #7126BD;
+    color: #6a0dc8;
+}
+
+.theme-toggle {
+    margin-top: 1rem;
+    padding: 0.35rem 1rem;
+    border: 1px solid var(--button-border);
+    background: var(--button-bg);
+    color: var(--button-text);
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 500;
+    letter-spacing: 1px;
+    transition: all 0.25s ease;
+}
+
+.theme-toggle:hover {
+    box-shadow: 0 0 8px rgba(0,0,0,0.25);
+}
+
+/* Responsividade para tablets */
+@media (max-width: 768px) {
+    h1 {
+        /* Reduz o tamanho da fonte para tablets */
+        font-size: 2.5rem;
+    }
+
+    .profiles ul {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 4rem;
+        justify-items: center;
+    }
+
+    .profiles {
+        /* Reduz o gap entre perfis */
+        gap: 1.5rem;
+    }
+
+    img {
+        /* Reduz o tamanho das imagens */
+        width: 120px;
+        height: 120px;
+    }
+
+    .manage-profiles {
+        /* Reduz o padding e margem para tablets */
+        padding: 0.5rem 1.5rem;
+        margin-top: 3rem;
+        font-size: 1rem;
+    }
+
+}
+
+/* Responsividade para celulares */
+@media (max-width: 480px) {
+    h1 {
+        /* Reduz ainda mais o tamanho da fonte */
+        font-size: 2rem;
+        /* Ajusta margem para telas pequenas */
+        margin-bottom: 1.5rem;
+    }
+
+    .profiles ul {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3rem;
+        justify-items: center;
+    }
+
+    .profiles {
+        /* Mantém horizontal, reduz gap para caber melhor */
+        gap: 0.5rem;
+    }
+
+    .profile::before {
+        width: 75px;
+        height: 75px;
+        filter: blur(10px) contrast(180%);
+    }
+
+    img {
+        /* Reduz o tamanho das imagens para celulares */
+        width: 80px;
+        height: 80px;
+    }
+
+    figcaption {
+        /* Reduz o tamanho da fonte dos nomes */
+        font-size: 0.8rem;
+    }
+
+    .manage-profiles {
+        /* Ajusta padding e margem para celulares */
+        padding: 0.4rem 1rem;
+        margin-top: 2rem;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+    }
+
+    /* Efeito de brilho mais sutil para celulares */
+    .profile:hover img {
+        box-shadow: 0 0 8px rgba(0, 212, 255, 0.6), 0 0 12px rgba(113, 38, 189, 0.4);
+    }
+}
+
+
+.tardis-fix {
+    position: fixed;
+    bottom: 15%;
+    right: 5%;
+    width: 100px;
+    z-index: 1;
+    pointer-events: none;
+    animation: 
+        materializar 2s ease-out forwards,
+        glitchVortex 4s linear infinite 2s, 
+        floatingTardis 6s ease-in-out infinite 2s;
+    opacity: 0;
+}
+
+.tardis-fix img {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 0 15px rgba(0, 100, 255, 0.6));
+}
+
+/* Responsividade para TARDIS em tablets */
+@media (max-width: 768px) {
+    .tardis-fix {
+        width: 70px;
+        bottom: 20%;
+        right: 8%;
+    }
+}
+
+/* Responsividade para TARDIS em celulares */
+@media (max-width: 480px) {
+    .tardis-fix {
+        width: 50px;
+        bottom: 25%;
+        right: 10%;
+    }
+}
+
+/* 1. Animação de Chegada (Materialização inicial) */
+@keyframes materializar {
+    0% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 0.8; transform: scale(1.1); }
+    100% { opacity: 0.7; transform: scale(1); }
+}
+
+/* 2. O "Pisca-Pisca" do Vórtice (Fade-in e Fade-out contínuo) */
+@keyframes glitchVortex {
+    0% { opacity: 0.7; }
+    30% { opacity: 0.2; }
+    35% { opacity: 0.6; }
+    40% { opacity: 0.3; }
+    70% { opacity: 0.8; }
+    100% { opacity: 0.7; }
+}
+
+/* 3. A Flutuação (Subir e Descer) */
+@keyframes floatingTardis {
+    0% { transform: translateY(0px) rotate(5deg); }
+    50% { transform: translateY(-30px) rotate(-5deg); }
+    100% { transform: translateY(0px) rotate(5deg); }
+}
+
+/* 1. Prepara o card do perfil para segurar o efeito */
+.profile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* 2. O VÓRTICE ELÉTRICO (Escondido atrás da imagem) */
+.profile::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 105px;
+    height: 105px;
+    background: conic-gradient(from 0deg, #1e77fc, #7126BD, #ffff, #f700ff);
+    border-radius: 4px;
+    filter: blur(17px) contrast(200%);
+    opacity: 0;
+    z-index: 1;
+    transition: opacity 0.3s ease;
+}
+
+/* Responsividade: reduzir o vórtice em telas menores */
+@media (max-width: 768px) {
+    .profile::before {
+        width: 90px;
+        height: 90px;
+        filter: blur(12px) contrast(180%);
+    }
+}
+
+@media (max-width: 480px) {
+    .profile::before {
+        width: 70px;
+        height: 70px;
+        filter: blur(10px) contrast(160%);
+    }
+}
+
+/* 3. A IMAGEM (Garante que ela fique na frente do brilho) */
+.profile img {
+    position: relative;
+    z-index: 2; /* Sobe a imagem para frente do brilho */
+    transition: all 0.3s ease;
+    border: 3px solid transparent; /* Reserva o espaço da borda */
+}
+
+/* --- EFEITO
+S AO PASSAR O MOUSE (HOVER) --- */
+
+/* Ativa o brilho elétrico */
+.profile:hover::before {
+    opacity: 0.8;
+    animation: rotateVortex 1.5s linear infinite;
+}
+
+/* Ativa a borda branca APENAS na imagem */
+.profile:hover img {
+    border-color: white;
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.5); /* Brilho azul extra */
+}
+
+/* Destaca o nome (figcaption) sem criar borda nele */
+.profile:hover figcaption {
+    color: white;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+/* --- ANIMAÇÃO DE ROTAÇÃO --- */
+@keyframes rotateVortex {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Container da Logo */
+.logo-container {
+    position: absolute; /* Faz ele flutuar */
+    top: 30px;          /* Distância do topo */
+    left: 4%;           /* Distância da esquerda */
+    z-index: 10;        /* Garante que fique acima do degradê */
+}
+
+/* Estilização do Texto */
+.logo-text {
+    color: #e50914; /* Vermelho Netflix clássico #e50914; */
+    font-family: 'DoctorWhoFont', sans-serif;
+    font-size: 3.4rem;
+    font-weight: normal;
+    letter-spacing: -1px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+}
+
+
+/* O detalhe "FLIX" em branco ou outra cor se preferir */
+.flix {
+    color: white;
+}
+
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.hidden {
+  display: none;
+}
+
+
+
+.avatar-list {
+  display: flex;
+  flex-wrap: wrap; /*  permite quebrar linha */
+  gap: 10px;
+  justify-content: center;
+  max-height: 200px; /* opcional */
+  overflow-y: auto; /* scroll se tiver muitos */
+}
+
+.avatar-option {
+  width: 110px;
+  height: 110px;
+  border-radius: 8px;
+  cursor: url('../assets/cursor-2.png') 16 16, pointer;
+  border: 2px solid transparent;
+}
+
+
+
+.avatar-option.selected {
+  border: 2px solid rgb(142, 52, 252);
+  box-shadow: 0 0 15px rgb(103, 1, 177);
+}
+
+
+
+.modal-buttons button {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Cancelar */
+#cancelar {
+  background: transparent;
+  color: #aaa;
+  border: 1px solid #555;
+}
+
+#cancelar:hover {
+  background: #222;
+  color: white;
+}
+
+/* Salvar (estilo Doctor Who 🔥) */
+#salvar {
+  background: linear-gradient(45deg, #0ff, #00f, #8a2be2);
+  color: white;
+  box-shadow: 0 0 10px rgba(0,255,255,0.5);
+}
+
+#salvar:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(0,255,255,0.9);
+}
+
+.modal-content {
+  background: radial-gradient(circle at top, #111, #000);
+  padding: 25px;
+  border-radius: 12px;
+  text-align: center;
+  color: rgb(142, 55, 249);
+  width: 320px;
+  border: 1px solid rgba(13, 0, 255, 0.2);
+  box-shadow: 0 0 30px rgba(162, 0, 255, 0.2);
+  animation: aparecer 0.3s ease;
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: scale(0.8) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}

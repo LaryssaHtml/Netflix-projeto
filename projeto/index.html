@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DoctorFlix</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    
+    <div class="logo-container">
+    <span class="logo-text">DOCTOR<span class="flix">FLIX</span></span>
+</div>
+
+    <header>
+        <h1>Quem está assistindo?</h1>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Alternar modo claro/escuro">🌗 Modo escuro</button>
+    </header>
+
+
+    <main>
+
+        <div class="tardis-background">
+        <img src="../assets/tardis.png" alt="Tardis" class="tardis-fix">
+    </div>
+
+        <section class="profiles" aria-label="Seleção de perfis">
+
+            <ul class="listas-perfis">
+
+                <li class="profile">
+                    <a href="../catalogo/catalogo.html" class="profile-link">
+                    <figure class="vortex-effect">
+                        <img src="../assets/perfil-1.png" alt="Perfil do Doutor" width="128" height="128">
+                        <figcaption>Doutor</figcaption>
+                    </figure>
+                </a>
+                </li>
+
+                <li class="profile">
+                    <a href="../catalogo/catalogo.html" class="profile-link">
+                    <figure>
+                        <img src="./assets/perfil-2.jpg" alt="Perfil de Rose Tyler" width="128" height="128">
+                        <figcaption>Rose Tyler</figcaption>
+                    </figure>
+                </a>
+                </li>
+
+                <li class="profile">
+                    <a href="../catalogo/catalogo.html" class="profile-link">
+                    <figure>
+                        <img src="./assets/perfil-3.jpg" alt="Perfil do Dalek" width="128" height="128">
+                        <figcaption>Dalek</figcaption>
+                    </figure>
+                </a>
+                </li>
+
+                <li class="profile add-profile">
+                    <figure>
+                        <img src="../assets/adicionar-perfil.png" alt="Perfil para adicionar novo usuário" 
+                        width="128" height="128">
+                        <figcaption>Adicionar perfil</figcaption>
+                    </figure>
+                </li>
+
+            </ul>
+        </section>
+            <button class="manage-profiles">Gerenciar perfis</button>
+    </main>
+
+<!-- Modal de adicionar perfil -->
+<div id="modal-perfil" class="modal hidden">
+  <div class="modal-content">
+    <h2>Criar novo perfil</h2>
+
+    <input type="text" id="nome-perfil-input" placeholder="Digite o nome">
+
+    <p>Escolha um avatar:</p>
+
+    <div class="avatar-list">
+      <img src="../assets/perfil-4.jpg" class="avatar-option">
+      <img src="../assets/perfil-5.jpg" class="avatar-option">
+      <img src="../assets/perfil-6.jpg" class="avatar-option">
+      <img src="../assets/perfil-7.jpg" class="avatar-option">
+      <img src="../assets/perfil-8.jpg" class="avatar-option">
+      <img src="../assets/perfil-9.jpg" class="avatar-option">
+      <img src="../assets/perfil-10.jpg" class="avatar-option">
+      <img src="../assets/perfil-11.jpg" class="avatar-option">
+      <img src="../assets/perfil-12.jpg" class="avatar-option">
+      <img src="../assets/perfil-13.jpg" class="avatar-option">
+      <img src="../assets/perfil-14.jpg" class="avatar-option">
+      <img src="../assets/perfil-15.jpg" class="avatar-option">
+      <img src="../assets/perfil-16.jpg" class="avatar-option">
+      <img src="../assets/perfil-17.jpg" class="avatar-option">
+    </div>
+
+    <div class="modal-buttons">
+      <button id="cancelar">Cancelar</button>
+      <button id="salvar">Salvar</button>
+    </div>
+  </div>
+</div>
+
+
+    <script src="index.js"></script>
+     
+    <script src="../js/perfis.js"></script>
+
+    <script src="../js/add.js"></script>
+   
+</body>
+</html>
+        

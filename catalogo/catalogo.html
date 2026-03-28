@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DoctorFlix</title>
+    <link rel="stylesheet" href="catalogo.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header class="navbar" id="navbar">
+        <div class="navbar-left">
+            <img class="logo" src="../assets/image.png"
+                alt="DoctorFlix logo">
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="catalogo.html" class="active">Início</a></li>
+                    <li><a href="catalogo.html">Séries</a></li>
+                    <li><a href="catalogo.html">Filmes</a></li>
+                    <li><a href="catalogo.html">Jogos</a></li>
+                    <li><a href="catalogo.html">Bombando</a></li>
+                    <li><a href="catalogo.html">Minha lista</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="navbar-right">
+            <i class="fas fa-search icon"></i>
+            <a href="../projeto/index.html" class="kids-link">Doutor</a>
+            <div class="nav-notification">
+                <i class="fas fa-bell icon"></i>
+                <span class="notification-badge">20</span>
+            </div>
+            <a href="../projeto/index.html" class="profile-menu" style="text-decoration: none; color: inherit;">
+                <img class="profile-icon" src="../assets/perfil-1.png"
+                    alt="Profile">
+                <i class="fas fa-caret-down icon" style="font-size: 14px; margin-left: 5px;"></i>
+            </a>
+        </div>
+    </header>
+
+
+     <section class="hero">
+  <div class="hero-content">
+    <h1 class="hero-title">Doctor Who</h1>
+    <p class="hero-description">
+      Um viajante do tempo excêntrico explora o universo salvando civilizações.
+    </p>
+
+    <div class="hero-buttons">
+      <button class="btn-play">▶ Assistir</button>
+      <button class="btn-info">ℹ Mais informações</button>
+    </div>
+  </div>
+</section>
+
+
+    <!-- Sliders Container -->
+    <main class="sliders-container" id="main-content">
+        <!-- Javascript will inject the rows here -->
+         <section id="inicio"></section>
+
+    <section id="series"></section>
+
+    <section id="filmes"></section>
+
+    <section id="jogos"></section>
+
+    <section id="bombando"></section>
+
+    <section id="minha-lista"></section>
+
+    </main>
+      
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <a href="https://www.alura.com.br/" target="_blank">
+                <p>Laryssa</p>
+            </a>
+            <ul class="footer-links">
+                <li><a href="https://www.alura.com.br/" target="_blank">Perguntas frequentes</a></li>
+                <li><a href="https://www.alura.com.br/" target="_blank">Centro de ajuda</a></li>
+                <li><a href="https://www.alura.com.br/" target="_blank">Conta</a></li>
+                <li><a href="https://www.alura.com.br/" target="_blank">Imprensa</a></li>
+                <li><a href="https://www.alura.com.br/" target="_blank">Relações com investidores</a></li>
+                <li><a href="https://www.alura.com.br/" target="_blank">Carreiras</a></li>
+                <li><a href="https://www.alura.com.br/" target="_blank">Formas de assistir</a></li>
+                <li><a href="https://www.alura.com.br/" target="_blank">Termos de uso</a></li>
+                <li><a href="https://www.alura.com.br/" target="_blank">Privacidade</a></li>
+                <li><a href="https://www.alura.com.br/" target="_blank">Preferências de cookies</a></li>
+                <li><a href="https://www.alura.com.br/" target="_blank">Informações corporativas</a></li>
+                <li><a href="https://www.alura.com.br/" target="_blank">Entre em contato</a></li>
+                <li><a href="https://www.alura.com.br/" target="_blank">Teste de velocidade</a></li>
+                <li><a href="https://www.alura.com.br/" target="_blank">Avisos legais</a></li>
+                <li><a href="https://www.alura.com.br/" target="_blank">Só na Netflix</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script type="module" src="js/main.js"></script>
+
+   
+
+   <div class="modal" id="modal">
+  <div class="modal-content">
+    <span class="close-btn">&times;</span>
+
+    <div style="position: relative; line-height: 0;">
+       <img id="modal-poster" src="https://www.nationalworld.com/jpim-static/image/2023/12/09/10/57/The%20Giggle.jpg?crop=3:2,smart&trim=&width=640&quality=65" style="width:100%; height:300px; object-fit:cover; display:none;">
+       
+       <button id="inner-play" class="btn-vivid" style="position:absolute; bottom:20px; left:20px; display:none; padding:10px 20px; cursor:pointer; font-weight:bold;">ASSISTIR</button>
+
+       <iframe id="modal-video" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+
+    <div class="modal-info">
+  <h2>Doctor Who</h2>
+  <p class="synopsis">
+    Estrelando David Tennant e Catherine Tate, a trama traz novos desafios espaciais e o retorno de rostos conhecidos, unindo o legado clássico ao futuro da franquia, agora disponível globalmente pelo Disney+.
+  </p>
+  
+  <ul class="meta-list">
+    <li><strong>Gêneros:</strong> Ficção científica, Aventura</li>
+    <li><strong>Elenco:</strong> David Tennant, Catherine Tate, Neil Patrick Harris, Ncuti Gatwa</li>
+    <li><strong>Categoria:</strong> Série</li>
+  </ul>
+</div>
+  </div>
+</div>
+ <script src="../catalogo/js/teste.js"></script>
+</body>
+
+</html>
