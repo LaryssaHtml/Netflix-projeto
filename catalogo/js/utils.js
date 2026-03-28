@@ -11,7 +11,7 @@ export function getRandomMatchScore() {
 }
 
 export function getRandomDuration(hasProgress) {
-    return hasProgress ? '10 temporadas' : '2h ' + Math.floor(Math.random() * 59) + 'm';
+    return hasProgress ? '3 temporadas' : '1h' + Math.floor(Math.random() * 59) + 'm';
 }
 
 export function getRandomAgeBadge() {

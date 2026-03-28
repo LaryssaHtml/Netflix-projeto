@@ -30,21 +30,14 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	});
 
-	// 💾 Salvar perfil
-	btnSalvar.addEventListener('click', () => {
-		const nome = inputNome.value.trim();
-
-		if (!nome || !avatarSelecionado) {
-			alert('Preencha o nome e escolha um avatar para entrar no universo de doctor who!');
-			return;
-		}
+	
 
 		// Criar novo perfil na tela
 		const novoPerfil = document.createElement('li');
 		novoPerfil.classList.add('profile');
 
 		novoPerfil.innerHTML = `
-			<a href="../catalogo/catalogo.html" class="profile-link">
+			<a href="catalogo.html" class="profile-link">
 				<figure>
 					<img src="${avatarSelecionado}" width="128" height="128">
 					<figcaption>${nome}</figcaption>
@@ -61,4 +54,3 @@ document.addEventListener('DOMContentLoaded', () => {
 		avatarOptions.forEach(i => i.classList.remove('selected'));
 		modal.classList.add('hidden');
 	});
-});

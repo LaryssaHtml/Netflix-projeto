@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     li.className = 'profile profile-dinamico';
 
     li.innerHTML = `
-      <a href="../catalogo/catalogo.html" class="profile-link">
+      <a href="catalogo.html" class="profile-link">
         <figure>
           <img src="${perfil.imagem}" width="128" height="128">
           <figcaption>${perfil.nome}</figcaption>
