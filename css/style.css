@@ -1,7 +1,7 @@
 /* Estilos inspirados na Netflix */
 @font-face {
     font-family: 'DoctorWhoFont'; /* Nome que você escolheu */
-    src: url('fonts/Doctor-Who.ttf'); /* Caminho exato do arquivo */
+    src: url('../fonts/Doctor-Who.ttf'); /* Caminho exato do arquivo */
 }
 
 :root {
@@ -38,7 +38,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('assets/wallpaper-2.jpeg');
+    background-image: url('../assets/wallpaper-2.jpeg');
     background-attachment: fixed;
     background-position: center;
     background-size: cover;
@@ -66,7 +66,7 @@ body.dark {
 }
 
 body {
-    cursor: url('assets/cursor-sonic.png') 16 16, auto;
+    cursor: url('../assets/cursor-sonic.png') 16 16, auto;
     background: var(--bg);
     color: var(--text);
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -110,7 +110,7 @@ main {
     display: block;
     text-decoration: none;
     color: inherit;
-    cursor: url('assets/cursor-2.png') 16 16, pointer; /*Cursor*/
+    cursor: url('../assets/cursor-2.png') 16 16, pointer; /*Cursor*/
 }
 
 .profiles {
@@ -130,7 +130,7 @@ main {
 
 
 .profiles li {
-    cursor: url('assets/cursor-2.png') 16 16, pointer; /*Cursor pra selecionar os perfis*/
+    cursor: url('../assets/cursor-2.png') 16 16, pointer; /*Cursor pra selecionar os perfis*/
     list-style: none;
 }
 
@@ -138,7 +138,7 @@ main {
     /* Centraliza o texto dentro de cada perfil */
     text-align: center;
     /* Muda o cursor para pointer ao passar o mouse */
-    cursor: url('assets/cursor-2.png') 16 16, pointer;
+    cursor: url('../assets/cursor-2.png') 16 16, pointer;
      /* Adiciona transição suave para transformações */
 }
 
@@ -197,7 +197,7 @@ figcaption {
     border: 1px solid var(--button-border);
     padding: 0.6rem 2rem;
     margin-top: 4rem;
-    cursor: url('assets/cursor-2.png') 16 16, pointer;
+    cursor: url('../assets/cursor-2.png') 16 16, pointer;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 1.1rem;
     letter-spacing: 2px;
@@ -516,7 +516,7 @@ S AO PASSAR O MOUSE (HOVER) --- */
   width: 110px;
   height: 110px;
   border-radius: 8px;
-  cursor: url('assets/cursor-2.png') 16 16, pointer;
+  cursor: url('../assets/cursor-2.png') 16 16, pointer;
   border: 2px solid transparent;
 }
 
@@ -550,7 +550,7 @@ S AO PASSAR O MOUSE (HOVER) --- */
   color: white;
 }
 
-/* Salvar (estilo Doctor Who 🔥) */
+/* botao de Salvar */
 #salvar {
   background: linear-gradient(45deg, #0ff, #00f, #8a2be2);
   color: white;
