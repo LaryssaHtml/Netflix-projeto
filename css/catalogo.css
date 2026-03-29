@@ -4,6 +4,7 @@
     --text-color: #ffffff;
 }
 
+
 * {
     margin: 0;
     padding: 0;
@@ -113,37 +114,38 @@ a:hover {
 }
 
 /* Sliders */
+/* ===== CONTAINER GERAL ===== */
 .sliders-container {
     padding: 0 4%;
     padding-top: 100px;
-    /* Space for navbar */
+    padding-bottom: 100px;
     position: relative;
     z-index: 3;
-    padding-bottom: 100px;
 }
 
+/* ===== CADA CATEGORIA ===== */
 .slider-section {
-    margin-bottom: 3.5vw;
+    margin-bottom: 20px;
+    overflow: visible; /* Permite que os cards cresçam para fora do container */
 }
 
+/* ===== HEADER (TÍTULO + INDICADORES) ===== */
 .slider-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 .slider-title {
-    font-size: 1.25vw;
+    font-size: 1.4vw;
     font-weight: bold;
     color: #e5e5e5;
-    line-height: 1.25vw;
 }
 
 .slider-indicators {
     display: flex;
-    gap: 2px;
-    margin-bottom: 4px;
+    gap: 4px;
 }
 
 .slider-indicators div {
@@ -152,84 +154,76 @@ a:hover {
     background-color: #4d4d4d;
 }
 
-.slider-indicators div.active {
+.slider-indicators .active {
     background-color: #aaa;
 }
 
+/* ===== WRAPPER DO CARROSSEL ===== */
+.carousel-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: visible; /* permite o hover crescer */
+}
+
+/* ===== FILEIRA DE FILMES ===== */
 .movie-row {
     display: flex;
-    gap: 8px;
-    /* Small gap between movie cards */
-    overflow-x: visible;
-    /* Let the expanded cards paint outside this box vertically */
-    padding: 10px 4% 50px 4%;
-    /* Added bottom padding to hold the expanding modal */
-    margin: 0 -4%;
-    /* Pull edges back out so we don't double up padding from container */
+    gap: 7px;
+    align-items: flex-start;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 55px 5px 70px;
     scroll-behavior: smooth;
-    -ms-overflow-style: none;
     scrollbar-width: none;
+    position: relative;
 }
 
 .movie-row::-webkit-scrollbar {
     display: none;
 }
 
+/* ===== CARD ===== */
 .movie-card {
-    min-width: 250px;
+     flex: 0 0 250px;
     width: 250px;
-    height: 140px;
+    height: 145px;
     background-color: #222;
     border-radius: 4px;
     cursor: pointer;
-    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s, border-radius 0.3s 0s, z-index 0s 0.3s, box-shadow 0.3s 0s;
     position: relative;
     z-index: 1;
     transform-origin: center center;
-    /* Default origin */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: visible;
 }
 
-/* Modifiers applied by JavaScript to prevent edge clipping */
-.movie-card.origin-left {
-    transform-origin: left center;
-}
-
-.movie-card.origin-right {
-    transform-origin: right center;
-}
-
+/* ===== HOVER (EFEITO NETFLIX) ===== */
 .movie-card:hover {
-    transform: scale(1.6) translateY(-5%);
-    /* Reduced vertical translation since container has more padding */
-    z-index: 99;
+    transform: scale(1.28) translateY(-40px);
+    z-index: 999;
     border-radius: 6px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
-    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s, border-radius 0.3s 0.6s, box-shadow 0.3s 0.6s, z-index 0s 0s;
 }
 
+/* ===== IMAGEM ===== */
 .movie-card img {
     position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 4px;
-    transition: opacity 0.3s ease, border-radius 0.3s;
-    z-index: 2;
+    transition: opacity 0.3s;
 }
 
+/* ===== VÍDEO ===== */
 .movie-card iframe {
     position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
     opacity: 0;
     border-radius: 4px;
-    transition: opacity 0.3s ease, border-radius 0.3s;
+    transition: opacity 0.3s;
     pointer-events: none;
-    z-index: 1;
 }
 
 .movie-card iframe.playing {
@@ -238,40 +232,77 @@ a:hover {
     border-radius: 6px 6px 0 0;
 }
 
-.movie-card:hover img {
-    border-radius: 6px 6px 0 0;
-    transition: border-radius 0s 0.6s;
-}
-
 .movie-card img.playing-video {
     opacity: 0;
 }
 
-/* Card Details Modal */
+/* ===== DETALHES DO CARD (preview) ===== */
 .card-details {
     position: absolute;
     top: 100%;
     left: 0;
     width: 100%;
+
     background-color: #181818;
-    border-bottom-left-radius: 6px;
-    border-bottom-right-radius: 6px;
-    padding: 18px 16px;
+    border-radius: 0 0 6px 6px;
+    padding: 16px;
+
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.3s 0s, visibility 0.3s 0s;
+    z-index:5;
+
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.9);
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    z-index: 2;
-    cursor: default;
 }
 
 .movie-card:hover .card-details {
     opacity: 1;
     visibility: visible;
-    transition: opacity 0.2s 0.6s, visibility 0s 0.6s;
+}
+
+/* ===== SETAS ===== */
+.handle {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 34px;
+    height: 72px;
+
+    background: rgba(0, 0, 0, 0.18);
+    border: none;
+    border-radius: 999px;
+
+    color: white;
+    z-index: 1000;
+    cursor: pointer;
+
+    opacity: 0;
+    transition: opacity 0.25s ease, background 0.25s ease, transform 0.25s ease;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-wrapper:hover .handle {
+    opacity: 1;
+}
+
+.handle:hover {
+    background: rgba(0, 0, 0, 0.8);
+    transform: translateY(-50%) scale(1.05);
+}
+
+.handle-prev {
+    left: 6px;
+}
+
+.handle-next {
+    right: 6px;
+}
+
+.handle i {
+    font-size: 14px;
 }
 
 
@@ -785,4 +816,121 @@ footer {
 .btn-vivid:hover {
   transform: scale(1.05); /* Aumenta ligeiramente de tamanho */
   box-shadow: 0 6px 20px rgba(0, 224, 255, 0.6); /* Sombra mais forte */
+}
+
+/* Container do Menu */
+.genre-menu {
+    position: relative;
+    display: inline-block;
+    margin-left: 20px;
+}
+
+/* O Botão principal */
+.genre-button {
+    background: black;
+    color: white;
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 5px 15px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.3s;
+}
+
+.genre-button:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+/* A Caixinha que fica escondida */
+.genre-content {
+    display: none; /* Escondido por padrão */
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.9);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.1);
+    z-index: 1000;
+}
+
+/* Links dentro do menu */
+.genre-content a {
+    color: #b3b3b3;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 13px;
+    transition: 0.2s;
+}
+
+.genre-content a:hover {
+    background-color: rgba(255,255,255,0.1);
+    color: white;
+}
+
+/* Mostra o menu quando passa o mouse */
+.genre-menu:hover .genre-content {
+    display: block;
+}
+
+/* Estilo para marcar qual está ativo */
+.genre-content a.active {
+    color: white;
+    font-weight: bold;
+    background-color: rgba(255,255,255,0.05);
+}
+
+/* Quando o mouse passa no menu, o botão ganha destaque */
+.genre-menu:hover .genre-button {
+    background: rgba(212, 13, 252, 0.1);
+    border-radius: 4px;
+    padding: 5px 10px;
+}
+
+/* Efeito de transição suave nos links do menu */
+.genre-content a {
+    transition: all 0.2s ease-in-out;
+}
+
+/* Container da busca */
+.search-box {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    transition: all 0.3s ease;
+    border: 1px solid transparent; /* Borda invisível por padrão */
+}
+
+/* Quando a classe .active for adicionada pelo JS */
+.search-box.active {
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid white;
+}
+
+/* O campo de texto */
+#search-input {
+    width: 0; /* Começa com largura zero */
+    opacity: 0; /* Começa invisível */
+    background: transparent;
+    border: none;
+    color: white;
+    outline: none;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+/* Quando a busca estiver ativa, o input expande */
+.search-box.active #search-input {
+    width: 200px; /* Largura que ele vai assumir */
+    opacity: 1;
+    margin-left: 10px;
+    padding: 5px;
+}
+
+.search-icon {
+    cursor: pointer;
+    color: white;
+    font-size: 18px;
 }

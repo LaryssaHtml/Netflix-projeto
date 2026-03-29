@@ -1,6 +1,15 @@
 import { getYouTubeId, getRandomMatchScore, getRandomDuration, getRandomAgeBadge } from '../utils.js';
 
 export function createCard(item) {
+    // 1. Buscamos o estado atual do perfil e das listas
+    const nomePerfil = localStorage.getItem('perfilAtivoNome');
+    const listaIds = JSON.parse(localStorage.getItem(`lista_${nomePerfil}`)) || [];
+    const likesIds = JSON.parse(localStorage.getItem(`likes_${nomePerfil}`)) || [];
+    
+    // 2. Verificamos se ESTE item específico está na lista ou tem like
+    const estaNaLista = listaIds.includes(item.id);
+    const deuLike = likesIds.includes(item.id);
+
     const card = document.createElement('div');
     card.className = 'movie-card';
     if (item.progress) {
@@ -24,12 +33,22 @@ export function createCard(item) {
 
     const details = document.createElement('div');
     details.className = 'card-details';
+    
+    // 3. Aplicamos as cores e ícones dinamicamente com base nas constantes acima
     details.innerHTML = `
         <div class="details-buttons">
             <div class="left-buttons">
-                <button class="btn-icon btn-play-icon"><i class="fas fa-play" style="margin-left:2px;"></i></button>
-                ${item.progress ? '<button class="btn-icon"><i class="fas fa-check"></i></button>' : '<button class="btn-icon"><i class="fas fa-plus"></i></button>'}
-                <button class="btn-icon"><i class="fas fa-thumbs-up"></i></button>
+                <button class="btn-icon btn-play-icon">
+                    <i class="fas fa-play" style="margin-left:2px;"></i>
+                </button>
+                
+                <button class="btn-icon ${estaNaLista ? 'active' : ''}" onclick="toggleMinhaLista('${item.id}', this)">
+                    <i class="fas ${estaNaLista ? 'fa-check' : 'fa-plus'}"></i>
+                </button>
+
+                <button class="btn-icon" style="color: ${deuLike ? '#46d369' : 'white'}" onclick="toggleLike('${item.id}', this)">
+                    <i class="fas fa-thumbs-up"></i>
+                </button>
             </div>
             <div class="right-buttons">
                 <button class="btn-icon"><i class="fas fa-chevron-down"></i></button>
@@ -49,7 +68,6 @@ export function createCard(item) {
         </div>
     `;
     card.appendChild(details);
-
 
     if (item.progress) {
         const pbContainer = document.createElement('div');

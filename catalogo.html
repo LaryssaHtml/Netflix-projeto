@@ -16,30 +16,64 @@
         <div class="navbar-left">
             <img class="logo" src="assets/image.png"
                 alt="DoctorFlix logo">
+
             <nav>
-                <ul class="nav-links">
-                    <li><a href="catalogo.html" class="active">Início</a></li>
-                    <li><a href="catalogo.html">Séries</a></li>
-                    <li><a href="catalogo.html">Filmes</a></li>
-                    <li><a href="catalogo.html">Jogos</a></li>
-                    <li><a href="catalogo.html">Bombando</a></li>
-                    <li><a href="catalogo.html">Minha lista</a></li>
+
+            <ul class="nav-links">
+                <li><a href="javascript:void(0)" onclick="mudarFiltro('todos')" class="active">Início</a></li>
+                <li><a href="javascript:void(0)" onclick="mudarFiltro('series')">Séries</a></li>
+                <li><a href="javascript:void(0)" onclick="mudarFiltro('filmes')">Filmes</a></li>
+                <li><a href="javascript:void(0)" onclick="mudarFiltro('jogos')">Jogos</a></li>
+                <li><a href="javascript:void(0)" onclick="mudarFiltro('bombando')">Bombando</a></li>
+                <li><a href="javascript:void(0)" onclick="mudarFiltro('minha-lista')">Minha lista</a></li>
                 </ul>
+
             </nav>
         </div>
+
+
         <div class="navbar-right">
-            <i class="fas fa-search icon"></i>
+
+               <div class="genre-menu">
+         <button class="genre-button">
+             Gêneros <i class="fas fa-caret-down"></i>
+         </button>
+
+    <div class="genre-content">
+        <a href="#" id="btn-todos" onclick="mudarFiltro('todos')">Tudo</a>
+        <a href="#" id="btn-sci-fi" onclick="mudarFiltro('sci-fi')">Sci-Fi</a>
+        <a href="#" id="btn-romance" onclick="mudarFiltro('romance')">Romance</a>
+        <a href="#" id="btn-terror" onclick="mudarFiltro('terror')">Terror</a>
+        <a href="#" id="btn-aventura" onclick="mudarFiltro('aventura')">Aventura</a>
+    </div>
+
+    </div>
+
+            <div class="search-box">
+              <i class="fas fa-search search-icon" onclick="toggleSearch()"></i>
+        <input type="text" id="search-input" placeholder="Títulos, personagens..." oninput="executarBusca()">
+       </div>
+            
             <a href="index.html" class="kids-link">Doutor</a>
+
+
             <div class="nav-notification">
                 <i class="fas fa-bell icon"></i>
                 <span class="notification-badge">20</span>
-            </div>
+
+     </div>
+
+
             <a href="index.html" class="profile-menu" style="text-decoration: none; color: inherit;">
                 <img class="profile-icon" src="assets/perfil-1.png"
                     alt="Profile">
                 <i class="fas fa-caret-down icon" style="font-size: 14px; margin-left: 5px;"></i>
             </a>
         </div>
+
+            
+
+
     </header>
 
 
@@ -131,7 +165,10 @@
 </div>
   </div>
 </div>
+
+
  <script src="catalogo/js/teste.js"></script>
+
 </body>
 
 </html>
