@@ -5,9 +5,7 @@ export function createCard(item) {
     const listaIds = JSON.parse(localStorage.getItem(`lista_${nomePerfil}`)) || [];
     const likesIds = JSON.parse(localStorage.getItem(`likes_${nomePerfil}`)) || [];
     
-    // CHAVE ÚNICA POR PERFIL: Dinâmica para qualquer nome de usuário
     const chaveProgresso = `progress_${nomePerfil}_${item.id}`;
-    
     const savedProgress = item.id ? localStorage.getItem(chaveProgresso) : null;
     let progressEstatico = savedProgress !== null ? parseInt(savedProgress) : (item.progress || 0); 
     
@@ -17,7 +15,13 @@ export function createCard(item) {
     const card = document.createElement('div');
     card.className = 'movie-card';
 
-    // --- ESTRUTURA DA BARRA DE PROGRESSO ---
+    // Clique para Mobile (Abre o modal direto)
+    card.onclick = (e) => {
+        if (window.innerWidth <= 768) {
+            window.abrirModal(item, 'info');
+        }
+    };
+
     const pbContainer = document.createElement('div');
     pbContainer.className = 'progress-bar-container';
     pbContainer.style.display = (progressEstatico > 0 && progressEstatico < 100) ? 'block' : 'none';
@@ -25,12 +29,13 @@ export function createCard(item) {
     const pbValue = document.createElement('div');
     pbValue.className = 'progress-value-neon';
     pbValue.style.width = `${progressEstatico}%`;
-    
     pbContainer.appendChild(pbValue);
 
     const img = document.createElement('img');
-    img.src = item.img;
+    // Se tiver imgVertical no data.js, usa no mobile
+    img.src = (window.innerWidth <= 768 && item.imgVertical) ? item.imgVertical : item.img;
     img.alt = item.title || "Movie cover";
+    img.loading = "lazy";
 
     const iframe = document.createElement('iframe');
     iframe.frameBorder = "0";
@@ -52,10 +57,10 @@ export function createCard(item) {
                 <button class="btn-icon btn-play-icon">
                     <i class="fas fa-play" style="margin-left:2px;"></i>
                 </button>
-                <button class="btn-icon ${estaNaLista ? 'active' : ''}" onclick="toggleMinhaLista('${item.id}', this)">
+                <button class="btn-icon ${estaNaLista ? 'active' : ''}" onclick="event.stopPropagation(); toggleMinhaLista('${item.id}', this)">
                     <i class="fas ${estaNaLista ? 'fa-check' : 'fa-plus'}"></i>
                 </button>
-                <button class="btn-icon btn-like-main" style="color: ${deuLike ? '#a855f7' : 'white'}" onclick="toggleLike('${item.id}', this)">
+                <button class="btn-icon btn-like-main" style="color: ${deuLike ? '#a855f7' : 'white'}" onclick="event.stopPropagation(); toggleLike('${item.id}', this)">
                     <i class="fas fa-thumbs-up"></i>
                 </button>
             </div>
@@ -81,57 +86,54 @@ export function createCard(item) {
     const btnPlayCard = details.querySelector('.btn-play-icon');
     const btnInfoCard = details.querySelector('.btn-info-icon');
     
-    if (btnPlayCard) btnPlayCard.onclick = () => window.abrirModal(item, 'assistir');
-    if (btnInfoCard) btnInfoCard.onclick = () => window.abrirModal(item, 'info');
+    if (btnPlayCard) btnPlayCard.onclick = (e) => { e.stopPropagation(); window.abrirModal(item, 'assistir'); };
+    if (btnInfoCard) btnInfoCard.onclick = (e) => { e.stopPropagation(); window.abrirModal(item, 'info'); };
 
-    // --- LÓGICA DE PROGRESSO AO VIVO (PREVIEW) ---
+    // --- LÓGICA DE PC (HOVER) ---
     let playTimeout;
     let liveProgressInterval;
     let tempProgress = 0; 
 
     card.addEventListener('mouseenter', () => {
-        const rect = card.getBoundingClientRect();
-        if (rect.left < 100) card.classList.add('origin-left');
-        else if (rect.right > window.innerWidth - 100) card.classList.add('origin-right');
+        if (window.innerWidth > 768) {
+            const rect = card.getBoundingClientRect();
+            if (rect.left < 100) card.classList.add('origin-left');
+            else if (rect.right > window.innerWidth - 100) card.classList.add('origin-right');
 
-        // Sincronização: Zera a barra visual para começar junto com o vídeo do YT
-        tempProgress = 0;
-        pbValue.style.width = '0%';
-        pbContainer.style.display = 'block';
+            tempProgress = 0;
+            pbValue.style.width = '0%';
+            pbContainer.style.display = 'block';
 
-        playTimeout = setTimeout(() => {
-            if (videoId) {
-                iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0&modestbranding=1&loop=1&playlist=${videoId}&mute=0`;
-                iframe.classList.add('playing');
-                img.classList.add('playing-video');
+            playTimeout = setTimeout(() => {
+                if (videoId) {
+                    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0&modestbranding=1&loop=1&playlist=${videoId}&mute=0`;
+                    iframe.classList.add('playing');
+                    img.classList.add('playing-video');
 
-                liveProgressInterval = setInterval(() => {
-                    if (tempProgress >= 100) {
-                        tempProgress = 0; // Reset fiel ao loop do vídeo
-                    } else {
-                        tempProgress += 1; 
-                    }
-
-                    pbValue.style.width = `${tempProgress}%`;
-                    localStorage.setItem(chaveProgresso, tempProgress);
-                }, 1000); 
-            }
-        }, 600);
+                    liveProgressInterval = setInterval(() => {
+                        tempProgress = (tempProgress >= 100) ? 0 : tempProgress + 1;
+                        pbValue.style.width = `${tempProgress}%`;
+                        localStorage.setItem(chaveProgresso, tempProgress);
+                    }, 1000); 
+                }
+            }, 600);
+        }
     });
 
     card.addEventListener('mouseleave', () => {
-        clearTimeout(playTimeout);
-        clearInterval(liveProgressInterval); 
-        iframe.classList.remove('playing');
-        img.classList.remove('playing-video');
-        iframe.src = "";
-        card.classList.remove('origin-left');
-        card.classList.remove('origin-right');
+        if (window.innerWidth > 768) {
+            clearTimeout(playTimeout);
+            clearInterval(liveProgressInterval); 
+            iframe.classList.remove('playing');
+            img.classList.remove('playing-video');
+            iframe.src = "";
+            card.classList.remove('origin-left');
+            card.classList.remove('origin-right');
 
-        // Restaura a exibição baseada no último progresso salvo para este perfil
-        const finalProgress = localStorage.getItem(chaveProgresso) || progressEstatico;
-        pbValue.style.width = `${finalProgress}%`;
-        if (parseInt(finalProgress) === 0) pbContainer.style.display = 'none';
+            const finalProgress = localStorage.getItem(chaveProgresso) || progressEstatico;
+            pbValue.style.width = `${finalProgress}%`;
+            if (parseInt(finalProgress) === 0) pbContainer.style.display = 'none';
+        }
     });
 
     return card;

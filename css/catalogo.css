@@ -2,8 +2,12 @@
     --netflix-red: #E50914;
     --dark-bg: #141414;
     --text-color: #ffffff;
+    --secondary-text: #e5e5e5;
+    --light-gray: #4d4d4d;
+    --medium-gray: #2b2b2b;
+    --shadow: rgba(0, 0, 0, 0.18);
+    --shadow-dark: rgba(0, 0, 0, 0.8);
 }
-
 
 * {
     margin: 0;
@@ -19,12 +23,12 @@ body {
 }
 
 html {
-  scroll-behavior: smooth;
+    scroll-behavior: smooth;
 }
 
 a {
     text-decoration: none;
-    color: #e5e5e5;
+    color: var(--secondary-text);
     transition: color 0.3s;
 }
 
@@ -46,8 +50,7 @@ a:hover {
     background-color: var(--dark-bg);
 }
 
-.navbar-left,
-.navbar-right {
+.navbar-left, .navbar-right {
     display: flex;
     align-items: center;
     gap: 20px;
@@ -71,13 +74,9 @@ a:hover {
     color: white;
 }
 
-.icon {
-    font-size: 20px;
-    cursor: pointer;
-}
-
-.kids-link {
+.icon, .kids-link {
     font-size: 15px;
+    cursor: pointer;
 }
 
 .nav-notification {
@@ -87,18 +86,152 @@ a:hover {
 
 .notification-badge {
     position: absolute;
-    top: -5px;
+    top: -8px;
     right: -8px;
     background-color: var(--netflix-red);
     color: white;
     font-size: 10px;
     font-weight: bold;
     border-radius: 50%;
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
     display: flex;
     justify-content: center;
     align-items: center;
+    animation: pulse-badge 2s infinite;
+    border: 2px solid var(--dark-bg);
+}
+
+@keyframes pulse-badge {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.nav-notification .icon {
+    transition: all 0.3s ease;
+}
+
+.nav-notification:hover .icon {
+    transform: scale(1.1);
+    color: var(--netflix-red);
+}
+
+/* DROPDOWN de NOTIFICAÇÕES */
+.notification-dropdown {
+    position: absolute;
+    top: 100%;
+    right: -20px;
+    width: 320px;
+    background-color: #141414;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    margin-top: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+    z-index: 1001;
+    display: none;
+    max-height: 400px;
+    overflow-y: auto;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.notification-dropdown.active {
+    display: block;
+}
+
+.notification-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+}
+
+.notification-header button {
+    background: none;
+    border: none;
+    color: var(--netflix-red);
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s ease;
+}
+
+.notification-header button:hover {
+    color: white;
+}
+
+.notification-item {
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.notification-item:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.notification-item.unread {
+    background-color: rgba(229, 9, 20, 0.1);
+}
+
+.notification-icon {
+    font-size: 18px;
+    min-width: 24px;
+    text-align: center;
+    color: var(--netflix-red);
+}
+
+.notification-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.notification-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 4px;
+}
+
+.notification-text {
+    font-size: 12px;
+    color: #b3b3b3;
+    line-height: 1.4;
+    margin-bottom: 4px;
+}
+
+.notification-time {
+    font-size: 11px;
+    color: #707070;
+}
+
+.notification-empty {
+    padding: 30px 16px;
+    text-align: center;
+    color: #707070;
+    font-size: 13px;
+}
+
+.notification-empty i {
+    display: block;
+    font-size: 32px;
+    margin-bottom: 10px;
+    opacity: 0.5;
 }
 
 .profile-menu {
@@ -113,8 +246,7 @@ a:hover {
     border-radius: 4px;
 }
 
-/* Sliders */
-/* ===== CONTAINER GERAL ===== */
+/* Sliders & Carousel */
 .sliders-container {
     padding: 0 4%;
     padding-top: 100px;
@@ -123,13 +255,11 @@ a:hover {
     z-index: 3;
 }
 
-/* ===== CADA CATEGORIA ===== */
 .slider-section {
     margin-bottom: -55px;
-    overflow: visible; /* Permite que os cards cresçam para fora do container */
+    overflow: visible;
 }
 
-/* ===== HEADER (TÍTULO + INDICADORES) ===== */
 .slider-header {
     display: flex;
     justify-content: space-between;
@@ -140,7 +270,7 @@ a:hover {
 .slider-title {
     font-size: 1.4vw;
     font-weight: bold;
-    color: #e5e5e5;
+    color: var(--secondary-text);
 }
 
 .slider-indicators {
@@ -151,21 +281,77 @@ a:hover {
 .slider-indicators div {
     width: 12px;
     height: 2px;
-    background-color: #4d4d4d;
+    background-color: var(--light-gray);
 }
 
 .slider-indicators .active {
     background-color: #aaa;
 }
 
-/* ===== WRAPPER DO CARROSSEL ===== */
 .carousel-wrapper {
     position: relative;
     width: 100%;
-    overflow: visible; /* permite o hover crescer */
+    overflow: visible;
+    display: flex;
+    align-items: center;
 }
 
-/* ===== FILEIRA DE FILMES ===== */
+/* SETAS DE NAVEGAÇÃO (HANDLES) */
+.handle {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.6);
+    border: none;
+    color: white;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    z-index: 10;
+    transition: all 0.3s ease;
+    opacity: 0;
+}
+
+.carousel-wrapper:hover .handle {
+    opacity: 1;
+}
+
+.handle:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.handle-prev {
+    left: -60px;
+}
+
+.handle-next {
+    right: -60px;
+}
+
+/* Mobile: Mostrar setas sempre no mobile */
+@media (max-width: 768px) {
+    .handle {
+        opacity: 0.8 !important;
+        width: 36px !important;
+        height: 36px !important;
+        font-size: 16px !important;
+    }
+    
+    .handle-prev {
+        left: 5px !important;
+    }
+    
+    .handle-next {
+        right: 5px !important;
+    }
+}
+
 .movie-row {
     display: flex;
     gap: 7px;
@@ -182,12 +368,11 @@ a:hover {
     display: none;
 }
 
-/* ===== CARD ===== */
 .movie-card {
-     flex: 0 0 250px;
+    flex: 0 0 250px;
     width: 250px;
     height: 145px;
-    background-color: #222;
+    background-color: var(--medium-gray);
     border-radius: 4px;
     cursor: pointer;
     position: relative;
@@ -197,7 +382,6 @@ a:hover {
     overflow: visible;
 }
 
-/* ===== HOVER (EFEITO NETFLIX) ===== */
 .movie-card:hover {
     transform: scale(1.28) translateY(-40px);
     z-index: 999;
@@ -205,7 +389,6 @@ a:hover {
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
 }
 
-/* ===== IMAGEM ===== */
 .movie-card img {
     position: absolute;
     width: 100%;
@@ -215,7 +398,6 @@ a:hover {
     transition: opacity 0.3s;
 }
 
-/* ===== VÍDEO ===== */
 .movie-card iframe {
     position: absolute;
     width: 100%;
@@ -235,22 +417,17 @@ a:hover {
 .movie-card img.playing-video {
     opacity: 0;
 }
-
-/* ===== DETALHES DO CARD (preview) ===== */
 .card-details {
     position: absolute;
     top: 100%;
     left: 0;
     width: 100%;
-
     background-color: #181818;
     border-radius: 0 0 6px 6px;
     padding: 16px;
-
     opacity: 0;
     visibility: hidden;
-    z-index:5;
-
+    z-index: 5;
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.9);
 }
 
@@ -259,61 +436,13 @@ a:hover {
     visibility: visible;
 }
 
-/* ===== SETAS ===== */
-.handle {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-
-    width: 34px;
-    height: 72px;
-
-    background: rgba(0, 0, 0, 0.18);
-    border: none;
-    border-radius: 999px;
-
-    color: white;
-    z-index: 1000;
-    cursor: pointer;
-
-    opacity: 0;
-    transition: opacity 0.25s ease, background 0.25s ease, transform 0.25s ease;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.carousel-wrapper:hover .handle {
-    opacity: 1;
-}
-
-.handle:hover {
-    background: rgba(0, 0, 0, 0.8);
-    transform: translateY(-50%) scale(1.05);
-}
-
-.handle-prev {
-    left: 6px;
-}
-
-.handle-next {
-    right: 6px;
-}
-
-.handle i {
-    font-size: 14px;
-}
-
-
 .details-buttons {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.left-buttons,
-.right-buttons {
+.left-buttons, .right-buttons {
     display: flex;
     gap: 8px;
 }
@@ -322,7 +451,7 @@ a:hover {
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background-color: #2b2b2b;
+    background-color: var(--medium-gray);
     border: 1px solid rgba(255, 255, 255, 0.5);
     color: white;
     display: flex;
@@ -331,6 +460,7 @@ a:hover {
     cursor: pointer;
     font-size: 14px;
     transition: border-color 0.2s, background-color 0.2s;
+    position: relative;
 }
 
 .btn-icon:hover {
@@ -469,17 +599,35 @@ a:hover {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 4px;
-    background-color: rgba(100, 100, 100, 0.7);
-    z-index: 5;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
+    height: 6px;
+    background: rgba(40, 40, 40, 0.9);
+    z-index: 15;
+    overflow: hidden;
+    border-radius: 0 0 4px 4px;
+    cursor: pointer;
+}
+
+.progress-value, .progress-value-neon {
+    height: 100%;
+    border-radius: 0 2px 2px 0;
 }
 
 .progress-value {
-    height: 100%;
-    background-color: var(--netflix-red);
-    border-bottom-left-radius: 4px;
+    background: linear-gradient(90deg, #a855f7, #d946ef);
+    box-shadow: 0 0 10px #a855f7;
+}
+
+.progress-value-neon {
+    background: linear-gradient(90deg, #a855f7 0%, #d946ef 50%, #7e3fff 100%);
+    box-shadow: 0 0 15px #a855f7, inset 0 0 10px rgba(168, 85, 247, 0.5);
+    transition: width 1s ease-out;
+    width: 0;
+    animation: progressGlow 2s ease-in-out infinite;
+}
+
+@keyframes progressGlow {
+    0%, 100% { box-shadow: 0 0 15px #a855f7, inset 0 0 10px rgba(168, 85, 247, 0.5); }
+    50% { box-shadow: 0 0 25px #d946ef, inset 0 0 15px rgba(217, 70, 239, 0.7); }
 }
 
 /* Footer */
@@ -514,107 +662,100 @@ footer {
     text-decoration: underline;
 }
 
-@media (max-width: 768px) {
-    .footer-links {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-   
-  .hero {
-    min-height: 60vh;
-    padding: 24px;
-    margin-top: 60px;
-    align-items: flex-end;
-    background-position: center top;
-  }
-
-  .hero::after {
-    background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0.25));
-  }
-
-  .hero-content {
-    max-width: 100%;
-  }
-
-  .hero-title {
-    font-size: 2rem;
-  }
-
-  .hero-description {
-    font-size: 0.95rem;
-  }
-
-  .hero-buttons {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .hero-buttons button {
-    width: 100%;
-  }
-
-}
-
-
+/* Hero Section */
 .hero {
-  height: 80vh;
-  background-image: url('https://is1-ssl.mzstatic.com/image/thumb/JDfvRSswwERxrtlXfSorfA/1200x675.jpg');
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  display: flex;
-  align-items: center;
-  padding: 60px;
-  margin-top: 80px;
-  transition: background-image 0.8s ease-in-out, opacity 0.5s ease-in-out;
+    height: 85vh;
+    background-image: url('https://is1-ssl.mzstatic.com/image/thumb/JDfvRSswwERxrtlXfSorfA/1200x675.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 60px;
+    margin-top: 80px;
+    transition: background-image 0.8s ease-in-out, opacity 0.5s ease-in-out;
 }
 
-/* Classe auxiliar que vamos usar no JS para o efeito de piscar */
 .hero-fade-out {
-  opacity: 0;
+    opacity: 0;
 }
 
 .hero::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to right, rgba(0,0,0,0.8), transparent);
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(0,0,0,0.8), transparent);
 }
 
 .hero-content {
-  position: relative;
-  max-width: 500px;
-  z-index: 2;
+    position: relative;
+    max-width: 500px;
+    z-index: 2;
 }
 
 .hero-title {
-  font-size: 3rem;
-  margin-bottom: 10px;
+    font-size: 3rem;
+    margin-bottom: 10px;
 }
 
 .hero-description {
-  font-size: 1.1rem;
-  margin-bottom: 20px;
-  color: #ccc;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    color: #ccc;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 15px;
 }
 
 .hero-buttons button {
-  margin-right: 10px;
-  padding: 10px 20px;
-  border: none;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 4px;
+    padding: 12px 32px;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .btn-play {
-  background: white;
-  color: black;
+    background: white;
+    color: black;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+}
+
+.btn-play:hover {
+    background: #e6e6e6;
+    transform: scale(1.05);
+    box-shadow: 0 6px 25px rgba(255, 255, 255, 0.3);
+}
+
+.btn-play:active {
+    transform: scale(0.98);
 }
 
 .btn-info {
-  background: rgba(109, 109, 110, 0.7);
-  color: white;
+    background: rgba(109, 109, 110, 0.7);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(8px);
+}
+
+.btn-info:hover {
+    background: rgba(109, 109, 110, 0.9);
+    border-color: rgba(255, 255, 255, 0.8);
+    transform: scale(1.05);
+    box-shadow: 0 6px 25px rgba(255, 255, 255, 0.1);
+}
+
+.btn-info:active {
+    transform: scale(0.98);
 }
 
 
@@ -629,7 +770,9 @@ footer {
   display: none;
   justify-content: center;
   align-items: center;
-  z-index: 999;
+  z-index: 10000;
+  overflow: hidden;
+  padding: 20px;
 }
 
 /* Container que segura o iframe */
@@ -659,12 +802,15 @@ footer {
 .modal-content {
   background: #141414;
   width: 90%;
-  max-width: 850px;
+  max-width: 900px;
+  max-height: none;
   min-height: auto;
   border-radius: 10px;
-  overflow: hidden;
+  overflow: visible;
   position: relative;
   box-shadow: 0 0 30px rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
 }
 
 /*.modal iframe {
@@ -705,13 +851,40 @@ footer {
 
 .close-btn {
   position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 35px; /* Aumentei um pouco para facilitar o clique */
+  top: 12px;
+  right: 12px;
+  font-size: 28px;
   color: white;
   cursor: pointer;
-  z-index: 9999; /* Valor bem alto para ficar na frente de tudo */
-  text-shadow: 2px 2px 5px rgba(0,0,0,0.8); /* Sombra para aparecer no fundo branco */
+  z-index: 10001;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.9);
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.5);
+  transition: all 0.2s ease;
+  border: 2px solid rgba(255,255,255,0.3);
+  padding: 0;
+}
+
+.close-btn:hover {
+  background: rgba(255,255,255,0.2);
+  border-color: rgba(255,255,255,0.6);
+  transform: scale(1.15);
+  text-shadow: 2px 2px 10px rgba(0,0,0,1);
+}
+
+@media (max-width: 768px) {
+  .close-btn {
+    width: 48px;
+    height: 48px;
+    font-size: 28px;
+    top: 10px;
+    right: 10px;
+  }
 }
 
 /* O estilo do botão interno vivido */
@@ -752,29 +925,6 @@ footer {
 }
 
 
-/* BARRA ROXA NEON BRILHANTE */
-.progress-bar-container {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%; /* Garante que ocupa o card todo */
-    height: 4px;
-    background: rgba(40, 40, 40, 0.9); /* Fundo mais escuro para o roxo destacar */
-    z-index: 10;
-    overflow: hidden; /* Corta o brilho que sair do card */
-}
-
-.progress-value-neon {
-    height: 100%;
-    /* Gradiente mais vivo */
-    background: linear-gradient(to right, #7e3fff, #a855f7); 
-    box-shadow: 0 0 15px #a855f7; 
-    border-radius: 0 2px 2px 0;
-    /* Transição mais rápida para você ver ela 'andando' ao abrir a página */
-    transition: width 1s ease-out; 
-    width: 0; /* Começa em 0 e o JS aumenta */
-}
-
 /* ANIMAÇÃO LIKE SOCIAL (Subindo suave) */
 .social-particle {
     position: absolute;
@@ -797,32 +947,57 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px 20px;
+    padding: 60px 20px;
     color: #808080;
-    text-align: left;
+    text-align: center;
+    min-height: 400px;
+}
+
+.no-results-content {
+    max-width: 500px;
 }
 
 .no-results-content i {
-    font-size: 65px;
+    font-size: 80px;
     margin-bottom: 20px;
     display: block;
-    color: #333;
+    color: #404040;
+    opacity: 0.6;
 }
 
 .no-results-content h2 {
     color: white;
-    font-size: 22px;
+    font-size: 24px;
     margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.no-results-content p {
+    color: #b3b3b3;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 20px;
 }
 
 .no-results-content ul {
-    list-style: disc;
-    margin-left: 20px;
-    line-height: 1.8;
+    list-style: none;
+    margin: 20px 0;
+    padding: 0;
 }
 
 .no-results-content li {
     font-size: 14px;
+    color: #b3b3b3;
+    margin-bottom: 10px;
+    padding-left: 20px;
+    position: relative;
+}
+
+.no-results-content li:before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--netflix-red);
 }
 
 /* Container do Menu */
@@ -905,15 +1080,18 @@ footer {
 .search-box {
     display: flex;
     align-items: center;
-    padding: 5px;
+    padding: 8px 12px;
     transition: all 0.3s ease;
-    border: 1px solid transparent; /* Borda invisível por padrão */
+    border: 2px solid transparent;
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.3);
 }
 
 /* Quando a classe .active for adicionada pelo JS */
 .search-box.active {
-    background: rgba(0, 0, 0, 0.8);
-    border: 1px solid white;
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 20px rgba(229, 9, 20, 0.3);
 }
 
 /* O campo de texto */
@@ -926,6 +1104,11 @@ footer {
     outline: none;
     transition: all 0.3s ease;
     font-size: 14px;
+    padding: 0;
+}
+
+#search-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
 }
 
 /* Quando a busca estiver ativa, o input expande */
@@ -933,96 +1116,355 @@ footer {
     width: 200px; /* Largura que ele vai assumir */
     opacity: 1;
     margin-left: 10px;
-    padding: 5px;
+    padding: 5px 8px;
 }
 
 .search-icon {
     cursor: pointer;
     color: white;
-    font-size: 18px;
+    font-size: 16px;
+    transition: all 0.3s ease;
 }
 
+.search-box.active .search-icon {
+    color: #ff9800;
+}
 
-/* =========================
-   📱 MOBILE AJUSTE FINAL (FINO)
-========================= */
+.search-icon:hover {
+    color: var(--netflix-red);
+    transform: scale(1.1);
+}
+
+.mobile-nav-select { display: none; }
+
+
 @media (max-width: 768px) {
-
-    /* =========================
-       👤 NAVBAR (PERFIL VISÍVEL)
-    ========================= */
-    .navbar {
-        padding: 10px 12px;
-        z-index: 10000;
-    }
-
-    .navbar-right {
-        gap: 12px; /* mais respiro */
-    }
-
-    .profile-menu {
+    /* HEADER: Mantém Lupa e Perfil organizados */
+    .nav-links, .navbar nav, .kids-link, .nav-notification, .genre-menu { display: none !important; }
+    .navbar { padding: 10px 15px !important; }
+    .mobile-nav-select { display: flex !important; color: white; font-weight: bold; align-items: center; gap: 5px; cursor: pointer; }
+    .navbar-right { display: flex !important; gap: 15px; align-items: center; }
+    .profile-icon { width: 35px !important; height: 35px !important; display: block !important; }
+    
+    /* SINO VISÍVEL NO MOBILE */
+    .nav-notification {
         display: flex !important;
         align-items: center;
-        z-index: 10001;
+        cursor: pointer;
     }
-
-    .profile-icon {
-        width: 32px;  /* 👈 maior agora */
-        height: 32px;
-        border-radius: 4px;
+    
+    .nav-notification .icon {
+        font-size: 20px !important;
     }
-
-    /* =========================
-       🎬 FILEIRAS (mantém igual)
-    ========================= */
-    .sliders-container section > div {
-        padding-bottom: 80px;
+     .slider-title { font-size: 1.5rem !important; margin-left: 15px !important; margin-top: 20px !important; } /* Letras maiores nas fileiras */
+    
+    /* AJUSTES DO HERO NO MOBILE */
+    .hero {
+        height: 72vh !important;
+        padding: 30px !important;
     }
-
-    /* =========================
-       🎬 CARDS (MENOS QUADRADO)
-    ========================= */
-    .movie-card {
-        width: 160px; /* 👈 MAIS LARGO (era 140) */
-        aspect-ratio: 2 / 3; /* 👈 formato tipo Netflix */
+    
+    .hero-content {
+        max-width: 100% !important;
     }
-
-    .movie-card img {
+    
+    .hero-title {
+        font-size: 1.8rem !important;
+        margin-bottom: 10px !important;
+    }
+    
+    .hero-description {
+        font-size: 0.95rem !important;
+        margin-bottom: 15px !important;
+        line-height: 1.4 !important;
+    }
+    
+    .hero-buttons {
+        flex-direction: row !important;
+        gap: 10px !important;
         width: 100%;
-        height: 100%;
+    }
+    
+    .hero-buttons button {
+        flex: 1;
+        padding: 10px 12px !important;
+        font-size: 12px !important;
+        letter-spacing: 0.3px !important;
+    }
+    /* MODAL ESTILO "VITRINE" (Centralizado, não cobre tudo) */
+    #modal { 
+        align-items: center !important; 
+        justify-content: center !important; 
+        background: rgba(0, 0, 0, 0.85) !important;
+        padding: 20px;
+    }
+
+    /* LUPA (Conserto visual) */
+    .search-box.active input { width: 150px !important; }
+
+     /* 1. Alarga o modal e deixa a altura fluida */
+    .modal-content {
+        width: 92% !important; /* Mais gordinho lateralmente */
+        max-width: 500px !important;
+        height: auto !important; 
+        max-height: 90vh !important;
+        overflow-y: auto !important; /* Se o texto for longo, ele rola dentro */
+        border-radius: 8px !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    /* SISTEMA DE ABAS NO MOBILE */
+    .modal-tabs {
+        display: flex !important;
+        background-color: #0f0f0f;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        gap: 0;
+        width: 100%;
+        order: -3 !important;
+    }
+
+    .modal-tab-btn {
+        flex: 1;
+        background: none;
+        border: none;
+        color: #b3b3b3;
+        padding: 12px;
+        cursor: pointer;
+        font-size: 11px;
+        font-weight: 600;
+        border-bottom: 3px solid transparent;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: -2px;
+    }
+
+    .modal-tab-btn:hover {
+        color: white;
+        background: rgba(229, 9, 20, 0.1);
+    }
+
+    .modal-tab-btn.active {
+        color: white;
+        border-bottom-color: var(--netflix-red);
+        background: rgba(229, 9, 20, 0.15);
+    }
+
+    .modal-tab-content {
+        display: none !important;
+        width: 100%;
+    }
+
+    .modal-tab-content.active {
+        display: block !important;
+        width: 100% !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    #tab-trailer {
+        width: 100%;
+        background: #000;
+    }
+
+    #tab-trailer iframe {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 9;
+        display: block;
+    }
+
+    #tab-capa {
+        width: 100%;
+    }
+
+    #tab-capa img {
+        width: 100%;
+        display: block;
+        max-height: 400px;
         object-fit: cover;
     }
 
-    /* =========================
-       ✨ BOTÕES (mantém funcionando)
-    ========================= */
-    .card-details {
-        bottom: -65px;
-        z-index: 5;
+    #tab-info {
+        width: 100%;
+        overflow-y: auto;
+        max-height: none;
     }
 
-    /* =========================
-       ❌ BOTÃO FECHAR MODAL (CORRIGIDO)
-    ========================= */
-    .close-btn {
+    #tab-info #container-info {
         display: block !important;
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        font-size: 22px;
-        background: rgba(0,0,0,0.7);
-        border-radius: 50%;
-        padding: 6px 10px;
-        z-index: 10002; /* 👈 acima de tudo */
+    }
+
+/* 1. Mata o espaço embaixo da imagem e do vídeo */
+#modal-poster, #modal-video { 
+    display: block !important; 
+    margin: 0 !important; 
+    object-position: center 20%; /* Ajusta o foco da imagem para mostrar mais do rosto e menos do fundo */
+}
+
+/* 2. Ajusta o container do vídeo para ser um retângulo perfeito (16:9) */
+#container-video { 
+    width: 100% !important; 
+    aspect-ratio: 16 / 9 !important; 
+    background: #000 !important;
+    line-height: 0 !important; /* Remove respiro de linha de texto */
+}
+
+        /* 2. Resolve o problema da altura fixa que está esticando o modal */
+    #container-info > div:first-child {
+        height: 120px !important; /* Reduzido ainda mais para caber trailer + capa + info */
+    }
+
+/* 4. Garante que o texto dentro do modal tenha respiro, já que tiramos o padding do pai */
+#modal-title, #modal-synopsis, #modal-meta {
+    padding: 0 15px !important;
+}
+
+    /* BOTÕES LIKE E LISTA (Restaurados) */
+    .modal-mobile-actions {
+        display: flex !important;
+        justify-content: space-around !important;
+        align-items: center !important;
+        padding: 20px 10px !important;
+        background: #181818 !important;
+        border-top: 1px solid #333;
+        gap: 15px !important;
+    }
+    
+    .close-btn {
+        width: 48px !important;
+        height: 48px !important;
+        font-size: 26px !important;
+        top: 10px !important;
+        right: 10px !important;
+    }
+
+    /* VITRINE DE FILMES */
+    .movie-card { flex: 0 0 110px !important; height: 160px !important; }
+    .card-details { display: none !important; }
+
+    /* MENU NAVEGAR */
+    .nav-dropdown-mobile {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.9); z-index: 100000;
+        display: flex; justify-content: center; align-items: center;
+    }
+    .nav-dropdown-content {
+        background: #141414; width: 80%; border-radius: 10px;
+        display: flex; flex-direction: column; text-align: center;
+    }
+    .nav-dropdown-content span { padding: 15px; color: white; border-bottom: 1px solid #222; }
+
+    /* Estilização dos botões de Like/Lista */
+    .btn-icon { 
+        background: none !important; 
+        border: none !important; 
+        display: flex !important; 
+        flex-direction: column !important; 
+        align-items: center !important; 
+        gap: 6px !important; 
         cursor: pointer;
+        padding: 10px 15px !important;
+        color: white !important;
+        transition: all 0.2s ease !important;
+    }
+    
+    .btn-icon:hover {
+        color: #a855f7 !important;
+        transform: scale(1.1) !important;
+    }
+    
+    .btn-icon i { 
+        font-size: 24px !important;
+        display: block !important;
+    }
+    
+    .btn-icon span { 
+        font-size: 11px !important; 
+        color: #aaa !important;
+        white-space: nowrap !important;
     }
 
-    /* =========================
-       📦 MODAL (NÃO BLOQUEIA X)
-    ========================= */
-    .modal-content {
-        position: relative;
-        overflow: visible; /* 👈 deixa o X aparecer */
+/* Ajuste do vídeo para não ter bordas pretas */
+        
+/* 2. ACHATA O VÍDEO: Força a proporção de cinema (16:9) */
+    #container-video {
+        width: 100% !important;
+        height: auto !important; /* Mata a altura fixa que estava esticando */
+        aspect-ratio: 16 / 9 !important; 
+        background: #000;
     }
 
+    #modal-video {
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+        #modal-poster { display: block !important; } /* Remove espaço extra abaixo da imagem */
+
+        /* Ajuste da Sinopse para não ficar espremida */
+         #modal-synopsis {
+       font-size: 14px !important;
+      line-height: 1.4 !important;
+      margin-top: 10px !important;
+}
+}
+
+/* Ajuste para celulares muito pequenos */
+@media (max-width: 380px) {
+    #modal-title { font-size: 1.2rem !important; }
+    .modal-content { width: 98% !important; }
+    #container-info > div:first-child { height: 180px !important; }
+    
+    /* Botões do hero responsivos */
+    .hero-buttons {
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+    
+    .hero-buttons button {
+        width: 100%;
+        padding: 10px 16px !important;
+        font-size: 14px !important;
+    }
+}
+
+/* Deixa a rolagem do modal suave no polegar */
+.modal-content {
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Estilos para containers PC (-pc suffix) */
+#container-video-pc {
+    width: 100%;
+    height: 450px;
+    background-color: #000;
+    display: none;
+    position: relative;
+    overflow: hidden;
+}
+
+#modal-video-pc {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+    object-fit: contain;
+}
+
+#container-info-pc {
+    width: 100%;
+    display: none;
+    padding: 20px;
+}
+
+#modal-poster-pc {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 6px;
+    display: block;
+    margin: 0;
 }
