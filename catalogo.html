@@ -135,39 +135,33 @@
         </div>
     </footer>
 
+    <script src="https://www.youtube.com/iframe_api"></script>
+
     <script type="module" src="catalogo/js/main.js"></script>
 
    
-
-   <div class="modal" id="modal">
+<div class="modal" id="modal">
   <div class="modal-content">
     <span class="close-btn">&times;</span>
 
-    <div style="position: relative; line-height: 0;">
-       <img id="modal-poster" src="https://www.nationalworld.com/jpim-static/image/2023/12/09/10/57/The%20Giggle.jpg?crop=3:2,smart&trim=&width=640&quality=65" style="width:100%; height:300px; object-fit:cover; display:none;">
-       
-       <button id="inner-play" class="btn-vivid" style="position:absolute; bottom:20px; left:20px; display:none; padding:10px 20px; cursor:pointer; font-weight:bold;">ASSISTIR</button>
-
-       <iframe id="modal-video" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <div id="container-video">
+        <iframe id="modal-video" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
     </div>
 
-    <div class="modal-info">
-  <h2>Doctor Who</h2>
-  <p class="synopsis">
-    Estrelando David Tennant e Catherine Tate, a trama traz novos desafios espaciais e o retorno de rostos conhecidos, unindo o legado clássico ao futuro da franquia, agora disponível globalmente pelo Disney+.
-  </p>
-  
-  <ul class="meta-list">
-    <li><strong>Gêneros:</strong> Ficção científica, Aventura</li>
-    <li><strong>Elenco:</strong> David Tennant, Catherine Tate, Neil Patrick Harris, Ncuti Gatwa</li>
-    <li><strong>Categoria:</strong> Série</li>
-  </ul>
-</div>
+    <div id="container-info">
+        <div style="height: 350px; position: relative;">
+            <img id="modal-poster" src="" style="width:100%; height:100%; object-fit:cover;">
+            <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 60%; background: linear-gradient(transparent, #141414);"></div>
+        </div>
+        <div class="modal-info">
+            <h2 id="modal-title">Título</h2>
+            <p class="synopsis" id="modal-synopsis">Sinopse...</p>
+            <ul class="meta-list" id="modal-meta"></ul>
+        </div>
+    </div>
   </div>
 </div>
 
-
- <script src="catalogo/js/teste.js"></script>
 
 </body>
 

@@ -5,7 +5,7 @@ export const categories = [
         items: [
             {
                 title: "Doctor Who",
-                img: "https://is1-ssl.mzstatic.com/image/thumb/JDfvRSswwERxrtlXfSorfA/1200x675.jpg", top10: true, badge: "Clássico", badgeColor: "purple", progress: 40,
+                img: "https://is1-ssl.mzstatic.com/image/thumb/JDfvRSswwERxrtlXfSorfA/1200x675.jpg", top10: true, badge: "Clássico", badgeColor: "purple", progress: 0,
                 youtube: "https://www.youtube.com/watch?v=uw72J3WYxLI",
                 genero: "sci-fi",
                 id: "dr-who-special-3",
@@ -20,7 +20,7 @@ export const categories = [
                 id: "dr-who-snowmen"
             },
             {
-                img: "https://disney.images.edge.bamgrid.com/ripcut-delivery/v2/variant/disney/3fb46da1-4dbc-4926-9f24-8822aeabec0a/compose?aspectRatio=1.78&format=webp&width=1200", progress: 100,
+                img: "https://disney.images.edge.bamgrid.com/ripcut-delivery/v2/variant/disney/3fb46da1-4dbc-4926-9f24-8822aeabec0a/compose?aspectRatio=1.78&format=webp&width=1200", progress: 0,
                 youtube: "https://www.youtube.com/watch?v=P_IVeP3i7B0",
                 genero: "Aventura",
                 id: "alice-in-wonderland"
@@ -34,7 +34,7 @@ export const categories = [
                 
             },
              {
-                 img: "https://www.doctorwhotv.co.uk/wp-content/uploads/2023-disney-doctor-who.jpg", top10: true, badge: "Clássico", badgeColor: "purple", progress: 10,
+                 img: "https://www.doctorwhotv.co.uk/wp-content/uploads/2023-disney-doctor-who.jpg", top10: true, badge: "Clássico", badgeColor: "purple", progress: 0,
                 youtube: "https://www.youtube.com/watch?v=MAtI2K9Nvc0",
                 genero: "Aventura",
                 id: "dr-who-disney"
@@ -60,5 +60,36 @@ export const categories = [
             { img: "https://is1-ssl.mzstatic.com/image/thumb/Video123/v4/3b/8e/c3/3b8ec32a-9e26-2def-0168-3574637a0abc/pr_source.lsr/1200x675.jpg", top10: true, badge: "Novo episódio", badgeColor: "red", youtube: "https://www.youtube.com/watch?v=LdEcMMFrn9w" },
             { img: "https://m.media-amazon.com/images/S/pv-target-images/24ddd432723e134531db1a3881ad05c86ee6f48780a2aa104d610e023d420c24.jpg", top10: true, badge: "Novo episódio", badgeColor: "red", youtube: "https://www.youtube.com/watch?v=xGwe7D0RKWc" },
         ]
+    }
+];
+
+
+export const heroList = [
+    {
+        title: "Doctor Who",
+        description: "Estrelando David Tennant e Catherine Tate, a trama traz novos desafios espaciais...",
+        img: "https://is1-ssl.mzstatic.com/image/thumb/JDfvRSswwERxrtlXfSorfA/1200x675.jpg",
+        id: "dr-who-special-3",
+        generos: "Sci-fi, Aventura",
+        elenco: "David Tennant, Catherine Tate, Neil Patrick Harris",
+        categoria: "Filme",
+        video: "https://www.youtube.com/embed/XX8frK5Taf8?si=ZXoYuk2yiQKS7yJO"
+    },
+    {
+        title: "Alice in Wonderland",
+        description: "Alice cai em um buraco de coelho e descobre um mundo fantástico e bizarro.",
+        img: "https://disney.images.edge.bamgrid.com/ripcut-delivery/v2/variant/disney/3fb46da1-4dbc-4926-9f24-8822aeabec0a/compose?aspectRatio=1.78&format=webp&width=1200",
+        id: "alice-in-wonderland",
+        generos: "infantil, Aventura",
+        elenco: "Jhonny Depp, Mia Wasikowska, Helena Bonham Carter, Anne Hathaway",
+        categoria: "Filme",
+        video: "https://www.youtube.com/embed/Bb2FTulPpOA?si=Y8C44a6ito0elV8F"
+        
+    },
+    {
+        title: "The Thing",
+        description: "Um grupo de cientistas na Antártida é perseguido por uma criatura que muda de forma.",
+        img: "https://is1-ssl.mzstatic.com/image/thumb/Video115/v4/d2/48/96/d248963e-4bf9-980e-57b7-fe3ac363a60b/UNI_THE_THING_BR_ARTWORK_PT-BR_3840x2160_2VN7MZ000001LJ.lsr/1200x675.jpg",
+        id: "the-thing"
     }
 ];
