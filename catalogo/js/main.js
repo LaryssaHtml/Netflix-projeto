@@ -55,6 +55,7 @@ function atualizarMenuGenerosMobile(menu) {
         <span onclick="window.mudarFiltro('todos'); this.closest('.nav-dropdown-mobile').remove()">Início</span>
         <span onclick="window.mudarFiltro('series'); this.closest('.nav-dropdown-mobile').remove()">Séries</span>
         <span onclick="window.mudarFiltro('filmes'); this.closest('.nav-dropdown-mobile').remove()">Filmes</span>
+        <span onclick="window.mudarFiltro('dvd'); this.closest('.nav-dropdown-mobile').remove()">DVD</span>
         <span onclick="window.mudarFiltro('minha-lista'); this.closest('.nav-dropdown-mobile').remove()">Minha Lista</span>
         <hr style="border:none;border-top:1px solid #222;margin:8px 0;"><p style="color:gray;font-size:12px;">GÊNEROS</p>`;
     
@@ -71,9 +72,28 @@ import { getRandomElenco, getRandomClassificacao } from './utils.js';
 
 let tempoInicioAssistir = 0;
 let filmeAtualId = null;
+let heroIntervalId = null; // Armazena o intervalo do hero para pausar/retomar
 
 const normalizarTexto = (texto) => !texto ? "" : texto.toString().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
 const getPerfilData = () => ({ nome: localStorage.getItem('perfilAtivoNome') || 'default', lista: JSON.parse(localStorage.getItem(`lista_${localStorage.getItem('perfilAtivoNome') || 'default'}`)) || [], likes: JSON.parse(localStorage.getItem(`likes_${localStorage.getItem('perfilAtivoNome') || 'default'}`)) || [] });
+
+function pausarHero() {
+    if (heroIntervalId) {
+        clearInterval(heroIntervalId);
+        heroIntervalId = null;
+    }
+}
+
+function retomarHero() {
+    const heroSection = document.querySelector('.hero');
+    if (heroSection && heroList.length > 0) {
+        let heroIndex = heroList.findIndex(item => item.title === document.querySelector('.hero-title')?.textContent) || 0;
+        heroIntervalId = setInterval(() => {
+            heroIndex = (heroIndex + 1) % heroList.length;
+            if (window.atualizarHero) window.atualizarHero(heroIndex);
+        }, 15000);
+    }
+}
 
 function fecharModal() {
     const modal = document.getElementById('modal');
@@ -108,6 +128,10 @@ function fecharModal() {
     if (modalVideoTablet) modalVideoTablet.src = "";
     filmeAtualId = null;
     tempoInicioAssistir = 0;
+    
+    // Retomar hero quando modal fecha
+    retomarHero();
+    
     renderizarConteudo(document.getElementById('search-input')?.value, false);
 }
 
@@ -139,6 +163,9 @@ window.abrirModal = function(filme, modo) {
     const modal = document.getElementById('modal');
     if (!modal) return;
 
+    // Pausar hero quando modal abre
+    pausarHero();
+
     const isMobileMode = isMobile();
     const link = filme.video || filme.trailer || filme.youtube;
     const separator = link?.includes('?') ? '&' : '?';
@@ -154,36 +181,40 @@ window.abrirModal = function(filme, modo) {
     if (containerVideoPc) containerVideoPc.style.display = 'none';
     if (containerInfoPc) containerInfoPc.style.display = 'none';
     
-    if (modo === 'assistir') {
+    if (modo === 'assistir' || modo === 'info') {
         filmeAtualId = filme.id;
         tempoInicioAssistir = Date.now();
-        if (link) {
-            if (isMobileMode) {
-                mudarAbaModal('trailer');
+        
+        // No mobile, sempre começa com trailer
+        if (isMobileMode) {
+            mudarAbaModal('trailer');
+            if (link) {
                 const containerVideo = document.getElementById('container-video');
                 if (containerVideo) containerVideo.style.display = 'block';
                 const trailer = document.querySelector('#tab-trailer iframe');
-                if (trailer) trailer.src = `${link}${separator}autoplay=1&rel=0&modestbranding=1`;
-            } else {
-                if (containerVideoPc) containerVideoPc.style.display = 'block';
-                const videoPc = document.getElementById('modal-video-pc');
-                if (videoPc) videoPc.src = `${link}${separator}autoplay=1&rel=0&modestbranding=1`;
+                if (trailer) {
+                    // Otimizar carregamento do trailer: usar YouTube com parâmetros e permissão de autoplay
+                    trailer.src = `${link}${separator}autoplay=1&rel=0&modestbranding=1&fs=1&controls=1`;
+                }
             }
-        } else alert("Vídeo indisponível.");
-    } else {
-        if (isMobileMode) {
-            mudarAbaModal('info');
+            // Preencher informações no background (tab-info)
             const capa = document.getElementById('modal-poster-capa');
             if (capa) capa.src = filme.imgVertical || filme.img;
+            preencherModalInfo(filme, true);
         } else {
-            if (containerInfoPc) containerInfoPc.style.display = 'block';
-            const poster = document.getElementById('modal-poster-pc');
-            if (poster) poster.src = filme.imgVertical || filme.img;
-        }
-        preencherModalInfo(filme, isMobileMode);
-        if (isMobileMode) {
-            const poster = document.getElementById('modal-poster');
-            if (poster) poster.src = filme.imgVertical || filme.img;
+            // No PC, comportamento original
+            if (modo === 'assistir') {
+                if (containerVideoPc) containerVideoPc.style.display = 'block';
+                if (link) {
+                    const videoPc = document.getElementById('modal-video-pc');
+                    if (videoPc) videoPc.src = `${link}${separator}autoplay=1&rel=0&modestbranding=1&fs=1&controls=1`;
+                }
+            } else {
+                if (containerInfoPc) containerInfoPc.style.display = 'block';
+                const poster = document.getElementById('modal-poster-pc');
+                if (poster) poster.src = filme.imgVertical || filme.img;
+            }
+            preencherModalInfo(filme, false);
         }
     }
 };
@@ -240,9 +271,9 @@ document.addEventListener('DOMContentLoaded', () => {
             box.innerHTML = `
                 <div class="nav-dropdown-content">
                     <span onclick="mudarFiltro('todos'); this.parentElement.parentElement.remove()">Início</span>
-                    <span onclick="mudarFiltro('série'); this.parentElement.parentElement.remove()">Séries</span>
-                    <span onclick="mudarFiltro('filme'); this.parentElement.parentElement.remove()">Filmes</span>
-                    <span onclick="this.parentElement.parentElement.remove()">Bombando</span>
+                    <span onclick="mudarFiltro('series'); this.parentElement.parentElement.remove()">Séries</span>
+                    <span onclick="mudarFiltro('filmes'); this.parentElement.parentElement.remove()">Filmes</span>
+                    <span onclick="mudarFiltro('dvd'); this.parentElement.parentElement.remove()">DVD</span>
                     <span onclick="mudarFiltro('minha-lista'); this.parentElement.parentElement.remove()">Minha Lista</span>
                 </div>
             `;
@@ -278,27 +309,40 @@ document.addEventListener('DOMContentLoaded', () => {
     const heroSection = document.querySelector('.hero');
     if (heroSection && heroList.length > 0) {
         let heroIndex = 0; 
-        const atualizarHero = (index) => {
+        const atualizarHero = window.atualizarHero = (index) => {
             const item = heroList[index];
             if (!item) return;
-            heroSection.style.transition = "opacity 0.8s ease";
-            heroSection.style.opacity = '0.3'; 
-            setTimeout(() => {
+            
+            // Só faz fade se já tem conteúdo (troca de filme)
+            if (heroSection.style.backgroundImage && heroSection.textContent) {
+                heroSection.style.transition = "opacity 0.6s ease";
+                heroSection.style.opacity = '0.2';
+                
+                setTimeout(() => {
+                    const imgHero = (isMobile() && item.imgVertical) ? item.imgVertical : item.img;
+                    heroSection.style.backgroundImage = `linear-gradient(to top, #111 10%, transparent 90%), url('${imgHero}')`;
+                    heroSection.style.transition = "opacity 0.6s ease";
+                    heroSection.style.opacity = '1';
+                }, 600);
+            } else {
+                // Primeira vez: não faz fade
                 const imgHero = (isMobile() && item.imgVertical) ? item.imgVertical : item.img;
                 heroSection.style.backgroundImage = `linear-gradient(to top, #111 10%, transparent 90%), url('${imgHero}')`;
-                const hTitle = document.querySelector('.hero-title');
-                const hDesc = document.querySelector('.hero-description');
-                if (hTitle) hTitle.textContent = item.title;
-                if (hDesc) hDesc.textContent = item.description;
-                const btnPlay = document.querySelector('.btn-play');
-                const btnInfo = document.querySelector('.btn-info');
-                if (btnPlay) btnPlay.onclick = () => window.abrirModal(item, 'assistir');
-                if (btnInfo) btnInfo.onclick = () => window.abrirModal(item, 'info');
                 heroSection.style.opacity = '1';
-            }, 800);
+                heroSection.style.transition = 'none';
+            }
+            
+            const hTitle = document.querySelector('.hero-title');
+            const hDesc = document.querySelector('.hero-description');
+            if (hTitle) hTitle.textContent = item.title;
+            if (hDesc) hDesc.textContent = item.description;
+            const btnPlay = document.querySelector('.btn-play');
+            const btnInfo = document.querySelector('.btn-info');
+            if (btnPlay) btnPlay.onclick = () => window.abrirModal(item, 'assistir');
+            if (btnInfo) btnInfo.onclick = () => window.abrirModal(item, 'info');
         };
         atualizarHero(heroIndex);
-        setInterval(() => {
+        heroIntervalId = setInterval(() => {
             heroIndex = (heroIndex + 1) % heroList.length;
             atualizarHero(heroIndex);
         }, 15000);
@@ -364,7 +408,23 @@ function renderizarConteudo(filtroBusca = "", deveRolar = true) {
         if(itensLista.length > 0) container.appendChild(createCarousel({ title: "Minha Lista", items: itensLista }));
     }
 
+    // Se filtro for "dvd", mostrar apenas coleção DVD
+    if (interesseAtual === 'dvd') {
+        const dvdCategory = categories.find(cat => cat.title && normalizarTexto(cat.title).includes('dvd'));
+        console.log('DVD - Procurando categoria:', dvdCategory?.title, 'Items:', dvdCategory?.items?.length);
+        if (dvdCategory && dvdCategory.items.length > 0) {
+            container.appendChild(createCarousel(dvdCategory));
+            realizarScroll();
+        } else {
+            container.innerHTML = `<div class="no-results-container"><div class="no-results-content"><i class="fas fa-disc"></i><h2>Nenhum DVD disponível</h2><p>Confira as outras categorias!</p></div></div>`;
+        }
+        return;
+    }
+
     categories.forEach(cat => {
+        // Excluir categoria DVD da renderização geral (mostrar apenas quando filtro for 'dvd')
+        if (cat.title && normalizarTexto(cat.title).includes('dvd')) return;
+        
         const filtrados = cat.items.filter(item => {
             if (!item) return false;
             let passaPrivacidade = !item.perfil || (item.perfil.toLowerCase() === nomePerfil.toLowerCase());
@@ -398,6 +458,7 @@ const StorageMgr = {
 // 4. FUNÇÕES GLOBAIS
 window.toggleLike = (id, btn) => {
     let likes = StorageMgr.getLikes();
+    const filme = categories.flatMap(c => c.items).find(i => i.id === id);
     if (likes.includes(id)) { 
         likes = likes.filter(i => i !== id); 
         btn.style.setProperty('color', 'white', 'important');
@@ -405,7 +466,15 @@ window.toggleLike = (id, btn) => {
     else { 
         likes.push(id); 
         btn.style.setProperty('color', '#a855f7', 'important');
-        animacaoLikeSocial(btn); 
+        animacaoLikeSocial(btn);
+        // Notificar quando dá like
+        if (filme) {
+            adicionarNotificacao(
+                '❤️ Você classificou',
+                `"${filme.title}" foi classificado!`,
+                'fa-thumbs-up'
+            );
+        }
     }
     StorageMgr.setLikes(likes);
 };
@@ -413,12 +482,51 @@ window.toggleLike = (id, btn) => {
 window.toggleMinhaLista = (id, btn) => {
     let lista = StorageMgr.getLista();
     const icon = btn.querySelector('i');
-    if (lista.includes(id)) { lista = lista.filter(i => i !== id); if(icon) icon.className = 'fas fa-plus'; }
-    else { lista.push(id); if(icon) icon.className = 'fas fa-check'; }
+    const filme = categories.flatMap(c => c.items).find(i => i.id === id);
+    let adicionou = false;
+    if (lista.includes(id)) { 
+        lista = lista.filter(i => i !== id); 
+        if(icon) icon.className = 'fas fa-plus'; 
+    } else { 
+        lista.push(id); 
+        if(icon) icon.className = 'fas fa-check'; 
+        adicionou = true;
+        // Notificar quando adiciona à lista
+        if (filme) {
+            adicionarNotificacao(
+                '✓ Adicionado com sucesso',
+                `"${filme.title}" foi adicionado à sua lista!`,
+                'fa-list'
+            );
+        }
+    }
     StorageMgr.setLista(lista);
+    
+    // Mostrar notificação se adicionou
+    if (adicionou) {
+        mostrarNotificacaoLista();
+    }
+};
+
+// Função para mostrar notificação de "Adicionado à lista"
+window.mostrarNotificacaoLista = () => {
+    const notif = document.createElement('div');
+    notif.className = 'notificacao-lista';
+    notif.innerHTML = `<i class="fas fa-check"></i> <span>Adicionado a sua lista!</span>`;
+    document.body.appendChild(notif);
+    
+    // Aparecer com animação
+    setTimeout(() => notif.classList.add('visible'), 10);
+    
+    // Desaparecer após 3 segundos
+    setTimeout(() => {
+        notif.classList.remove('visible');
+        setTimeout(() => notif.remove(), 300);
+    }, 3000);
 };
 // 1. Função global de filtro (Conserta o scroll do PC)
 window.mudarFiltro = (g) => {
+    console.log('Mudando filtro para:', g);
     localStorage.setItem(`interesse_${localStorage.getItem('perfilAtivoNome')}`, g);
     renderizarConteudo("", true);
     setTimeout(() => {
@@ -454,8 +562,22 @@ document.addEventListener('DOMContentLoaded', () => { setupMobileMenu(); });
 window.toggleSearch = () => {
     const box = document.querySelector('.search-box');
     const input = document.getElementById('search-input');
+    const navSelect = document.querySelector('.mobile-nav-select');
     box.classList.toggle('active');
-    if (box.classList.contains('active')) input.focus();
+    if (box.classList.contains('active')) {
+        input.focus();
+        // Esconder "Navegar" quando pesquisa abre no mobile (com !important para override do CSS)
+        if (navSelect && window.innerWidth <= 768) {
+            navSelect.style.setProperty('display', 'none', 'important');
+            navSelect.style.setProperty('visibility', 'hidden', 'important');
+        }
+    } else {
+        // Mostrar "Navegar" quando pesquisa fecha
+        if (navSelect && window.innerWidth <= 768) {
+            navSelect.style.setProperty('display', 'flex', 'important');
+            navSelect.style.setProperty('visibility', 'visible', 'important');
+        }
+    }
 };
 
 window.executarBusca = () => { const input = document.getElementById('search-input'); if (input) renderizarConteudo(input.value, true); };
@@ -464,9 +586,15 @@ document.getElementById('search-input')?.addEventListener('input', () => window.
 document.getElementById('search-input')?.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
         const box = document.querySelector('.search-box');
+        const navSelect = document.querySelector('.mobile-nav-select');
         box.classList.remove('active');
         box.querySelector('input').value = '';
         renderizarConteudo('', false);
+        // Mostrar "Navegar" novamente
+        if (navSelect && window.innerWidth <= 768) {
+            navSelect.style.setProperty('display', 'flex', 'important');
+            navSelect.style.setProperty('visibility', 'visible', 'important');
+        }
     }
 });
 
@@ -474,34 +602,32 @@ document.getElementById('search-input')?.addEventListener('keydown', (e) => {
 // SISTEMA DE NOTIFICAÇÕES 🔔
 // ============================================================================
 
-// 📦 ARRAY DE NOTIFICAÇÕES - Aqui ficam armazenadas as notificações
-// EDITE ESTE ARRAY PARA MUDAR AS NOTIFICAÇÕES PADRÃO:
-let notificacoes = JSON.parse(localStorage.getItem('notificacoes_app')) || [
-    {
-        id: 1,
-        titulo: "Novo episódio disponível!",
-        mensagem: "The Crown - Temporada 5 já está disponível",
-        icone: "fa-star",  // 🎬 Ícone mostrado na notificação
-        lido: false,       // false = não lido (mostrar badge)
-        tempo: "Há 2 horas"
-    },
-    {
-        id: 2,
-        titulo: "Recomendação personalizada",
-        mensagem: "Você pode gostar de 'Stranger Things'",
-        icone: "fa-heart",
-        lido: false,
-        tempo: "Há 5 horas"
-    },
-    {
-        id: 3,
-        titulo: "Filme chegando em breve",
-        mensagem: "O episódio final sai em 3 dias!",
-        icone: "fa-calendar",
-        lido: true,  // true = já foi lido (sem badge)
-        tempo: "Há 1 dia"
+// 📦 Gerar notificações automáticas de novos filmes do data.js
+function gerarNotificacoesAutomaticas() {
+    const todosFilmes = categories.flatMap(cat => cat.items);
+    const filmesComBadge = todosFilmes.filter(f => f.badge && (f.badge.toLowerCase().includes('novo') || f.badge.toLowerCase().includes('novidade')));
+    
+    filmesComBadge.forEach(filme => {
+        if (!localStorage.getItem(`notif_seen_${filme.id}`)) {
+            adicionarNotificacao(
+                `🎬 ${filme.badge.toUpperCase()}`,
+                `${filme.title} já está disponível!`,
+                'fa-film'
+            );
+            localStorage.setItem(`notif_seen_${filme.id}`, 'true');
+        }
+    });
+}
+
+// 📦 ARRAY DE NOTIFICAÇÕES
+let notificacoes = JSON.parse(localStorage.getItem('notificacoes_app')) || [];
+
+// Gerar notificações ao carregar a página
+document.addEventListener('DOMContentLoaded', () => {
+    if (notificacoes.length === 0) {
+        gerarNotificacoesAutomaticas();
     }
-];
+});
 
 /** 
  * 💾 SALVA AS NOTIFICAÇÕES NO localStorage
@@ -535,6 +661,13 @@ function atualizarBadgeNotificacoes() {
  * 📋 RENDERIZA O DROPDOWN COM TODAS AS NOTIFICAÇÕES
  * Cria o HTML de cada notificação quando o usuário clica no sino
  */
+function limparTodosNotificacoes() {
+    notificacoes = [];
+    StorageMgr.set('notificacoes', []);
+    renderizarNotificacoes();
+    atualizarBadgeNotificacoes();
+}
+
 function renderizarNotificacoes() {
     const dropdown = document.querySelector('.notification-dropdown');
     if (!dropdown) return;
@@ -542,7 +675,12 @@ function renderizarNotificacoes() {
     // CABEÇALHO DO DROPDOWN
     let html = `<div class="notification-header">
         <span>Notificações</span>
-        <button onclick="marcarTodasComoLidas()">Marcar tudo como lido</button>
+        <div class="notification-header-buttons">
+            <button onclick="marcarTodasComoLidas()" title="Marcar tudo como lido">Marcar tudo como lido</button>
+            <button onclick="limparTodosNotificacoes()" title="Limpar todas as notificações" class="btn-delete-notifications">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
     </div>`;
 
     // SE NÃO HÁ NOTIFICAÇÕES
@@ -556,7 +694,7 @@ function renderizarNotificacoes() {
         notificacoes.forEach(notif => {
             // Se não foi lida, adiciona classe 'unread' que muda a cor de fundo
             const classe = notif.lido ? '' : 'unread';
-            html += `<div class="notification-item ${classe}" onclick="abrirNotificacao(${notif.id})">
+            html += `<div class="notification-item ${classe}" data-id="${notif.id}" onclick="abrirNotificacao(${notif.id})">
                 <div class="notification-icon">
                     <i class="fas ${notif.icone}"></i>
                 </div>
@@ -565,15 +703,43 @@ function renderizarNotificacoes() {
                     <div class="notification-text">${notif.mensagem}</div>
                     <div class="notification-time">${notif.tempo}</div>
                 </div>
+                <button class="notification-delete-btn" data-id="${notif.id}" title="Excluir notificação">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>`;
         });
     }
 
     dropdown.innerHTML = html;
+    
+    // Adicionar event listeners para botões de exclusão
+    document.querySelectorAll('.notification-delete-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const id = parseInt(this.getAttribute('data-id'));
+            excluirNotificacao(id);
+        });
+    });
 }
 
 /** 
- * 🔔 ABRE/FECHA O DROPDOWN DE NOTIFICAÇÕES
+ * �️ EXCLUI UMA NOTIFICAÇÃO ESPECÍFICA
+ * Removido do array de notificações quando usuário clica no X
+ * 
+ * @param {number} id - ID da notificação a excluir
+ */
+function excluirNotificacao(id) {
+    // Remover a notificação do array
+    notificacoes = notificacoes.filter(n => n.id !== id);
+    
+    // Salvar e atualizar UI
+    salvarNotificacoes();
+    atualizarBadgeNotificacoes();
+    renderizarNotificacoes();
+}
+
+/** 
+ * �🔔 ABRE/FECHA O DROPDOWN DE NOTIFICAÇÕES
  * Chamada quando clica no sino
  */
 function toggleNotificacoes() {
