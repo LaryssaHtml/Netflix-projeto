@@ -1005,6 +1005,7 @@ footer {
     position: relative;
     display: inline-block;
     margin-left: 20px;
+    padding-bottom: 10px;
 }
 
 /* O Botão principal */
@@ -1020,6 +1021,8 @@ footer {
     align-items: center;
     gap: 8px;
     transition: 0.3s;
+    position: relative;
+    z-index: 1001;
 }
 
 .genre-button:hover {
@@ -1030,11 +1033,36 @@ footer {
 .genre-content {
     display: none; /* Escondido por padrão */
     position: absolute;
-    background-color: rgba(0, 0, 0, 0.9);
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
-    border: 1px solid rgba(255,255,255,0.1);
+    background-color: rgba(0, 0, 0, 0.95);
+    min-width: 220px;
+    max-height: 420px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-shadow: 0px 12px 24px rgba(0,0,0,0.7);
+    border: 1px solid rgba(255,255,255,0.15);
     z-index: 1000;
+    top: 40px;
+    left: 0;
+    border-radius: 6px;
+}
+
+/* Scrollbar Styling */
+.genre-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.genre-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.genre-content::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.3);
+    border-radius: 4px;
+    transition: background 0.2s ease;
+}
+
+.genre-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,0.5);
 }
 
 /* Links dentro do menu */
@@ -1044,12 +1072,14 @@ footer {
     text-decoration: none;
     display: block;
     font-size: 13px;
-    transition: 0.2s;
+    transition: all 0.2s ease;
+    white-space: nowrap;
 }
 
 .genre-content a:hover {
-    background-color: rgba(255,255,255,0.1);
+    background-color: rgba(141, 9, 229, 0.3);
     color: white;
+    padding-left: 20px;
 }
 
 /* Mostra o menu quando passa o mouse */
@@ -1057,23 +1087,22 @@ footer {
     display: block;
 }
 
+/* Manter menu visível quando hover no conteúdo */
+.genre-content:hover {
+    display: block !important;
+}
+
 /* Estilo para marcar qual está ativo */
 .genre-content a.active {
     color: white;
     font-weight: bold;
-    background-color: rgba(255,255,255,0.05);
+    background-color: rgba(112, 9, 229, 0.2);
 }
 
 /* Quando o mouse passa no menu, o botão ganha destaque */
 .genre-menu:hover .genre-button {
     background: rgba(212, 13, 252, 0.1);
     border-radius: 4px;
-    padding: 5px 10px;
-}
-
-/* Efeito de transição suave nos links do menu */
-.genre-content a {
-    transition: all 0.2s ease-in-out;
 }
 
 /* Container da busca */
@@ -1091,7 +1120,7 @@ footer {
 .search-box.active {
     background: rgba(255, 255, 255, 0.15);
     border: 2px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 0 20px rgba(229, 9, 20, 0.3);
+    box-shadow: 0 0 20px rgba(112, 9, 229, 0.3);
 }
 
 /* O campo de texto */
@@ -1242,13 +1271,13 @@ footer {
 
     .modal-tab-btn:hover {
         color: white;
-        background: rgba(229, 9, 20, 0.1);
+        background: rgba(192, 9, 229, 0.1);
     }
 
     .modal-tab-btn.active {
         color: white;
         border-bottom-color: var(--netflix-red);
-        background: rgba(229, 9, 20, 0.15);
+        background: rgba(141, 9, 229, 0.15);
     }
 
     .modal-tab-content {
@@ -1343,18 +1372,74 @@ footer {
     /* VITRINE DE FILMES */
     .movie-card { flex: 0 0 110px !important; height: 160px !important; }
     .card-details { display: none !important; }
+    
+    /* MOSTRAR GÊNEROS NO MOBILE */
+    .card-details.mobile-genre-visible {
+        display: flex !important;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.7));
+        padding: 8px;
+        height: auto;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+    
+    .card-details.mobile-genre-visible .details-buttons { display: none !important; }
+    .card-details.mobile-genre-visible .details-info { display: none !important; }
+    
+    .card-details.mobile-genre-visible .details-tags {
+        display: flex !important;
+        gap: 4px;
+        font-size: 10px;
+        color: #b3b3b3;
+        margin-top: 0;
+        flex-wrap: wrap;
+    }
+    
+    .card-details.mobile-genre-visible .details-tags span:not(:last-child)::after {
+        content: "•";
+        color: #666;
+        margin-left: 4px;
+    }
 
     /* MENU NAVEGAR */
     .nav-dropdown-mobile {
         position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(0,0,0,0.9); z-index: 100000;
-        display: flex; justify-content: center; align-items: center;
+        background: rgba(0,0,0,0.85); z-index: 100000;
+        display: flex; justify-content: center; align-items: flex-start; padding-top: 20px;
+        animation: slideIn 0.3s ease;
+    }
+    @keyframes slideIn {
+        from { background: rgba(0,0,0,0); }
+        to { background: rgba(0,0,0,0.85); }
     }
     .nav-dropdown-content {
-        background: #141414; width: 80%; border-radius: 10px;
+        background: #141414; width: 90%; max-height: calc(100vh - 60px); border-radius: 12px;
         display: flex; flex-direction: column; text-align: center;
+        overflow-y: auto; overflow-x: hidden;
+        box-shadow: 0 15px 50px rgba(0,0,0,0.9);
     }
-    .nav-dropdown-content span { padding: 15px; color: white; border-bottom: 1px solid #222; }
+    .nav-dropdown-content p {
+        margin: 10px 0 6px 0;
+        padding: 6px 0;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .nav-dropdown-content span { 
+        padding: 13px 16px; color: white; border-bottom: 1px solid #222;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        font-size: 14px;
+    }
+    .nav-dropdown-content span:hover { 
+        background: rgba(203, 9, 229, 0.15);
+        color: var(--netflix-red);
+    }
+    .nav-dropdown-content hr { margin: 6px 0; border: none; border-top: 1px solid #222; }
 
     /* Estilização dos botões de Like/Lista */
     .btn-icon { 

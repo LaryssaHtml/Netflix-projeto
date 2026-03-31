@@ -83,6 +83,11 @@ export function createCard(item) {
     `;
     card.appendChild(details);
 
+    // Adicionar classe para mostrar gêneros no mobile
+    if (window.innerWidth <= 768) {
+        details.classList.add('mobile-genre-visible');
+    }
+
     const btnPlayCard = details.querySelector('.btn-play-icon');
     const btnInfoCard = details.querySelector('.btn-info-icon');
     

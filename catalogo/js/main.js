@@ -3,6 +3,69 @@ function isMobile() {
 }
 
 import { categories, heroList } from './data.js';
+
+// FUNÇÃO: Extrair gêneros únicos do data.js
+function extrairGenerosUnicos() {
+    const generosSet = new Set();
+    categories.forEach(cat => {
+        cat.items.forEach(item => {
+            if (item.genero) {
+                // Separar por vírgula primeiro
+                let generos = item.genero.split(',').map(g => g.trim());
+                // Se houver espaços após a normalização, considerar também como separador
+                generos = generos.flatMap(g => {
+                    // Se houver vírgula, mantém como está
+                    // Se não houver vírgula mas tiver espaço, pode ser múltiplos gêneros
+                    if (!item.genero.includes(',') && g.includes(' ')) {
+                        return g.split(' ').map(s => s.trim()).filter(s => s);
+                    }
+                    return [g];
+                });
+                generos.forEach(g => {
+                    if (g) generosSet.add(g.toLowerCase());
+                });
+            }
+        });
+    });
+    return Array.from(generosSet).sort();
+}
+
+// FUNÇÃO: Atualizar menu de gêneros no PC
+function atualizarMenuGenerosPC() {
+    const generos = extrairGenerosUnicos();
+    const genreContent = document.querySelector('.genre-content');
+    if (!genreContent) return;
+    
+    genreContent.innerHTML = `<a href="#" onclick="mudarFiltro('todos')">Tudo</a>`;
+    generos.forEach(genero => {
+        const link = document.createElement('a');
+        link.href = '#';
+        link.textContent = genero.charAt(0).toUpperCase() + genero.slice(1);
+        link.onclick = () => { mudarFiltro(genero); return false; };
+        genreContent.appendChild(link);
+    });
+}
+
+// FUNÇÃO: Atualizar menu de gêneros no Mobile
+function atualizarMenuGenerosMobile(menu) {
+    const generos = extrairGenerosUnicos();
+    let html = `<div class="nav-dropdown-content">
+        <span style="color:red;font-weight:bold;border-bottom:2px solid rgba(229,9,20,0.5);position:sticky;top:0;background:#141414;z-index:2;" onclick="this.closest('.nav-dropdown-mobile').remove()">✕ FECHAR</span>
+        <p style="color:gray;font-size:12px;">NAVEGAR</p>
+        <span onclick="window.mudarFiltro('todos'); this.closest('.nav-dropdown-mobile').remove()">Início</span>
+        <span onclick="window.mudarFiltro('series'); this.closest('.nav-dropdown-mobile').remove()">Séries</span>
+        <span onclick="window.mudarFiltro('filmes'); this.closest('.nav-dropdown-mobile').remove()">Filmes</span>
+        <span onclick="window.mudarFiltro('minha-lista'); this.closest('.nav-dropdown-mobile').remove()">Minha Lista</span>
+        <hr style="border:none;border-top:1px solid #222;margin:8px 0;"><p style="color:gray;font-size:12px;">GÊNEROS</p>`;
+    
+    generos.forEach(genero => {
+        const genCapitalizado = genero.charAt(0).toUpperCase() + genero.slice(1);
+        html += `<span onclick="window.mudarFiltro('${genero}'); this.closest('.nav-dropdown-mobile').remove()">${genCapitalizado}</span>`;
+    });
+    
+    html += `</div>`;
+    menu.innerHTML = html;
+}
 import { createCarousel } from './components/Carousel.js';
 import { getRandomElenco, getRandomClassificacao } from './utils.js';
 
@@ -240,6 +303,10 @@ document.addEventListener('DOMContentLoaded', () => {
             atualizarHero(heroIndex);
         }, 15000);
     }
+    
+    // Atualizar menus de gêneros
+    atualizarMenuGenerosPC();
+    
     renderizarConteudo();
 });
 
@@ -274,7 +341,25 @@ function renderizarConteudo(filtroBusca = "", deveRolar = true) {
     }
 
     const listaIds = JSON.parse(localStorage.getItem(`lista_${nomePerfil}`)) || [];
-    if (listaIds.length > 0 && (interesseAtual === 'todos' || interesseAtual === 'minha-lista')) {
+    
+    // Se filtro for "minha-lista", só mostrar itens da lista
+    if (interesseAtual === 'minha-lista') {
+        if (listaIds.length > 0) {
+            const itensLista = categories.flatMap(cat => cat.items).filter(item => item && item.id && listaIds.includes(item.id));
+            if(itensLista.length > 0) {
+                container.appendChild(createCarousel({ title: "Minha Lista", items: itensLista }));
+                realizarScroll();
+            } else {
+                container.innerHTML = `<div class="no-results-container"><div class="no-results-content"><i class="fas fa-heart"></i><h2>Sua lista está vazia</h2><p>Comece a adicionar filmes e séries à sua lista!</p></div></div>`;
+            }
+        } else {
+            container.innerHTML = `<div class="no-results-container"><div class="no-results-content"><i class="fas fa-heart"></i><h2>Sua lista está vazia</h2><p>Comece a adicionar filmes e séries à sua lista!</p></div></div>`;
+        }
+        return;
+    }
+    
+    // Mostrar minha lista apenas quando filtro for "todos"
+    if (listaIds.length > 0 && interesseAtual === 'todos') {
         const itensLista = categories.flatMap(cat => cat.items).filter(item => item && item.id && listaIds.includes(item.id));
         if(itensLista.length > 0) container.appendChild(createCarousel({ title: "Minha Lista", items: itensLista }));
     }
@@ -283,7 +368,19 @@ function renderizarConteudo(filtroBusca = "", deveRolar = true) {
         const filtrados = cat.items.filter(item => {
             if (!item) return false;
             let passaPrivacidade = !item.perfil || (item.perfil.toLowerCase() === nomePerfil.toLowerCase());
-            let passaInteresse = (interesseAtual === 'todos' || (item.genero && normalizarTexto(item.genero) === normalizarTexto(interesseAtual)));
+            let passaInteresse = false;
+            
+            if (interesseAtual === 'todos') {
+                passaInteresse = true;
+            } else if (interesseAtual === 'serie' || interesseAtual === 'series' || interesseAtual === 'série') {
+                passaInteresse = item.tipo && normalizarTexto(item.tipo) === 'serie';
+            } else if (interesseAtual === 'filme' || interesseAtual === 'filmes') {
+                passaInteresse = item.tipo && normalizarTexto(item.tipo) === 'filme';
+            } else {
+                // Filtro por gênero - busca parcial/includes
+                passaInteresse = item.genero && normalizarTexto(item.genero).includes(normalizarTexto(interesseAtual));
+            }
+            
             return passaPrivacidade && passaInteresse;
         });
         if (filtrados.length > 0) container.appendChild(createCarousel({ ...cat, items: filtrados }));
@@ -342,13 +439,7 @@ const setupMobileMenu = () => {
         if (existing) { existing.remove(); return; }
         const menu = document.createElement('div');
         menu.className = 'nav-dropdown-mobile';
-        menu.innerHTML = `<div class="nav-dropdown-content"><p style="color:gray;font-size:12px;">NAVEGAR</p>
-            <span onclick="window.mudarFiltro('todos')">Início</span><span onclick="window.mudarFiltro('series')">Séries</span>
-            <span onclick="window.mudarFiltro('filmes')">Filmes</span><span onclick="window.mudarFiltro('minha-lista')">Minha Lista</span>
-            <hr style="border:none;border-top:1px solid #333;margin:10px 0;"><p style="color:gray;font-size:12px;">GÊNEROS</p>
-            <span onclick="window.mudarFiltro('sci-fi')">Sci-Fi</span><span onclick="window.mudarFiltro('aventura')">Aventura</span>
-            <span onclick="window.mudarFiltro('romance')">Romance</span><span onclick="window.mudarFiltro('terror')">Terror</span>
-            <span style="color:red;margin-top:10px;font-weight:bold;" onclick="this.parentElement.parentElement.remove()">SAIR</span></div>`;
+        atualizarMenuGenerosMobile(menu);
         document.body.appendChild(menu);
         menu.onclick = (ev) => { if (ev.target === menu) menu.remove(); };
     };
