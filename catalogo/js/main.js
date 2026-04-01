@@ -50,23 +50,33 @@ function atualizarMenuGenerosPC() {
 function atualizarMenuGenerosMobile(menu) {
     const generos = extrairGenerosUnicos();
     let html = `<div class="nav-dropdown-content">
-        <span style="color:red;font-weight:bold;border-bottom:2px solid rgba(229,9,20,0.5);position:sticky;top:0;background:#141414;z-index:2;" onclick="this.closest('.nav-dropdown-mobile').remove()">✕ FECHAR</span>
-        <p style="color:gray;font-size:12px;">NAVEGAR</p>
-        <span onclick="window.mudarFiltro('todos'); this.closest('.nav-dropdown-mobile').remove()">Início</span>
-        <span onclick="window.mudarFiltro('series'); this.closest('.nav-dropdown-mobile').remove()">Séries</span>
-        <span onclick="window.mudarFiltro('filmes'); this.closest('.nav-dropdown-mobile').remove()">Filmes</span>
-        <span onclick="window.mudarFiltro('dvd'); this.closest('.nav-dropdown-mobile').remove()">DVD</span>
-        <span onclick="window.mudarFiltro('minha-lista'); this.closest('.nav-dropdown-mobile').remove()">Minha Lista</span>
-        <hr style="border:none;border-top:1px solid #222;margin:8px 0;"><p style="color:gray;font-size:12px;">GÊNEROS</p>`;
+        <span style="color:#a855f7;font-weight:bold;border-bottom:2px solid rgba(168,85,247,0.5);position:sticky;top:0;background:#141414;z-index:2;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;"><i class="fas fa-filter"></i><span>FILTROS</span><span onclick="this.closest('.nav-dropdown-mobile').remove()" style="cursor:pointer;color:red;font-size:18px;">✕</span></span>
+        <p style="color:white;font-size:11px;font-weight:600;padding:14px 16px 8px;text-transform:uppercase;letter-spacing:0.5px;">Categorias</p>
+        <span onclick="window.mudarFiltro('dvd'); this.closest('.nav-dropdown-mobile').remove()" style="padding:12px 16px;color:#b3b3b3;cursor:pointer;transition:all 0.2s;display:block;border-bottom:1px solid #222;">DVD</span>
+        <span onclick="window.mudarFiltro('bombando'); this.closest('.nav-dropdown-mobile').remove()" style="padding:12px 16px;color:#b3b3b3;cursor:pointer;transition:all 0.2s;display:block;border-bottom:1px solid #222;">Bombando</span>
+        <span onclick="window.mudarFiltro('minha-lista'); this.closest('.nav-dropdown-mobile').remove()" style="padding:12px 16px;color:#b3b3b3;cursor:pointer;transition:all 0.2s;display:block;border-bottom:1px solid #222;">Minha Lista</span>
+        <p style="color:white;font-size:11px;font-weight:600;padding:14px 16px 8px;text-transform:uppercase;letter-spacing:0.5px;">Gêneros</p>`;
     
     generos.forEach(genero => {
         const genCapitalizado = genero.charAt(0).toUpperCase() + genero.slice(1);
-        html += `<span onclick="window.mudarFiltro('${genero}'); this.closest('.nav-dropdown-mobile').remove()">${genCapitalizado}</span>`;
+        html += `<span onclick="window.mudarFiltro('${genero}'); this.closest('.nav-dropdown-mobile').remove()" style="padding:12px 16px;color:#b3b3b3;cursor:pointer;transition:all 0.2s;display:block;border-bottom:1px solid #222;">${genCapitalizado}</span>`;
     });
     
     html += `</div>`;
     menu.innerHTML = html;
 }
+
+// FUNÇÃO: Mostrar menu de gêneros do mobile (chamada pelo bottom nav)
+window.mostrarGeneros = function() {
+    const box = document.createElement('div');
+    box.className = 'nav-dropdown-mobile';
+    const menu = document.createElement('div');
+    atualizarMenuGenerosMobile(menu);
+    box.appendChild(menu);
+    document.body.appendChild(box);
+    box.onclick = (e) => { if(e.target === box) box.remove(); };
+};
+
 import { createCarousel } from './components/Carousel.js';
 import { getRandomElenco, getRandomClassificacao } from './utils.js';
 

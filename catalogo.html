@@ -140,6 +140,30 @@
         </div>
     </footer>
 
+    <!-- Bottom Navigation (Mobile Only) -->
+    <nav class="bottom-nav" id="bottom-nav">
+        <button class="nav-bottom-item" onclick="mudarFiltro('todos')">
+            <i class="fas fa-home"></i>
+            <span>Início</span>
+        </button>
+        <button class="nav-bottom-item" onclick="mudarFiltro('series')">
+            <i class="fas fa-tv"></i>
+            <span>Séries</span>
+        </button>
+        <button class="nav-bottom-item" onclick="mudarFiltro('filmes')">
+            <i class="fas fa-film"></i>
+            <span>Filmes</span>
+        </button>
+        <button class="nav-bottom-item" onclick="mudarFiltro('minha-lista')">
+            <i class="fas fa-heart"></i>
+            <span>Minha Lista</span>
+        </button>
+        <button class="nav-bottom-item" onclick="mostrarGeneros()">
+            <i class="fas fa-bars"></i>
+            <span>Gêneros</span>
+        </button>
+    </nav>
+
     <script src="https://www.youtube.com/iframe_api"></script>
 
     <script type="module" src="catalogo/js/main.js"></script>

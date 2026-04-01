@@ -11,9 +11,12 @@ export function createCard(item) {
     
     const estaNaLista = listaIds.includes(item.id);
     const deuLike = likesIds.includes(item.id);
+    
+    // Detectar se é DVD
+    const isDVD = item.id && item.id.toLowerCase().startsWith('dvd-');
 
     const card = document.createElement('div');
-    card.className = 'movie-card';
+    card.className = isDVD ? 'movie-card dvd-card' : 'movie-card';
 
     // Clique para Mobile (Abre o modal direto)
     card.onclick = (e) => {
@@ -101,6 +104,11 @@ export function createCard(item) {
 
     card.addEventListener('mouseenter', () => {
         if (window.innerWidth > 768) {
+            // DVDs não carregam trailer
+            if (isDVD) {
+                return;
+            }
+            
             const rect = card.getBoundingClientRect();
             if (rect.left < 100) card.classList.add('origin-left');
             else if (rect.right > window.innerWidth - 100) card.classList.add('origin-right');

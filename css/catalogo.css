@@ -299,7 +299,7 @@ a:hover {
 
 /* Sliders & Carousel */
 .sliders-container {
-    padding: 0 4%;
+    padding: 0 6%;
     padding-top: 100px;
     padding-bottom: 100px;
     position: relative;
@@ -457,6 +457,44 @@ a:hover {
     border-radius: 4px;
     transition: opacity 0.3s;
     pointer-events: none;
+}
+
+/* ========== DVDs ESTILO ========== */
+.dvd-row .movie-card {
+    flex: 0 0 280px;
+    width: 280px;
+    height: 415px;
+    aspect-ratio: 13.5 / 19;
+}
+
+/* Remover preview e botões de DVDs (PC) */
+.dvd-row .movie-card iframe {
+    display: none !important;
+}
+
+.dvd-row .movie-card .card-details {
+    display: none !important;
+}
+
+.dvd-row .movie-card .progress-bar-container {
+    display: none !important;
+}
+
+/* Animação de hover para DVDs */
+.dvd-row .movie-card {
+    perspective: 1000px;
+}
+
+.dvd-row .movie-card:hover {
+    transform: scale(1.1) rotateY(-15deg) translateZ(50px);
+}
+
+.dvd-row .movie-card img {
+    transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.dvd-row .movie-card:hover img {
+    transform: scaleX(-1);
 }
 
 .movie-card iframe.playing {
@@ -1266,17 +1304,117 @@ footer {
     transform: scale(1.1);
 }
 
-.mobile-nav-select { display: none; }
+.mobile-nav-select { display: none !important; }
+
+/* ============================================ */
+/* BOTTOM NAVIGATION BAR (Mobile Only) */
+/* ============================================ */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 70px;
+    background: linear-gradient(to top, rgba(20, 20, 20, 0.95), rgba(20, 20, 20, 0.85));
+    backdrop-filter: blur(15px);
+    border-top: 1px solid rgba(168, 85, 247, 0.3);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 999;
+    box-shadow: 0 -4px 20px rgba(168, 85, 247, 0.15);
+    display: none;
+}
+
+.nav-bottom-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s ease;
+    font-size: 12px;
+    font-weight: 500;
+    position: relative;
+    padding: 0;
+}
+
+.nav-bottom-item i {
+    font-size: 22px;
+    transition: all 0.3s ease;
+}
+
+.nav-bottom-item span {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    transition: all 0.3s ease;
+}
+
+.nav-bottom-item:hover,
+.nav-bottom-item.active {
+    color: #a855f7;
+}
+
+.nav-bottom-item:hover i,
+.nav-bottom-item.active i {
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.6));
+}
+
+.nav-bottom-item:hover::before,
+.nav-bottom-item.active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #a855f7, transparent);
+    border-radius: 2px;
+    box-shadow: 0 0 10px rgba(168, 85, 247, 0.6);
+}
 
 
 @media (max-width: 768px) {
-    /* HEADER: Mantém Lupa e Perfil organizados */
-    .nav-links, .navbar nav, .kids-link, .nav-notification, .genre-menu { display: none !important; }
-    .navbar { padding: 10px 15px !important; }
-    .mobile-nav-select { display: flex !important; color: white; font-weight: bold; align-items: center; gap: 5px; cursor: pointer; transition: opacity 0.3s ease, visibility 0.3s ease; }
-    .navbar-right { display: flex !important; gap: 15px; align-items: center; }
+    /* HEADER: Mantém Logo, Lupa, Notificação e Perfil apenas */
+    .nav-links, .navbar nav, .kids-link, .genre-menu { display: none !important; }
+    .navbar { padding: 10px 15px !important; height: 65px !important; }
+    .mobile-nav-select { display: none !important; }
+    .navbar-right { display: flex !important; gap: 12px !important; align-items: center; }
     
-    .profile-icon { width: 35px !important; height: 35px !important; display: block !important; }
+    /* MOSTRAR BOTTOM NAV */
+    .bottom-nav {
+        display: flex !important;
+    }
+    
+    /* Adicionar padding-bottom para não cobrir conteúdo */
+    body {
+        padding-bottom: 70px;
+    }
+    
+    main.sliders-container {
+        padding-bottom: 20px !important;
+    }
+    
+    .profile-icon { width: 32px !important; height: 32px !important; display: block !important; }
+    
+    .profile-menu {
+        display: flex !important;
+        gap: 5px !important;
+    }
+    
+    .profile-menu i {
+        display: none !important;
+    }
     
     /* SINO VISÍVEL NO MOBILE */
     .nav-notification {
@@ -1286,7 +1424,7 @@ footer {
     }
     
     .nav-notification .icon {
-        font-size: 20px !important;
+        font-size: 18px !important;
     }
      .slider-title { font-size: 1.5rem !important; margin-left: 15px !important; margin-top: 20px !important; } /* Letras maiores nas fileiras */
     
@@ -1360,11 +1498,12 @@ footer {
         width: 92% !important; 
         max-width: 500px !important;
         height: auto !important; 
-        max-height: 80vh !important;
+        max-height: calc(100vh - 100px) !important;
         overflow-y: auto !important;
         border-radius: 8px !important;
         display: flex !important;
         flex-direction: column !important;
+        padding-bottom: 20px !important;
     }
 
     /* SISTEMA DE ABAS NO MOBILE */
@@ -1668,7 +1807,7 @@ footer {
 /* Estilos para containers PC (-pc suffix) */
 #container-video-pc {
     width: 100%;
-    height: 300px;
+    height: 450px;
     background-color: #000;
     display: none;
     position: relative;
@@ -1683,18 +1822,39 @@ footer {
     object-fit: contain;
 }
 
+/* Customizar scrollbar do modal */
+#container-info-pc::-webkit-scrollbar {
+    width: 8px;
+}
+
+#container-info-pc::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+#container-info-pc::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #a855f7, #7e3fff);
+    border-radius: 4px;
+    box-shadow: inset 0 0 6px rgba(168, 85, 247, 0.3);
+}
+
+#container-info-pc::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #d946ef, #a855f7);
+    box-shadow: inset 0 0 8px rgba(217, 70, 239, 0.5);
+}
+
 #container-info-pc {
     width: 100%;
     display: none;
     padding: 15px 20px;
-    max-height: 400px;
+    max-height: 500px;
     overflow-y: auto;
 }
 
 #modal-poster-pc {
     width: 100%;
-    max-height: 280px;
-    object-fit: cover;
+    max-height: 350px;
+    object-fit: contain;
     object-position: center;
     border-radius: 6px;
     display: block;

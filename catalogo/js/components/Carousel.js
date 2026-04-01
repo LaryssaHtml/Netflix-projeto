@@ -25,6 +25,11 @@ export function createCarousel(category) {
 
     const row = document.createElement('div');
     row.className = 'movie-row';
+    
+    // Adicionar classe especial se for DVD
+    if (category.title && category.title.toLowerCase().includes('dvd')) {
+        row.classList.add('dvd-row');
+    }
 
     const getScrollStep = () => Math.max(row.clientWidth * 0.85, 240);
 
