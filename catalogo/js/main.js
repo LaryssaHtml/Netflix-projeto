@@ -95,6 +95,7 @@ function pausarHero() {
 }
 
 function retomarHero() {
+    pausarHero(); // Parar intervalo anterior para evitar duplicatas
     const heroSection = document.querySelector('.hero');
     if (heroSection && heroList.length > 0) {
         let heroIndex = heroList.findIndex(item => item.title === document.querySelector('.hero-title')?.textContent) || 0;
@@ -576,16 +577,14 @@ window.toggleSearch = () => {
     box.classList.toggle('active');
     if (box.classList.contains('active')) {
         input.focus();
-        // Esconder "Navegar" quando pesquisa abre no mobile (com !important para override do CSS)
+        // Esconder "Navegar" quando pesquisa abre no mobile
         if (navSelect && window.innerWidth <= 768) {
-            navSelect.style.setProperty('display', 'none', 'important');
-            navSelect.style.setProperty('visibility', 'hidden', 'important');
+            navSelect.style.display = 'none';
         }
     } else {
         // Mostrar "Navegar" quando pesquisa fecha
         if (navSelect && window.innerWidth <= 768) {
-            navSelect.style.setProperty('display', 'flex', 'important');
-            navSelect.style.setProperty('visibility', 'visible', 'important');
+            navSelect.style.display = 'flex';
         }
     }
 };
@@ -602,8 +601,7 @@ document.getElementById('search-input')?.addEventListener('keydown', (e) => {
         renderizarConteudo('', false);
         // Mostrar "Navegar" novamente
         if (navSelect && window.innerWidth <= 768) {
-            navSelect.style.setProperty('display', 'flex', 'important');
-            navSelect.style.setProperty('visibility', 'visible', 'important');
+            navSelect.style.display = 'flex';
         }
     }
 });

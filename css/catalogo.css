@@ -459,12 +459,14 @@ a:hover {
     pointer-events: none;
 }
 
-/* ========== DVDs ESTILO ========== */
+/* ========== DVDs ESTILO ISOLADO ========== */
 .dvd-row .movie-card {
-    flex: 0 0 280px;
-    width: 280px;
-    height: 415px;
-    aspect-ratio: 13.5 / 19;
+    flex: 0 0 160px !important;
+    width: 160px !important;
+    height: 240px !important;
+    aspect-ratio: 13.5 / 19 !important;
+    perspective: 1000px;
+    border-radius: 6px;
 }
 
 /* Remover preview e botões de DVDs (PC) */
@@ -480,17 +482,20 @@ a:hover {
     display: none !important;
 }
 
-/* Animação de hover para DVDs */
-.dvd-row .movie-card {
-    perspective: 1000px;
-}
-
-.dvd-row .movie-card:hover {
-    transform: scale(1.1) rotateY(-15deg) translateZ(50px);
-}
-
+/* Imagem do DVD */
 .dvd-row .movie-card img {
-    transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 6px;
+    transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Animação de hover para DVDs - Elegant flip */
+.dvd-row .movie-card:hover {
+    transform: scale(1.15) rotateY(8deg) rotateX(-5deg);
+    z-index: 999;
+    box-shadow: 0 12px 40px rgba(168, 85, 247, 0.4);
 }
 
 .dvd-row .movie-card:hover img {
@@ -1304,7 +1309,16 @@ footer {
     transform: scale(1.1);
 }
 
-.mobile-nav-select { display: none !important; }
+/* MOBILE NAV SELECT - deixar JS gerenciar sua exibição */
+.mobile-nav-select { 
+    display: none; 
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    color: #b3b3b3;
+    transition: all 0.3s ease;
+}
 
 /* ============================================ */
 /* BOTTOM NAVIGATION BAR (Mobile Only) */
@@ -1388,7 +1402,7 @@ footer {
     /* HEADER: Mantém Logo, Lupa, Notificação e Perfil apenas */
     .nav-links, .navbar nav, .kids-link, .genre-menu { display: none !important; }
     .navbar { padding: 10px 15px !important; height: 65px !important; }
-    .mobile-nav-select { display: none !important; }
+    /* mobile-nav-select gerenciado pelo JS para mostrar/ocultar na busca */
     .navbar-right { display: flex !important; gap: 12px !important; align-items: center; }
     
     /* MOSTRAR BOTTOM NAV */
@@ -1495,15 +1509,15 @@ footer {
 
      /* 1. Alarga o modal e deixa a altura fluida */
     .modal-content {
-        width: 92% !important; 
-        max-width: 500px !important;
+        width: 94% !important; 
+        max-width: 520px !important;
         height: auto !important; 
-        max-height: calc(100vh - 100px) !important;
+        max-height: calc(100vh - 80px) !important;
         overflow-y: auto !important;
-        border-radius: 8px !important;
+        border-radius: 10px !important;
         display: flex !important;
         flex-direction: column !important;
-        padding-bottom: 20px !important;
+        padding-bottom: 12px !important;
     }
 
     /* SISTEMA DE ABAS NO MOBILE */
@@ -1521,14 +1535,14 @@ footer {
         background: none;
         border: none;
         color: #b3b3b3;
-        padding: 12px;
+        padding: 14px 12px;
         cursor: pointer;
-        font-size: 11px;
+        font-size: 12px;
         font-weight: 600;
         border-bottom: 3px solid transparent;
         transition: all 0.3s ease;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
+        letter-spacing: 0.6px;
         margin-bottom: -2px;
     }
 
@@ -1595,9 +1609,39 @@ footer {
     
     #tab-info .modal-info {
         background-color: #141414 !important;
-        padding: 20px 15px !important;
+        padding: 20px 18px !important;
         margin: 0 !important;
         min-height: auto;
+    }
+
+    #tab-info .modal-info h2 {
+        font-size: 1.3rem !important;
+        margin-bottom: 14px !important;
+        color: white !important;
+    }
+
+    #tab-info .modal-info .synopsis {
+        font-size: 14px !important;
+        line-height: 1.6 !important;
+        margin-bottom: 18px !important;
+        color: #ddd !important;
+    }
+
+    #tab-info .modal-info .meta-list {
+        list-style: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    #tab-info .modal-info .meta-list li {
+        margin-bottom: 12px !important;
+        font-size: 13px !important;
+        color: #aaa !important;
+        line-height: 1.5 !important;
+    }
+
+    #tab-info .modal-info .meta-list li strong {
+        color: white !important;
     }
 
 /* 1. Mata o espaço embaixo da imagem e do vídeo */
@@ -1680,7 +1724,7 @@ footer {
         margin-left: 4px;
     }
 
-    /* MENU NAVEGAR */
+    /* MENU NAVEGAR MOBILE - Aumentado e com melhor espaçamento */
     .nav-dropdown-mobile {
         position: fixed; top: 0; left: 0; width: 100%; height: 100%;
         background: rgba(0,0,0,0.85); z-index: 100000;
@@ -1692,27 +1736,27 @@ footer {
         to { background: rgba(0,0,0,0.85); }
     }
     .nav-dropdown-content {
-        background: #141414; width: 90%; max-height: calc(100vh - 60px); border-radius: 12px;
+        background: #141414; width: 95%; max-height: calc(100vh - 60px); border-radius: 12px;
         display: flex; flex-direction: column; text-align: center;
         overflow-y: auto; overflow-x: hidden;
         box-shadow: 0 15px 50px rgba(0,0,0,0.9);
     }
     .nav-dropdown-content p {
-        margin: 10px 0 6px 0;
-        padding: 6px 0;
+        margin: 16px 0 10px 0;
+        padding: 8px 16px;
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.5px;
     }
     .nav-dropdown-content span { 
-        padding: 13px 16px; color: white; border-bottom: 1px solid #222;
+        padding: 16px 24px; color: #b3b3b3; border-bottom: 1px solid #222;
         transition: all 0.2s ease;
         cursor: pointer;
-        font-size: 14px;
+        font-size: 15px;
     }
     .nav-dropdown-content span:hover { 
         background: rgba(203, 9, 229, 0.15);
-        color: var(--netflix-red);
+        color: white;
     }
     .nav-dropdown-content hr { margin: 6px 0; border: none; border-top: 1px solid #222; }
 
