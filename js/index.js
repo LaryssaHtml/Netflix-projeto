@@ -1,3 +1,30 @@
+/* ============================================ */
+/* ========== SPLASH SCREEN LOGIC ========== */
+/* ============================================ */
+
+function initSplashScreen() {
+    const splashScreen = document.getElementById('splash-screen');
+    
+    if (!splashScreen) return;
+    
+    // Aguarda 3 segundos, depois faz fade-out
+    setTimeout(() => {
+        splashScreen.classList.add('fade-out');
+        
+        // Remove do DOM após a animação (0.8s de fade-out)
+        setTimeout(() => {
+            splashScreen.style.display = 'none';
+        }, 800);
+    }, 3000);
+}
+
+// Executar quando a página carregar
+document.addEventListener('DOMContentLoaded', initSplashScreen);
+
+/* ============================================ */
+/* ========== THEME TOGGLE LOGIC ========== */
+/* ============================================ */
+
 const body = document.body;
 const toggle = document.getElementById('theme-toggle');
 

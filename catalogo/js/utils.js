@@ -4,6 +4,18 @@ export function getYouTubeId(url) {
     return url.split('/').pop();
 }
 
+/**
+ * Remove nomes duplicados do elenco
+ * @param {string} elenco - String com nomes separados por vírgula
+ * @returns {string} - String com nomes únicos
+ */
+export function removerDuplicatasElenco(elenco) {
+    if (!elenco) return "";
+    const nomes = elenco.split(',').map(nome => nome.trim());
+    const nomesUnicos = [...new Set(nomes)];
+    return nomesUnicos.join(', ');
+}
+
 const RANDOM_DATA = {
     atores: [['Ncuti Gatwa', 'Millie Gibson', 'Jinkx Monsoon'], ['Pearl Mackie', 'Matt Smith', 'Karen Gillan'], ['Peter Capaldi', 'Jenna Coleman', 'Michelle Gomez'], ['David Tennant', 'Catherine Tate', 'Freema Agyeman'], ['Jodie Whittaker', 'Tosin Cole', 'Mandip Gill'], ['Sylvester McCoy', 'Sophie Aldred', 'Andrew Cartmel']],
     classificacoes: ['L', '10', '12', '14', '16', '18'],

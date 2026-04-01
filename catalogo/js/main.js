@@ -51,18 +51,28 @@ function atualizarMenuGenerosMobile(menu) {
     const generos = extrairGenerosUnicos();
     let html = `<div class="nav-dropdown-content">
         <span style="color:#a855f7;font-weight:bold;border-bottom:2px solid rgba(168,85,247,0.5);position:sticky;top:0;background:#141414;z-index:2;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;"><i class="fas fa-filter"></i><span>FILTROS</span><span onclick="this.closest('.nav-dropdown-mobile').remove()" style="cursor:pointer;color:red;font-size:18px;">✕</span></span>
-        <p style="color:white;font-size:11px;font-weight:600;padding:14px 16px 8px;text-transform:uppercase;letter-spacing:0.5px;">Categorias</p>
-        <span onclick="window.mudarFiltro('dvd'); this.closest('.nav-dropdown-mobile').remove()" style="padding:12px 16px;color:#b3b3b3;cursor:pointer;transition:all 0.2s;display:block;border-bottom:1px solid #222;">DVD</span>
-        <span onclick="window.mudarFiltro('bombando'); this.closest('.nav-dropdown-mobile').remove()" style="padding:12px 16px;color:#b3b3b3;cursor:pointer;transition:all 0.2s;display:block;border-bottom:1px solid #222;">Bombando</span>
-        <span onclick="window.mudarFiltro('minha-lista'); this.closest('.nav-dropdown-mobile').remove()" style="padding:12px 16px;color:#b3b3b3;cursor:pointer;transition:all 0.2s;display:block;border-bottom:1px solid #222;">Minha Lista</span>
-        <p style="color:white;font-size:11px;font-weight:600;padding:14px 16px 8px;text-transform:uppercase;letter-spacing:0.5px;">Gêneros</p>`;
+        
+        <div class="dropdown-section">
+            <p class="dropdown-section-title">Categorias</p>
+            <div class="dropdown-items-container">
+                <div class="dropdown-item" onclick="window.mudarFiltro('dvd'); this.closest('.nav-dropdown-mobile').remove()">DVD</div>
+                <div class="dropdown-item" onclick="window.mudarFiltro('bombando'); this.closest('.nav-dropdown-mobile').remove()">Bombando</div>
+                <div class="dropdown-item" onclick="window.mudarFiltro('minha-lista'); this.closest('.nav-dropdown-mobile').remove()">Minha Lista</div>
+            </div>
+        </div>
+        
+        <div class="dropdown-section">
+            <p class="dropdown-section-title">Gêneros</p>
+            <div class="generos-grid">`;
     
     generos.forEach(genero => {
         const genCapitalizado = genero.charAt(0).toUpperCase() + genero.slice(1);
-        html += `<span onclick="window.mudarFiltro('${genero}'); this.closest('.nav-dropdown-mobile').remove()" style="padding:12px 16px;color:#b3b3b3;cursor:pointer;transition:all 0.2s;display:block;border-bottom:1px solid #222;">${genCapitalizado}</span>`;
+        html += `<div class="genre-chip" onclick="window.mudarFiltro('${genero}'); this.closest('.nav-dropdown-mobile').remove()">${genCapitalizado}</div>`;
     });
     
-    html += `</div>`;
+    html += `</div>
+        </div>
+    </div>`;
     menu.innerHTML = html;
 }
 
@@ -78,7 +88,7 @@ window.mostrarGeneros = function() {
 };
 
 import { createCarousel } from './components/Carousel.js';
-import { getRandomElenco, getRandomClassificacao } from './utils.js';
+import { getRandomElenco, getRandomClassificacao, removerDuplicatasElenco } from './utils.js';
 
 let tempoInicioAssistir = 0;
 let filmeAtualId = null;
@@ -150,7 +160,7 @@ function fecharModal() {
 const preencherModalInfo = (filme, isMobileMode) => {
     const { nome, lista, likes } = getPerfilData();
     const suffix = isMobileMode ? '' : '-pc';
-    const elenco = filme.elenco || getRandomElenco();
+    const elenco = removerDuplicatasElenco(filme.elenco) || getRandomElenco();
     const classificacao = filme.classificacao || getRandomClassificacao();
     const estaNaLista = lista.includes(filme.id);
     const deuLike = likes.includes(filme.id);
@@ -228,6 +238,109 @@ window.abrirModal = function(filme, modo) {
             preencherModalInfo(filme, false);
         }
     }
+};
+
+// FUNÇÃO PARA ABRIR IMAGEM DE DVD (Modal com infografia)
+window.abrirDVDImagem = function(dvd) {
+    // Criar modal simples para DVD
+    const modal = document.createElement('div');
+    modal.id = 'dvd-image-modal';
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        animation: fadeIn 0.3s ease;
+    `;
+    
+    const container = document.createElement('div');
+    container.style.cssText = `
+        position: relative;
+        width: 90%;
+        max-width: 400px;
+        background: #1a1a1a;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 20px 60px rgba(168, 85, 247, 0.3);
+    `;
+    
+    const title = document.createElement('h2');
+    title.textContent = dvd.title;
+    title.style.cssText = `
+        color: white;
+        padding: 16px;
+        margin: 0;
+        font-size: 1.3rem;
+        text-align: center;
+        border-bottom: 2px solid rgba(168, 85, 247, 0.3);
+    `;
+    
+    const image = document.createElement('img');
+    // Usar imgInfografia se disponível, senão usar img (frente do DVD)
+    image.src = dvd.imgInfografia || dvd.img || '#';
+    image.alt = dvd.title;
+    image.style.cssText = `
+        width: 100%;
+        height: auto;
+        display: block;
+        object-fit: cover;
+    `;
+    
+    const closeBtn = document.createElement('button');
+    closeBtn.innerHTML = '&times;';
+    closeBtn.style.cssText = `
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.6);
+        border: 2px solid white;
+        color: white;
+        font-size: 28px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        z-index: 10000;
+    `;
+    
+    closeBtn.onmouseover = () => {
+        closeBtn.style.background = 'rgba(0, 0, 0, 0.9)';
+        closeBtn.style.transform = 'scale(1.1)';
+    };
+    closeBtn.onmouseout = () => {
+        closeBtn.style.background = 'rgba(0, 0, 0, 0.6)';
+        closeBtn.style.transform = 'scale(1)';
+    };
+    
+    closeBtn.onclick = () => {
+        modal.remove();
+    };
+    
+    // Fechar ao clicar fora
+    modal.onclick = (e) => {
+        if (e.target === modal) {
+            modal.remove();
+        }
+    };
+    
+    container.appendChild(title);
+    container.appendChild(image);
+    container.appendChild(closeBtn);
+    modal.appendChild(container);
+    document.body.appendChild(modal);
+    
+    // Animar entrada
+    container.style.animation = 'slideUp 0.4s ease';
 };
 
 // FUNÇÃO PARA MUDAR ABA NO MODAL (Mobile)

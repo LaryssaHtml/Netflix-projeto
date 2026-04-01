@@ -18,10 +18,16 @@ export function createCard(item) {
     const card = document.createElement('div');
     card.className = isDVD ? 'movie-card dvd-card' : 'movie-card';
 
-    // Clique para Mobile (Abre o modal direto)
+    // Clique para Mobile (comportamento diferente para DVDs)
     card.onclick = (e) => {
-        if (window.innerWidth <= 768) {
-            window.abrirModal(item, 'info');
+        if (isDVD) {
+            // DVDs abrem modal em qualquer tamanho de tela (PC e Mobile)
+            window.abrirDVDImagem(item);
+        } else {
+            // Outros conteúdos abrem modal apenas no mobile
+            if (window.innerWidth <= 768) {
+                window.abrirModal(item, 'info');
+            }
         }
     };
 
@@ -39,6 +45,11 @@ export function createCard(item) {
     img.src = (window.innerWidth <= 768 && item.imgVertical) ? item.imgVertical : item.img;
     img.alt = item.title || "Movie cover";
     img.loading = "lazy";
+    
+    // Para DVDs, adicionar classe dvd-capa
+    if (isDVD) {
+        img.className = 'dvd-capa';
+    }
 
     const iframe = document.createElement('iframe');
     iframe.frameBorder = "0";
@@ -48,6 +59,17 @@ export function createCard(item) {
 
     card.appendChild(iframe);
     card.appendChild(img);
+    
+    // Se for DVD, criar imagem do disco
+    if (isDVD && item.imgDisco) {
+        const imgDisco = document.createElement('img');
+        imgDisco.src = item.imgDisco;
+        imgDisco.alt = `${item.title} - Disco`;
+        imgDisco.className = 'dvd-disco';
+        imgDisco.loading = "lazy";
+        card.appendChild(imgDisco);
+    }
+    
     card.appendChild(pbContainer);
 
     const ageBadge = getRandomAgeBadge();
@@ -104,7 +126,7 @@ export function createCard(item) {
 
     card.addEventListener('mouseenter', () => {
         if (window.innerWidth > 768) {
-            // DVDs não carregam trailer
+            // DVDs: Sem lógica de hover, apenas CSS faz a animação
             if (isDVD) {
                 return;
             }
@@ -135,6 +157,11 @@ export function createCard(item) {
 
     card.addEventListener('mouseleave', () => {
         if (window.innerWidth > 768) {
+            // DVDs: Sem lógica de hover, apenas CSS faz a animação
+            if (isDVD) {
+                return;
+            }
+
             clearTimeout(playTimeout);
             clearInterval(liveProgressInterval); 
             iframe.classList.remove('playing');

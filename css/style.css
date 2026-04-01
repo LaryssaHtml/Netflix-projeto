@@ -584,3 +584,120 @@ S AO PASSAR O MOUSE (HOVER) --- */
     transform: scale(1) translateY(0);
   }
 }
+
+/* ============================================ */
+/* ========== SPLASH SCREEN ANIMADO ========== */
+/* ============================================ */
+
+.splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, #0a192f 0%, #000000 80%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    opacity: 1;
+    transition: opacity 0.8s ease-out;
+}
+
+.splash-screen.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.splash-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+}
+
+.splash-logo {
+    animation: splashLogoIn 1s ease-out;
+}
+
+.splash-text {
+    color: #e50914;
+    font-family: 'DoctorWhoFont', sans-serif;
+    font-size: 4rem;
+    font-weight: normal;
+    letter-spacing: -1px;
+    text-shadow: 0 0 30px rgba(229, 9, 20, 0.8), 0 0 60px rgba(113, 38, 189, 0.6);
+}
+
+.splash-flix {
+    color: white;
+}
+
+/* Animação de entrada do logo */
+@keyframes splashLogoIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3) translateY(-50px);
+    }
+    60% {
+        transform: scale(1.1);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Imagem do relógio - Loader GIF */
+.relogio-loader {
+    max-width: 180px;
+    width: 100%;
+    height: auto;
+    display: block;
+    mix-blend-mode: screen;
+    animation: relogioFloating 3s ease-in-out infinite;
+}
+
+@keyframes relogioFloating {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.splash-subtitle {
+    color: #a855f7;
+    font-size: 1rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin: 0;
+    animation: subtitlePulse 1.5s ease-in-out infinite;
+}
+
+@keyframes subtitlePulse {
+    0%, 100% {
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+/* Responsividade para mobile */
+@media (max-width: 768px) {
+    .splash-text {
+        font-size: 2.5rem;
+    }
+    
+    .relogio-loader {
+        max-width: 140px;
+    }
+    
+    .splash-subtitle {
+        font-size: 0.9rem;
+    }
+}
