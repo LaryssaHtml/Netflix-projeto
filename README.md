@@ -5,9 +5,12 @@
 ![GitHub forks](https://img.shields.io/github/forks/LaryssaHtml/Netflix-projeto?style=for-the-badge)
 ![GitHub last commit](https://img.shields.io/github/last-commit/LaryssaHtml/Netflix-projeto?style=for-the-badge)
 
-<img src="imagem.png" alt="Exemplo imagem">
+<img src="assets/preview-1.png" alt="Print do site">
 
->  Um projeto front-end inspirado na Netflix que fiz na imersão Front-End da Alura, desenvolvido para fins de estudo e portfólio. O foco está na criação de uma interface moderna, interativa e responsiva utilizando HTML, CSS e JavaScript.
+<img src="assets/preview-2.png" alt="Print do site">
+
+
+>  Um projeto inspirado na Netflix que fiz na imersão Front-End da Alura, desenvolvido para fins de estudo e portfólio. O foco está na criação de uma interface moderna, interativa e responsiva utilizando HTML, CSS e JavaScript.
 
 ### Ajustes e melhorias
 
@@ -27,7 +30,7 @@ Para rodar o projeto localmente, siga estas etapas:
 
 1. Clone o repositório:
 
-git clone https://github.com/LaryssaHtml/Netflix-projeto.git
+ > git clone https://github.com/LaryssaHtml/Netflix-projeto.git
 
 2. Acesse a pasta do projeto
 
@@ -46,9 +49,9 @@ Sugestões e ideias são sempre bem-vindas!
   <tr>
     <td align="center">
       <a href="https://github.com/LaryssaHtml">
-        <img src="https://github.com/LaryssaHtml.png" width="100px;" alt="Foto da Laryssa"/><br>
+        <img src="https://github.com/LaryssaHtml.png" width="100px;" alt="Foto de perfil Laryssa"/><br>
         <sub>
-          <b>Laryssa</b>
+          <b>Laryssa Ferreira</b>
         </sub>
       </a>
     </td>
