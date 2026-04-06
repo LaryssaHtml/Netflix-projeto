@@ -66,6 +66,43 @@ export const categories = [
                 elenco: "Dakota Blue Richards, Teri Hatcher, John Huston",
                 classificacao: "10"
             },
+
+            {
+                title: "Esqueceram de mim",
+                img: "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/7BF2D213AC3C197A3F2203F21A79125BC9ACF2BE441072904250CCA634AB0A00/scale?width=506&aspectRatio=2.00&format=webp", top10: true, badge: "Clássico", badgeColor: "purple", progress: 0,
+                video: "https://www.youtube.com/embed/tEHlnBosurY?si=ke5_NzJQIt24Gumg",
+                genero: "Aventura, infantil",
+                tipo: "filme",
+                id: "esqueceram-de-mim",
+                imgVertical: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREhbjPZzHR5ogzrLI4ZD3MsuNyykdbQlTFFQ&s",
+                elenco: "Macaulay Culkin, Joe Pesci, Daniel Stern",
+                classificacao: "L"
+            },
+
+            {
+                title: "Pânico",
+                img: "https://m.media-amazon.com/images/S/pv-target-images/6c7fc517b1c0958fffcf44d05d526d0be39b78d3b01f2903de701ea99cbdd033.jpg", top10: true, badge: "Clássico", badgeColor: "purple", progress: 0,
+                video: "https://www.youtube.com/embed/Xlut875doho?si=Y5_mqLquMAHuSYEG",
+                genero: "Horror, drama",
+                tipo: "filme",
+                id: "panico",
+                imgVertical: "https://static.wikia.nocookie.net/panicobrasil/images/5/5a/P%C3%A2nico_1_filme_poster.jpg/revision/latest?cb=20241208144035&path-prefix=pt-br",
+                elenco: "Neve Campbell, Courteney Cox, David Arquette, Matthew Lillard",
+                classificacao: "18"
+            },
+
+            {
+                title: "Premonição",
+                img: "https://meuvalordigital.com.br/wp-content/uploads/2024/05/Premonicao.jpg", top10: true, badge: "Clássico", badgeColor: "purple", progress: 0,
+                video: "https://www.youtube.com/embed/yLnvUdKGIXY?si=_5cbcb9DGIr6wiR3",
+                genero: "Horror, drama",
+                tipo: "filme",
+                id: "premonicao",
+                imgVertical: "https://cinema-em-cena.nyc3.cdn.digitaloceanspaces.com/reviews/1172/yFJVHW2Q7ofpS0IJFPKBoonAbMe.jpg",
+                elenco: "Neve Campbell, Courteney Cox, David Arquette, Matthew Lillard",
+                classificacao: "18"
+            },
+
         ]
     },
     {
@@ -75,7 +112,9 @@ export const categories = [
             { title: "Stranger Things", img: "https://i0.wp.com/geekpopnews.com.br/wp-content/uploads/2025/10/stranger-things-em-sao-paulo-capa.jpg?resize=1200%2C640&ssl=1", id: "stranger-things", top10: true, video: "https://www.youtube.com/embed/RMmGQNNl164", genero: "Sci-fi, Horror, Mistério", tipo: "série", imgVertical: "https://cdn.europosters.eu/image/1300/telas-stranger-things-bike-i69181.jpg", elenco: "Winona Ryder, Finn Wolfhard, Millie Bobby Brown", classificacao: "14" },
             { title: "A Família Addams", img: "https://streamcoimg-a.akamaihd.net/000/233/4415/2334415-Banner-L2-f6a0f9012324b75d0217d95b48fc5070.jpeg", id: "serie-2", badge: "Novo episódio", badgeColor: "red", video: "https://www.youtube.com/embed/A6X4VAHdDVg", genero: "Comédia, Fantasia", tipo: "série", imgVertical: "https://www.themoviedb.org/t/p/original/lppFgN1ujhKlGgDahBhy7lOFHUs.jpg", elenco: "Raul Julia, Anjelica Huston, Christina Ricci", classificacao: "12" },
             { title: "Mark rober", img: "https://beam-images.warnermediacdn.com/BEAM_LWM_DELIVERABLES/7797feaf-616c-44b2-a8c0-fa0b19f76f11/a4138af6-8c11-44cd-b31f-469e1ae4ffbe?host=wbd-images.prod-vod.h264.io&partner=beamcom", id: "serie-3", badge: "Novidade", badgeColor: "red", video: "https://www.youtube.com/embed/hFZFjoX2cGg", genero: "Educação, Ciência", tipo: "série", imgVertical: "https://images.justwatch.com/poster/306672238/s718/isto-e-ciencia-com-mark-rober.jpg", elenco: "Mark Rober", classificacao: "L" },
-            { title: "A Noiva Cadáver", img: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi_MPTLuuFZrXV6LP52aQBVXQC8JW0oxr7KY1x_C3bRV9-86cXANOgB1xGGFlGIDPS9iBceiffAIWFO97dLnTYEo0s6gWlhb-YnzEzejdgmZLyi6laF5WujWAXN4_dKgK3VGPrqFOo39b1ZJHEOCtLne6_tAr2nfOjIlpXECu8wE1P7PlZo0FPyCpE8kzs/s1280/A%20Noiva-Cad%C3%A1ver%20(2005)-Capa-Repassando.png", id: "noiva-cadaver", top10: true, badge: "Nova temporada", badgeColor: "red", video: "https://www.youtube.com/embed/ZE5CbXVheJk", genero: "Animação, Fantasia, Romance", tipo: "filme", imgVertical: "https://m.media-amazon.com/images/M/MV5BMjQ3YTMyZWYtZGFjMC00MGYzLTgyMmQtODJhNjFmNmJhMWM1XkEyXkFqcGc@._V1_FMjpg_UY337_.jpg", elenco: "Johnny Depp, Helena Bonham Carter, Emily Watson", classificacao: "10" }
+            { title: "A Noiva Cadáver", img: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi_MPTLuuFZrXV6LP52aQBVXQC8JW0oxr7KY1x_C3bRV9-86cXANOgB1xGGFlGIDPS9iBceiffAIWFO97dLnTYEo0s6gWlhb-YnzEzejdgmZLyi6laF5WujWAXN4_dKgK3VGPrqFOo39b1ZJHEOCtLne6_tAr2nfOjIlpXECu8wE1P7PlZo0FPyCpE8kzs/s1280/A%20Noiva-Cad%C3%A1ver%20(2005)-Capa-Repassando.png", id: "noiva-cadaver", top10: true, badge: "Nova temporada", badgeColor: "red", video: "https://www.youtube.com/embed/ZE5CbXVheJk", genero: "Animação, Fantasia, Romance", tipo: "filme", imgVertical: "https://m.media-amazon.com/images/M/MV5BMjQ3YTMyZWYtZGFjMC00MGYzLTgyMmQtODJhNjFmNmJhMWM1XkEyXkFqcGc@._V1_FMjpg_UY337_.jpg", elenco: "Johnny Depp, Helena Bonham Carter, Emily Watson", classificacao: "10" },
+            { title: "Matilda", img: "https://m.media-amazon.com/images/S/pv-target-images/d2ad55410f97683ae880cfe5bf36482cc2f84d888414b2addf4dd73970b8b33e._UR1920,1080_SX624_FMjpg_.jpg", id: "matilda", top10: true, badge: "Nova temporada", badgeColor: "red", video: "https://www.youtube.com/embed/ykm9N0bgxJA?si=AZUdo0MNoQo8tNrw", genero: "Fantasia, Educação, Aventura", tipo: "filme", imgVertical: "https://m.media-amazon.com/images/S/pv-target-images/4b7602bfefb831912f40844be72b47435c4a08f41994ff06bb2c216943415c05.jpg", elenco: "Mara Wilson, Rhea Perlman, Danny DeVito, Pam Ferris, Embeth Davidtz, Kiami Davael, Jimmy Karz", classificacao: "L" },
+            { title: "Elvira a rainha das trevas", img: "https://img.odcdn.com.br/wp-content/uploads/2021/10/Elvira-a-Rainha-das-Trevas.jpg", id: "elvira", top10: true, badge: "Nova temporada", badgeColor: "red", video: "https://www.youtube.com/embed/ykm9N0bgxJA?si=AZUdo0MNoQo8tNrw", genero: "Fantasia, Educação, Aventura", tipo: "filme", imgVertical: "https://cinema10.com.br/upload/featuredImage.php?url=https%3A%2F%2Fcinema10.com.br%2Fupload%2Ffilmes%2Ffilmes_4152_images-1.jpg", elenco: "Mara Wilson, Rhea Perlman, Danny DeVito, Pam Ferris, Embeth Davidtz, Kiami Davael, Jimmy Karz", classificacao: "18" }
         ]
     },
     {
@@ -86,7 +125,10 @@ export const categories = [
             { title: "Interestelar", img: "https://is1-ssl.mzstatic.com/image/thumb/Video123/v4/3b/8e/c3/3b8ec32a-9e26-2def-0168-3574637a0abc/pr_source.lsr/1200x675.jpg", id: "filme-2", top10: true, badge: "Novo episódio", badgeColor: "red", video: "https://www.youtube.com/embed/LdEcMMFrn9w", genero: "Ficção Científica, Drama", tipo: "filme", imgVertical: "https://tse2.mm.bing.net/th/id/OIP.uiaj_IMaC7h3NoieAhcmVwHaLG?rs=1&pid=ImgDetMain&o=7&rm=3", elenco: "Matthew McConaughey, Anne Hathaway, Jessica Chastain", classificacao: "10" },
             { title: "Blade Runner", img: "https://m.media-amazon.com/images/S/pv-target-images/24ddd432723e134531db1a3881ad05c86ee6f48780a2aa104d610e023d420c24.jpg", id: "filme-3", top10: true, badge: "Novo episódio", badgeColor: "red", video: "https://www.youtube.com/embed/xGwe7D0RKWc", genero: "Ficção Científica, Noir", tipo: "filme", imgVertical: "https://images.squarespace-cdn.com/content/v1/51efa630e4b0d3a23d01fb83/1666637489802-FNAUDJ8K1TPWOWLDRP4C/bladerunner_finalart_regular_print.jpg", elenco: "Harrison Ford, Rutger Hauer, Sean Young", classificacao: "14" },
             { title: "Bússola de Ouro", img: "https://beam-images.warnermediacdn.com/BEAM_LWM_DELIVERABLES/da464d20-e2ac-4177-9e6f-097033f37199/6596684d94f41df79bcbbd93f560d63cf3bc6547.jpg?host=wbd-images.prod-vod.h264.io&partner=beamcom", id: "filme-4", top10: true, badge: "Novo episódio", badgeColor: "red", video: "https://www.youtube.com/embed/VtUNYOjZu6Y", genero: "Fantasia, Aventura", tipo: "filme", imgVertical: "https://m.media-amazon.com/images/S/pv-target-images/6bda6bb21abf84f677a15e580bdbcb83d19a0070532f04f61497aa6eb4870e17.jpg", elenco: "Daniel Craig, Nicole Kidman, Dakota Blue Richards", classificacao: "12" },
-            { title: "A Fantástica Fábrica de Chocolate", img: "https://www.slashfilm.com/img/gallery/tim-burton-toyed-with-the-idea-of-a-dwayne-johnson-willy-wonka-film/into-the-wonkaverse-1666819758.jpg", id: "filme-5", top10: true, badge: "Novidade", badgeColor: "red", video: "https://www.youtube.com/embed/beurNg4DGm0?si=9Zrs6691M3dpSwXP", genero: "Fantasia, Aventura, Infantil", tipo: "filme", imgVertical: "https://i.pinimg.com/originals/22/47/8b/22478b31786d0d6f4aaf364acef9516b.jpg", elenco: "Johnny Depp, Freddie Highmore, David Kelly", classificacao: "L" },
+            { title: "A Fantástica Fábrica de Chocolate", img: "https://m.media-amazon.com/images/S/pv-target-images/6325148b296c5af8b6350166e264c27950ed8dc722f3dcf0141cdaff351be80a.jpg", id: "filme-5", top10: true, badge: "Novidade", badgeColor: "red", video: "https://www.youtube.com/embed/beurNg4DGm0?si=9Zrs6691M3dpSwXP", genero: "Fantasia, Aventura, Infantil", tipo: "filme", imgVertical: "https://i.pinimg.com/originals/22/47/8b/22478b31786d0d6f4aaf364acef9516b.jpg", elenco: "Johnny Depp, Freddie Highmore, David Kelly", classificacao: "L" },
+            { title: "Meninas Malvadas", img: "https://m.media-amazon.com/images/S/pv-target-images/073cb3bd650476a51c90ed524a8c020c5520bdfabeb271c96849c5f67001d1cd._UR1920,1080_CLs%7C1920,1080%7C/G/bundle/BottomRightCardGradient16x9.png,/G/01/digital/video/merch/subs/benefit-id/a-f/cbsaacf/logos/channels-logo-white.png%7C0,0,1920,1080+0,0,1920,1080+1334,885,507,117_kv2153391f34c41b5172a3022deb992c03_SX624_FMjpg_.jpg", id: "filme-5", top10: true, badge: "Novidade", badgeColor: "red", video: "https://www.youtube.com/embed/oDU84nmSDZY?si=E_pswsVzla32RC_-", genero: "Fantasia, Aventura, Infantil", tipo: "filme", imgVertical: "https://m.media-amazon.com/images/S/pv-target-images/539186d23790c006b539f90db7b516d23224c424319040fb244c952ebb6bf2c5._UR2000,3000_CLs%7C2000,3000%7C/G/bundle/BottomRightCardGradient2x3.png,/G/01/digital/video/merch/subs/benefit-id/a-f/cbsaacf/logos/channels-logo-white.png%7C0,0,2000,3000+0,0,2000,3000+1415,2798,498,115_kv2153391f34c41b5172a3022deb992c03_.png", elenco: "Lindsay Lohan, Rachel McAdams, Amanda Seyfried", classificacao: "18" },
+            { title: "It a coisa", img: "https://m.media-amazon.com/images/S/pv-target-images/198a690cdafd8b5917c310fbd94ee6b248b1f838872fe34a11b16035a5169e06.png", id: "filme-5", top10: true, badge: "Novidade", badgeColor: "red", video: "https://www.youtube.com/embed/dD264ZjfKlk?si=LuzVa9-BBgsrZsML", genero: "Fantasia, Aventura, Infantil", tipo: "filme", imgVertical: "https://ingresso-a.akamaihd.net/img/cinema/cartaz/19302-cartaz.jpg", elenco: "Johnny Depp, Freddie Highmore, David Kelly", classificacao: "18" },
+            { title: "Terrifier", img: "https://m.media-amazon.com/images/S/pv-target-images/39e9e32f5c0659e9269c42eaa29ac5a8976d1b5e7471baa08970962dcf7a402a.jpg", id: "filme-5", top10: true, badge: "Novidade", badgeColor: "red", video: "https://www.youtube.com/embed/M4jZr8EBEJI?si=2Gu284_Ur4KzAsvy", genero: "Fantasia, Aventura, Infantil", tipo: "filme", imgVertical: "https://m.media-amazon.com/images/S/pv-target-images/32223d2daeeb65572ca43de094606e8a065150cfc49ae25a112e60e0485c36d8.jpg", elenco: "Johnny Depp, Freddie Highmore, David Kelly", classificacao: "18" },
         ]
     },
     {
@@ -129,7 +171,7 @@ export const heroList = [
     {
         title: "Edward mãos de tesoura",
         description: "Edward Scissorhands conta a história de um jovem artificial com tesouras no lugar das mãos que tenta se adaptar a uma comunidade suburbana. Ao enfrentar o preconceito e descobrir o amor, ele revela a dificuldade de ser diferente em um mundo que valoriza a normalidade.",
-        img: "https://wallpapercave.com/wp/wp2928969.jpg",
+        img: "https://disney.images.edge.bamgrid.com/ripcut-delivery/v2/variant/disney/162bb90e-a854-4206-be50-6e4652a28394/compose?format=webp&width=2560",
         id: "edward-scissorhands",
         genero: "Aventura, fantasia",
         elenco: "Johnny Depp, Winona Ryder, Dianne Wiest",
@@ -173,5 +215,18 @@ export const heroList = [
         categoria: "Documentário, Vídeo Educacional",
         video: "https://www.youtube.com/embed/hFZFjoX2cGg?si=W9RMueoJi1prTB-D",
         imgVertical: "https://images.justwatch.com/poster/306672238/s718/isto-e-ciencia-com-mark-rober.jpg"
+    },
+
+     {
+        title: "Coraline",
+        description: "Coraline descobre uma porta secreta que leva a um mundo onde tudo parece perfeito. Mas por trás da aparência encantadora, existe algo sombrio esperando por ela.",
+        img: "https://m.media-amazon.com/images/S/pv-target-images/b7bbb760a7e6c027770e7f2efbd998b693790ac85f84cfb82da0f66ec69731af._SX1080_FMjpg_.jpg",
+        id: "coraline",
+        genero: "Fantasia, Animação",
+        elenco: "Dakota Fanning, Teri Hatcher, Ian McShane",
+        categoria: "Filme",
+        video: "https://www.youtube.com/embed/BgKXN16_VBY?si=KOrQ58z2sDUhyf6T",
+        imgVertical: "https://br.web.img2.acsta.net/medias/nmedia/18/87/79/16/19961587.jpg"
     }
 ];
+
