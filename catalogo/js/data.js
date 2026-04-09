@@ -34,6 +34,19 @@ export const categories = [
                 elenco: "Jhonny Depp, Mia Wasikowska, Helena Bonham Carter, Anne Hathaway",
                 classificacao: "L"
             },
+
+             {
+                title: "WWE Raw",
+                img: "https://www.wwe.com/f/styles/wwe_large/public/all/2025/02/20250221_RAW_Netflix_Match_Mami_16x9_Tonight--7a5c447f2b8fc441fa2d8202d9cbb36a.jpg", progress: 0,
+                video: "https://www.youtube.com/embed/hRPEfQZmAwU",
+                genero: "Drama, comédia, ação",
+                tipo: "série",
+                id: "wwe-raw",
+                imgVertical: "https://pbs.twimg.com/media/GuombcoWYAAc6F4.jpg",
+                elenco: "Rhea Ripley, Becky Lynch, Charlotte Flair, Liv Morgan, Seth Rollins, Roman Reigns, John cena, The Rock",
+                classificacao: "16"
+            },
+
             {
                 title: "Wandinha",
                 img: "https://tse1.mm.bing.net/th/id/OIP.mcaHuUbgTVYi52WpWZ0x1QHaEo?rs=1&pid=ImgDetMain&o=7&rm=3", progress: 0,
@@ -70,7 +83,7 @@ export const categories = [
             {
                 title: "Esqueceram de mim",
                 img: "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/7BF2D213AC3C197A3F2203F21A79125BC9ACF2BE441072904250CCA634AB0A00/scale?width=506&aspectRatio=2.00&format=webp", top10: true, badge: "Clássico", badgeColor: "purple", progress: 0,
-                video: "https://www.youtube.com/embed/tEHlnBosurY?si=ke5_NzJQIt24Gumg",
+                video: "https://www.youtube.com/embed/jEDaVHmw7r4?si=WhYa3u4ISw6QtMYz",
                 genero: "Aventura, infantil",
                 tipo: "filme",
                 id: "esqueceram-de-mim",
@@ -114,8 +127,12 @@ export const categories = [
             { title: "Mark rober", img: "https://beam-images.warnermediacdn.com/BEAM_LWM_DELIVERABLES/7797feaf-616c-44b2-a8c0-fa0b19f76f11/a4138af6-8c11-44cd-b31f-469e1ae4ffbe?host=wbd-images.prod-vod.h264.io&partner=beamcom", id: "serie-3", badge: "Novidade", badgeColor: "red", video: "https://www.youtube.com/embed/hFZFjoX2cGg", genero: "Educação, Ciência", tipo: "série", imgVertical: "https://images.justwatch.com/poster/306672238/s718/isto-e-ciencia-com-mark-rober.jpg", elenco: "Mark Rober", classificacao: "L" },
             { title: "A Noiva Cadáver", img: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi_MPTLuuFZrXV6LP52aQBVXQC8JW0oxr7KY1x_C3bRV9-86cXANOgB1xGGFlGIDPS9iBceiffAIWFO97dLnTYEo0s6gWlhb-YnzEzejdgmZLyi6laF5WujWAXN4_dKgK3VGPrqFOo39b1ZJHEOCtLne6_tAr2nfOjIlpXECu8wE1P7PlZo0FPyCpE8kzs/s1280/A%20Noiva-Cad%C3%A1ver%20(2005)-Capa-Repassando.png", id: "noiva-cadaver", top10: true, badge: "Nova temporada", badgeColor: "red", video: "https://www.youtube.com/embed/ZE5CbXVheJk", genero: "Animação, Fantasia, Romance", tipo: "filme", imgVertical: "https://m.media-amazon.com/images/M/MV5BMjQ3YTMyZWYtZGFjMC00MGYzLTgyMmQtODJhNjFmNmJhMWM1XkEyXkFqcGc@._V1_FMjpg_UY337_.jpg", elenco: "Johnny Depp, Helena Bonham Carter, Emily Watson", classificacao: "10" },
             { title: "Matilda", img: "https://m.media-amazon.com/images/S/pv-target-images/d2ad55410f97683ae880cfe5bf36482cc2f84d888414b2addf4dd73970b8b33e._UR1920,1080_SX624_FMjpg_.jpg", id: "matilda", top10: true, badge: "Nova temporada", badgeColor: "red", video: "https://www.youtube.com/embed/ykm9N0bgxJA?si=AZUdo0MNoQo8tNrw", genero: "Fantasia, Educação, Aventura", tipo: "filme", imgVertical: "https://m.media-amazon.com/images/S/pv-target-images/4b7602bfefb831912f40844be72b47435c4a08f41994ff06bb2c216943415c05.jpg", elenco: "Mara Wilson, Rhea Perlman, Danny DeVito, Pam Ferris, Embeth Davidtz, Kiami Davael, Jimmy Karz", classificacao: "L" },
-            { title: "Elvira a rainha das trevas", img: "https://img.odcdn.com.br/wp-content/uploads/2021/10/Elvira-a-Rainha-das-Trevas.jpg", id: "elvira", top10: true, badge: "Nova temporada", badgeColor: "red", video: "https://www.youtube.com/embed/ykm9N0bgxJA?si=AZUdo0MNoQo8tNrw", genero: "Fantasia, Educação, Aventura", tipo: "filme", imgVertical: "https://cinema10.com.br/upload/featuredImage.php?url=https%3A%2F%2Fcinema10.com.br%2Fupload%2Ffilmes%2Ffilmes_4152_images-1.jpg", elenco: "Mara Wilson, Rhea Perlman, Danny DeVito, Pam Ferris, Embeth Davidtz, Kiami Davael, Jimmy Karz", classificacao: "18" }
+            { title: "Grey's Anatomy", img: "https://m.media-amazon.com/images/S/pv-target-images/1269395f8cd6f383f86c281d0771c2aed99461e76c0b0b01d58d9db33b3e3fbc.jpg", id: "greys-anatomy", top10: true, badge: "Nova temporada", badgeColor: "red", video: "https://www.youtube.com/embed/2wqzcLyaU8c?si=7FxN03ZddjKLRS3G", genero: "Romance, Drama", tipo: "série", imgVertical: "https://i.ebayimg.com/images/g/eL4AAOSwYy9fJHrX/s-l1200.jpg", elenco: "Ellen pompeo, Patrick Dempsey", classificacao: "16" },
+            { title: "Elvira a rainha das trevas", img: "https://img.odcdn.com.br/wp-content/uploads/2021/10/Elvira-a-Rainha-das-Trevas.jpg", id: "elvira", top10: true, badge: "Nova temporada", badgeColor: "red", video: "https://www.youtube.com/embed/ISBPdubLRpo?si=CcxzwPfyR18-vv8D", genero: "Fantasia, Educação, Aventura", tipo: "filme", imgVertical: "https://cinema10.com.br/upload/featuredImage.php?url=https%3A%2F%2Fcinema10.com.br%2Fupload%2Ffilmes%2Ffilmes_4152_images-1.jpg", elenco: "Mara Wilson, Rhea Perlman, Danny DeVito, Pam Ferris, Embeth Davidtz, Kiami Davael, Jimmy Karz", classificacao: "18" },
+            { title: "NASA Artemis II", img: "https://gagadget.com/media/post_big/NASA_Netflix.jpg", id: "nasa", top10: true, badge: "Nova temporada", badgeColor: "red", video: "https://www.youtube.com/embed/F9C3tc-ws7M?si=9yf-ifnXtHb9-9AU", genero: "Fantasia, Educação, Aventura", tipo: "filme", imgVertical: "https://www.whats-on-netflix.com/wp-content/uploads/covers-2024/nasaliveonnetflix.jpeg", elenco: "NASA", classificacao: "10" },
+           
         ]
+        
     },
     {
         title: "Filmes que talvez você gostaria",
@@ -127,8 +144,8 @@ export const categories = [
             { title: "Bússola de Ouro", img: "https://beam-images.warnermediacdn.com/BEAM_LWM_DELIVERABLES/da464d20-e2ac-4177-9e6f-097033f37199/6596684d94f41df79bcbbd93f560d63cf3bc6547.jpg?host=wbd-images.prod-vod.h264.io&partner=beamcom", id: "filme-4", top10: true, badge: "Novo episódio", badgeColor: "red", video: "https://www.youtube.com/embed/VtUNYOjZu6Y", genero: "Fantasia, Aventura", tipo: "filme", imgVertical: "https://m.media-amazon.com/images/S/pv-target-images/6bda6bb21abf84f677a15e580bdbcb83d19a0070532f04f61497aa6eb4870e17.jpg", elenco: "Daniel Craig, Nicole Kidman, Dakota Blue Richards", classificacao: "12" },
             { title: "A Fantástica Fábrica de Chocolate", img: "https://m.media-amazon.com/images/S/pv-target-images/6325148b296c5af8b6350166e264c27950ed8dc722f3dcf0141cdaff351be80a.jpg", id: "filme-5", top10: true, badge: "Novidade", badgeColor: "red", video: "https://www.youtube.com/embed/beurNg4DGm0?si=9Zrs6691M3dpSwXP", genero: "Fantasia, Aventura, Infantil", tipo: "filme", imgVertical: "https://i.pinimg.com/originals/22/47/8b/22478b31786d0d6f4aaf364acef9516b.jpg", elenco: "Johnny Depp, Freddie Highmore, David Kelly", classificacao: "L" },
             { title: "Meninas Malvadas", img: "https://m.media-amazon.com/images/S/pv-target-images/073cb3bd650476a51c90ed524a8c020c5520bdfabeb271c96849c5f67001d1cd._UR1920,1080_CLs%7C1920,1080%7C/G/bundle/BottomRightCardGradient16x9.png,/G/01/digital/video/merch/subs/benefit-id/a-f/cbsaacf/logos/channels-logo-white.png%7C0,0,1920,1080+0,0,1920,1080+1334,885,507,117_kv2153391f34c41b5172a3022deb992c03_SX624_FMjpg_.jpg", id: "filme-5", top10: true, badge: "Novidade", badgeColor: "red", video: "https://www.youtube.com/embed/oDU84nmSDZY?si=E_pswsVzla32RC_-", genero: "Fantasia, Aventura, Infantil", tipo: "filme", imgVertical: "https://m.media-amazon.com/images/S/pv-target-images/539186d23790c006b539f90db7b516d23224c424319040fb244c952ebb6bf2c5._UR2000,3000_CLs%7C2000,3000%7C/G/bundle/BottomRightCardGradient2x3.png,/G/01/digital/video/merch/subs/benefit-id/a-f/cbsaacf/logos/channels-logo-white.png%7C0,0,2000,3000+0,0,2000,3000+1415,2798,498,115_kv2153391f34c41b5172a3022deb992c03_.png", elenco: "Lindsay Lohan, Rachel McAdams, Amanda Seyfried", classificacao: "18" },
-            { title: "It a coisa", img: "https://m.media-amazon.com/images/S/pv-target-images/198a690cdafd8b5917c310fbd94ee6b248b1f838872fe34a11b16035a5169e06.png", id: "filme-5", top10: true, badge: "Novidade", badgeColor: "red", video: "https://www.youtube.com/embed/dD264ZjfKlk?si=LuzVa9-BBgsrZsML", genero: "Fantasia, Aventura, Infantil", tipo: "filme", imgVertical: "https://ingresso-a.akamaihd.net/img/cinema/cartaz/19302-cartaz.jpg", elenco: "Johnny Depp, Freddie Highmore, David Kelly", classificacao: "18" },
-            { title: "Terrifier", img: "https://m.media-amazon.com/images/S/pv-target-images/39e9e32f5c0659e9269c42eaa29ac5a8976d1b5e7471baa08970962dcf7a402a.jpg", id: "filme-5", top10: true, badge: "Novidade", badgeColor: "red", video: "https://www.youtube.com/embed/M4jZr8EBEJI?si=2Gu284_Ur4KzAsvy", genero: "Fantasia, Aventura, Infantil", tipo: "filme", imgVertical: "https://m.media-amazon.com/images/S/pv-target-images/32223d2daeeb65572ca43de094606e8a065150cfc49ae25a112e60e0485c36d8.jpg", elenco: "Johnny Depp, Freddie Highmore, David Kelly", classificacao: "18" },
+            { title: "It a coisa", img: "https://m.media-amazon.com/images/S/pv-target-images/198a690cdafd8b5917c310fbd94ee6b248b1f838872fe34a11b16035a5169e06.png", id: "filme-5", top10: true, badge: "Novidade", badgeColor: "red", video: "https://www.youtube.com/embed/dD264ZjfKlk?si=LuzVa9-BBgsrZsML", genero: "Terror, Horror", tipo: "filme", imgVertical: "https://ingresso-a.akamaihd.net/img/cinema/cartaz/19302-cartaz.jpg", elenco: "Johnny Depp, Freddie Highmore, David Kelly", classificacao: "18" },
+            { title: "Terrifier", img: "https://m.media-amazon.com/images/S/pv-target-images/39e9e32f5c0659e9269c42eaa29ac5a8976d1b5e7471baa08970962dcf7a402a.jpg", id: "filme-5", top10: true, badge: "Novidade", badgeColor: "red", video: "https://www.youtube.com/embed/M4jZr8EBEJI?si=2Gu284_Ur4KzAsvy", genero: "Terror, Horror", tipo: "filme", imgVertical: "https://m.media-amazon.com/images/S/pv-target-images/32223d2daeeb65572ca43de094606e8a065150cfc49ae25a112e60e0485c36d8.jpg", elenco: "Johnny Depp, Freddie Highmore, David Kelly", classificacao: "18" },
         ]
     },
     {
@@ -157,6 +174,33 @@ export const heroList = [
         video: "https://www.youtube.com/embed/uw72J3WYxLI",
         imgVertical: "https://thetimescales.com/xl_covers/13482-doctor_who_tv_series_specials_2005_2024_-19672.jpg"
     },
+
+      {
+        title: "Grey's Anatomy",
+        description: "Grey's Anatomy é uma série médica que acompanha a vida profissional e pessoal de um grupo de médicos em um hospital.",
+        img: "https://images.hellomagazine.com/horizon/landscape/6ca1229f56e5-gettyimages-93765020.jpg",
+        id: "greys-anatomy",
+        genero: "Romance, Drama",
+        elenco: "Ellen pompeo, Patrick Dempsey",
+        categoria: "Série",
+        video: "https://www.youtube.com/embed/2wqzcLyaU8c?si=7FxN03ZddjKLRS3G",
+        imgVertical: "https://i.ebayimg.com/images/g/eL4AAOSwYy9fJHrX/s-l1200.jpg"
+    },
+
+
+    {
+        title: "Mark Rober",
+        description: "Mark Rober é um ex-engenheiro da NASA que se tornou um popular criador de conteúdo no YouTube, conhecido por seus vídeos de ciência e engenharia que combinam educação e entretenimento.",
+        img: "https://occ-0-3011-116.1.nflxso.net/dnm/api/v6/6AYY37jfdO6hpXcMjf9Yu5cnmO0/AAAABRwDnH98vkGWcLDy88Ebjq3hd2gz24QWpykz4bvMLMa8ePbtQOCcX57ha8TE953zo59rb-h-LP3Opxwbp8STDwtnDFtyfjyfsEL6.jpg?r=5fd",
+        id: "mark-rober",
+        genero: "Educação, Ciência",
+        elenco: "Mark Rober",
+        categoria: "Documentário, Vídeo Educacional",
+        video: "https://www.youtube.com/embed/hFZFjoX2cGg?si=W9RMueoJi1prTB-D",
+        imgVertical: "https://images.justwatch.com/poster/306672238/s718/isto-e-ciencia-com-mark-rober.jpg"
+    },
+
+
     {
         title: "Alice no País das Maravilhas",
         description: "Aos 19 anos, Alice retorna ao mundo excêntrico que visitou na infância, embora não se recorde dele. Ela segue um Coelho Branco apressado até uma toca e entra no País das Maravilhas, um lugar mágico repleto de figuras inusitadas. ",
@@ -168,6 +212,8 @@ export const heroList = [
         video: "https://www.youtube.com/embed/uJqMRLFezbo?si=WVZrz0L3-EzkhwhN",
         imgVertical: "https://static.wikia.nocookie.net/dublagempedia/images/e/e4/Alice-no-pais-das-maravilhas-poster.jpg/revision/latest?cb=20200720235155&path-prefix=pt-br"
     },
+
+
     {
         title: "Edward mãos de tesoura",
         description: "Edward Scissorhands conta a história de um jovem artificial com tesouras no lugar das mãos que tenta se adaptar a uma comunidade suburbana. Ao enfrentar o preconceito e descobrir o amor, ele revela a dificuldade de ser diferente em um mundo que valoriza a normalidade.",
@@ -176,7 +222,7 @@ export const heroList = [
         genero: "Aventura, fantasia",
         elenco: "Johnny Depp, Winona Ryder, Dianne Wiest",
         categoria: "Filme",
-        video: "https://www.youtube.com/embed/7iTFYsmFV_Q?si=KNEUcxq4TXh0n80k",
+        video: "https://www.youtube.com/embed/QccX8gZUz4U?si=jJbVd8OezkCYk8iI",
         imgVertical: "https://i.pinimg.com/originals/46/ef/fa/46effa5a4ab9d2a449d2555fb2429bab.jpg"
 
     },
@@ -203,18 +249,6 @@ export const heroList = [
         categoria: "Série",
         video: "https://www.youtube.com/embed/RA2gB0WWUyg?si=6WUhIeXz2ChmJiIs",
         imgVertical: "https://media.fstatic.com/1tycLGm00041cV957Sic-LssjCQ=/322x478/smart/filters:format(webp)/media/movies/covers/2025/04/cats_UgY0sxd.png"
-    },
-
-     {
-        title: "Mark Rober",
-        description: "Mark Rober é um ex-engenheiro da NASA que se tornou um popular criador de conteúdo no YouTube, conhecido por seus vídeos de ciência e engenharia que combinam educação e entretenimento.",
-        img: "https://occ-0-3011-116.1.nflxso.net/dnm/api/v6/6AYY37jfdO6hpXcMjf9Yu5cnmO0/AAAABRwDnH98vkGWcLDy88Ebjq3hd2gz24QWpykz4bvMLMa8ePbtQOCcX57ha8TE953zo59rb-h-LP3Opxwbp8STDwtnDFtyfjyfsEL6.jpg?r=5fd",
-        id: "mark-rober",
-        genero: "Educação, Ciência",
-        elenco: "Mark Rober",
-        categoria: "Documentário, Vídeo Educacional",
-        video: "https://www.youtube.com/embed/hFZFjoX2cGg?si=W9RMueoJi1prTB-D",
-        imgVertical: "https://images.justwatch.com/poster/306672238/s718/isto-e-ciencia-com-mark-rober.jpg"
     },
 
      {
