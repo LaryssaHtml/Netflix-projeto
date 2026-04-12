@@ -38,7 +38,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('../assets/wallpaper-2.jpeg');
+    background-image: url('../assets/wallpaper.png');
     background-attachment: fixed;
     background-position: center;
     background-size: cover;
@@ -202,7 +202,7 @@ figcaption {
     font-size: 1.1rem;
     letter-spacing: 2px;
     font-weight: 300;
-    transition: border-color 0.3s ease, color 0.3s ease;
+    transition: border-color 0.3s ease, color 0.3s ease, background-color 0.3s ease;
 }
 
 .manage-profiles:hover {
@@ -211,9 +211,59 @@ figcaption {
    color: #ffffff; /* Muda a cor do texto para branco no hover */
 }
 
+.manage-profiles.active {
+    background-color: rgba(168, 85, 247, 0.2);
+    border-color: #a855f7;
+    color: #a855f7;
+}
+
 body.light .manage-profiles:hover {
     border-color: #7126BD;
     color: #6a0dc8;
+}
+
+/* Modo de edição de perfis */
+.profile.edit-mode {
+    position: relative;
+}
+
+.profile-delete-btn {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 44px;
+    height: 44px;
+    background: rgba(38, 7, 175, 0.9);
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    z-index: 10;
+    padding: 0;
+}
+
+.profile-delete-btn:hover {
+    background: rgb(26, 30, 250);
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(26, 15, 173, 0.5);
+}
+
+.profile.edit-mode .profile-delete-btn {
+    display: flex;
+}
+
+.profile.edit-mode figure {
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.profile.edit-mode:hover figure {
+    opacity: 0.4;
 }
 
 .theme-toggle {
@@ -391,7 +441,7 @@ body.light .manage-profiles:hover {
     cursor: pointer;
 }
 
-/* 2. O VÓRTICE ELÉTRICO (Escondido atrás da imagem) */
+/* 2. O VÓRTICE (Escondido atrás da imagem) */
 .profile::before {
     content: '';
     position: absolute;
@@ -468,7 +518,7 @@ S AO PASSAR O MOUSE (HOVER) --- */
 
 /* Estilização do Texto */
 .logo-text {
-    color: #e50914; /* Vermelho Netflix clássico #e50914; */
+    color: #9b0cc7; /* Vermelho Netflix clássico #e50914; caso quiser trocar */
     font-family: 'DoctorWhoFont', sans-serif;
     font-size: 3.4rem;
     font-weight: normal;
@@ -501,6 +551,12 @@ S AO PASSAR O MOUSE (HOVER) --- */
   display: none;
 }
 
+.modal .modal-content {
+  background: #000000 !important;
+  border: 3px solid #a222c9 !important;
+  outline: none !important;
+}
+
 
 
 .avatar-list {
@@ -510,6 +566,23 @@ S AO PASSAR O MOUSE (HOVER) --- */
   justify-content: center;
   max-height: 200px; /* opcional */
   overflow-y: auto; /* scroll se tiver muitos */
+}
+
+.avatar-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.avatar-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.avatar-list::-webkit-scrollbar-thumb {
+  background: #5426bd;
+  border-radius: 10px;
+}
+
+.avatar-list::-webkit-scrollbar-thumb:hover {
+  background: #7c4dff;
 }
 
 .avatar-option {
@@ -563,15 +636,46 @@ S AO PASSAR O MOUSE (HOVER) --- */
 }
 
 .modal-content {
-  background: radial-gradient(circle at top, #111, #000);
+  background: #000000;
   padding: 25px;
   border-radius: 12px;
   text-align: center;
-  color: rgb(142, 55, 249);
+  color: #ffffff;
   width: 320px;
-  border: 1px solid rgba(13, 0, 255, 0.2);
-  box-shadow: 0 0 30px rgba(162, 0, 255, 0.2);
+  border: 3px solid #5426bd;
+  box-shadow: 
+    0 0 30px rgba(160, 55, 209, 0.4),
+    inset 0 0 15px rgba(102, 55, 212, 0.1),
+    0 0 15px rgba(212, 55, 178, 0.2);
   animation: aparecer 0.3s ease;
+  position: relative;
+  outline: none;
+  border-style: solid !important;
+}
+
+.modal-content h2 {
+  color: #8A2BE2;
+  margin-top: 0;
+  font-size: 1.3rem;
+}
+
+.modal-content p {
+  color: #cccccc;
+  font-size: 0.95rem;
+}
+
+.modal-content input {
+  background: #1a1a1a;
+  border: 1px solid #6137d4;
+  color: #ffffff;
+  padding: 8px 12px;
+  width: 200px;
+  margin: 10px 0;
+  border-radius: 4px;
+}
+
+.modal-content input::placeholder {
+  color: #666666;
 }
 
 @keyframes aparecer {
@@ -595,14 +699,21 @@ S AO PASSAR O MOUSE (HOVER) --- */
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at center, #0a192f 0%, #000000 80%);
+    /* COLE AQUI A URL DO WALLPAPER ESCURO PARA MESCLAR COM O RELÓGIO */
+    background-image: url('https://images.steamusercontent.com/ugc/823441300628468632/7EDD676C1CCF28E4B7F0471CDB8D45B33F125B1A/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false');
+    background-size: cover;
+    background-position: center;
+    background-color: #000000;
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 99999;
     opacity: 1;
     transition: opacity 0.8s ease-out;
+    overflow: hidden;
 }
+
+
 
 .splash-screen.fade-out {
     opacity: 0;
@@ -614,24 +725,44 @@ S AO PASSAR O MOUSE (HOVER) --- */
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 40px;
+    gap: 50px;
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
 }
 
 .splash-logo {
     animation: splashLogoIn 1s ease-out;
+    order: 1;
+    margin-bottom: 20px;
 }
 
 .splash-text {
-    color: #e50914;
+    color: #8A2BE2;
     font-family: 'DoctorWhoFont', sans-serif;
     font-size: 4rem;
     font-weight: normal;
-    letter-spacing: -1px;
-    text-shadow: 0 0 30px rgba(229, 9, 20, 0.8), 0 0 60px rgba(113, 38, 189, 0.6);
+    letter-spacing: 1px;
+    text-shadow: 0 0 20px rgba(138, 43, 226, 0.8), 0 0 40px rgba(138, 43, 226, 0.4), 
+                 -1px -1px 0 #8A2BE2, 1px -1px 0 #8A2BE2, -1px 1px 0 #8A2BE2, 1px 1px 0 #8A2BE2;
+    -webkit-text-stroke: 0.5px #8A2BE2;
+    animation: neonGlow 2s ease-in-out infinite;
 }
 
 .splash-flix {
-    color: white;
+    color: #ffffff;
+    letter-spacing: 2px;
+    font-weight: 300;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.6), 0 0 20px rgba(138, 43, 226, 0.3);
+}
+
+@keyframes neonGlow {
+    0%, 100% {
+        text-shadow: 0 0 20px rgba(138, 43, 226, 0.8), 0 0 40px rgba(138, 43, 226, 0.4);
+    }
+    50% {
+        text-shadow: 0 0 30px rgba(138, 43, 226, 1), 0 0 50px rgba(138, 43, 226, 0.6);
+    }
 }
 
 /* Animação de entrada do logo */
@@ -655,35 +786,54 @@ S AO PASSAR O MOUSE (HOVER) --- */
     width: 100%;
     height: auto;
     display: block;
+    object-fit: contain;
+    -webkit-mix-blend-mode: screen;
     mix-blend-mode: screen;
-    animation: relogioFloating 3s ease-in-out infinite;
-}
-
-@keyframes relogioFloating {
-    0%, 100% {
-        transform: translateY(0px);
-    }
-    50% {
-        transform: translateY(-10px);
-    }
+    opacity: 1;
+    order: 2;
+    flex-shrink: 0;
 }
 
 .splash-subtitle {
-    color: #a855f7;
+    color: #e0e7ff;
     font-size: 1rem;
     font-weight: 300;
-    letter-spacing: 2px;
-    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-transform: none;
     margin: 0;
-    animation: subtitlePulse 1.5s ease-in-out infinite;
+    max-width: 500px;
+    text-align: center;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    animation: none;
+    order: 3;
+    margin-top: 20px;
 }
 
-@keyframes subtitlePulse {
-    0%, 100% {
-        opacity: 0.6;
-    }
-    50% {
+/* Frases especiais com animação blink */
+.splash-subtitle.special-phrase {
+    color: #ff0000;
+    animation: blinkingText 0.6s ease-in-out infinite;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.8), 0 0 20px rgba(255, 0, 0, 0.5);
+}
+
+/* Animação de piscar para frases especiais */
+@keyframes blinkingText {
+    0%, 49%, 100% {
         opacity: 1;
+        color: #ff0000;
+        text-shadow: 0 0 10px rgba(255, 0, 0, 0.8), 0 0 20px rgba(255, 0, 0, 0.5);
+    }
+    50%, 99% {
+        opacity: 0.2;
+        color: #cc0000;
+        text-shadow: 0 0 5px rgba(255, 0, 0, 0.4), 0 0 10px rgba(255, 0, 0, 0.2);
     }
 }
 
@@ -700,4 +850,208 @@ S AO PASSAR O MOUSE (HOVER) --- */
     .splash-subtitle {
         font-size: 0.9rem;
     }
+}
+
+/* ============================================ */
+/* ========== CONFIRMATION MODAL ========== */
+/* ============================================ */
+
+.confirmation-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100000;
+    backdrop-filter: blur(4px);
+}
+
+.confirmation-modal.hidden {
+    display: none;
+}
+
+.confirmation-container {
+    background: linear-gradient(135deg, #1a0a2e 0%, #16213e 100%);
+    border: 2px solid #7b37d4;
+    border-radius: 16px;
+    padding: 30px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 
+        0 0 40px rgba(138, 43, 226, 0.4),
+        inset 0 0 20px rgba(212, 175, 55, 0.1);
+    animation: confirmAppear 0.3s ease-out;
+    position: relative;
+}
+
+@keyframes confirmAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.confirmation-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    padding-bottom: 15px;
+}
+
+.confirmation-icon {
+    font-size: 28px;
+}
+
+.confirmation-header h3 {
+    color: #8A2BE2;
+    font-size: 1.3rem;
+    margin: 0;
+}
+
+#confirmation-message {
+    color: #e0e7ff;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.confirmation-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.confirmation-buttons button {
+    padding: 10px 24px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.btn-cancel {
+    background: transparent;
+    color: #f8f8f8;
+    border: 2px solid #585856;
+}
+
+.btn-cancel:hover {
+    background: rgba(212, 175, 55, 0.1);
+    transform: scale(1.05);
+}
+
+.btn-ok {
+    background: linear-gradient(135deg, #8A2BE2, #d946ef);
+    color: white;
+    box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
+}
+
+.btn-ok:hover {
+    box-shadow: 0 0 25px rgba(138, 43, 226, 0.8);
+    transform: scale(1.05);
+}
+
+/* ========== MODAL "NENHUM PERFIL" ========== */
+.no-profiles-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(42, 42, 43, 0.123);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100001;
+    backdrop-filter: blur(6px);
+}
+
+.no-profiles-modal.hidden {
+    display: none;
+}
+
+.no-profiles-container {
+    background: linear-gradient(135deg, #1a0a2e 0%, #16213e 100%);
+    border: 3px solid #8A2BE2;
+    border-radius: 18px;
+    padding: 40px 35px;
+    width: 90%;
+    max-width: 420px;
+    box-shadow: 
+        0 0 50px rgba(138, 43, 226, 0.5),
+        inset 0 0 30px rgba(138, 43, 226, 0.1),
+        0 0 30px rgba(212, 175, 55, 0.2);
+    animation: confirmAppear 0.4s ease-out;
+    position: relative;
+    text-align: center;
+}
+
+.no-profiles-header {
+    margin-bottom: 25px;
+}
+
+.no-profiles-header h2 {
+    color: #ffffff;
+    font-size: 1.8rem;
+    margin: 0;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(138, 43, 226, 0.4);
+}
+
+.no-profiles-content {
+    margin: 30px 0;
+}
+
+#no-profiles-message {
+    color: #e0e7ff;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    margin: 0;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+}
+
+.no-profiles-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 35px;
+}
+
+.btn-understood {
+    background: linear-gradient(135deg, #8A2BE2, #a855f7);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 40px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(138, 43, 226, 0.5);
+    letter-spacing: 1px;
+}
+
+.btn-understood:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 30px rgba(138, 43, 226, 0.8);
+    background: linear-gradient(135deg, #a855f7, #d946ef);
+}
+
+.btn-understood:active {
+    transform: scale(0.95);
 }

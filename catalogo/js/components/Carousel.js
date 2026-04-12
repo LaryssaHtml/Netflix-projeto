@@ -30,6 +30,11 @@ export function createCarousel(category) {
     if (category.title && category.title.toLowerCase().includes('dvd')) {
         row.classList.add('dvd-row');
     }
+    
+    // Adicionar classe especial se for "Minha Lista"
+    if (category.title && category.title.toLowerCase().includes('minha lista')) {
+        row.classList.add('my-list-row');
+    }
 
     const getScrollStep = () => Math.max(row.clientWidth * 0.85, 240);
 

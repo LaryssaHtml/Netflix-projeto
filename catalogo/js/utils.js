@@ -1,7 +1,20 @@
 export function getYouTubeId(url) {
     if (!url) return "7RUA0IOfar8";
-    if (url.includes('v=')) return url.split('v=')[1].split('&')[0];
-    return url.split('/').pop();
+    // Limpar espaços em branco
+    url = url.trim();
+    
+    // Extrair ID de URL com parâmetro 'v='
+    if (url.includes('v=')) {
+        return url.split('v=')[1].split('&')[0].split('?')[0].trim();
+    }
+    
+    // Extrair ID de URL de embed ou youtu.be
+    let id = url.split('/').pop().trim();
+    
+    // Remover parâmetros (?si=..., ?t=..., etc.)
+    id = id.split('?')[0].trim();
+    
+    return id;
 }
 
 /**

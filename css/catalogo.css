@@ -409,10 +409,40 @@ a:hover {
     align-items: center;
     overflow-x: auto;
     overflow-y: hidden;
-    padding: 55px 5px 100px;
+    padding: 55px 20px 100px;
     scroll-behavior: smooth;
     scrollbar-width: none;
     position: relative;
+}
+
+@media (min-width: 1024px) {
+    .movie-row .movie-card:first-child {
+        transform-origin: left center;
+    }
+    
+    .movie-row .movie-card:last-child {
+        transform-origin: right center;
+    }
+}
+
+/* Minha Lista - Espaço para zoom sem corte */
+.my-list-row {
+    overflow: visible !important;
+    padding-bottom: 80px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    position: relative;
+    z-index: 10;
+}
+
+@media (min-width: 1024px) {
+    .my-list-row .movie-card:first-child {
+        transform-origin: left center;
+    }
+    
+    .my-list-row .movie-card:last-child {
+        transform-origin: right center;
+    }
 }
 
 .movie-row::-webkit-scrollbar {
@@ -505,20 +535,22 @@ a:hover {
 
 /* Imagem do Disco (revelada no hover) */
 .dvd-row .movie-card .dvd-disco {
-    width: 100%;
-    height: 100%;
+    width: 85%;
+    height: auto;
+    aspect-ratio: 1 / 1;
     object-fit: cover;
-    border-radius: 6px;
+    border-radius: 50%;
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     z-index: 1;
     display: block;
 }
 
 /* Animação de hover para DVDs - Revelação com deslize */
 .dvd-row .movie-card:hover {
-    transform: scale(1.15);
+    transform: scale(1.05);
     z-index: 999;
     box-shadow: 0 12px 40px rgba(168, 85, 247, 0.5), inset -5px 0 20px rgba(168, 85, 247, 0.2);
 }
@@ -548,8 +580,9 @@ a:hover {
 
 .movie-card iframe.playing {
     opacity: 1;
-    z-index: 3;
+    z-index: 30;
     border-radius: 6px 6px 0 0;
+    pointer-events: auto;
 }
 
 .movie-card img.playing-video {
@@ -739,10 +772,11 @@ a:hover {
     width: 100%;
     height: 6px;
     background: rgba(40, 40, 40, 0.9);
-    z-index: 15;
+    z-index: 50;
     overflow: hidden;
     border-radius: 0 0 4px 4px;
     cursor: pointer;
+    pointer-events: auto;
 }
 
 .progress-value, .progress-value-neon {
@@ -771,24 +805,29 @@ a:hover {
 /* NOTIFICAÇÃO DE LISTA */
 .notificacao-lista {
     position: fixed;
-    bottom: 200px;
+    bottom: 80px;
     left: 50%;
     transform: translateX(-50%) translateY(120px);
     background: linear-gradient(135deg, rgba(168, 85, 247, 0.95), rgba(212, 13, 252, 0.95));
     color: white;
-    padding: 16px 24px;
+    padding: 14px 24px;
     border-radius: 8px;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 12px;
     font-size: 14px;
     font-weight: 600;
     z-index: 10001;
+    width: auto;
+    max-width: 85%;
+    margin: 0;
     box-shadow: 0 8px 32px rgba(168, 85, 247, 0.4);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     pointer-events: none;
+    white-space: nowrap;
 }
 
 .notificacao-lista.visible {
@@ -921,15 +960,16 @@ footer {
 .hero-buttons button {
     padding: 12px 32px;
     border: none;
-    font-weight: 700;
+    font-weight: 500;
     cursor: pointer;
     border-radius: 6px;
     transition: all 0.3s ease;
-    font-size: 16px;
+    font-size: 14px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
 }
 
@@ -965,6 +1005,58 @@ footer {
 
 .btn-info:active {
     transform: scale(0.98);
+}
+
+.hero-actions-pc {
+    display: none;
+    flex-direction: row;
+    gap: 12px;
+    align-items: center;
+}
+
+@media (min-width: 1025px) {
+    .hero-actions-pc {
+        display: flex;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-actions-pc {
+        display: none !important;
+    }
+}
+
+.btn-hero-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
+    aspect-ratio: 1 / 1;
+}
+
+.btn-hero-icon:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: scale(1.1);
+}
+
+.btn-hero-icon.active {
+    background: rgba(168, 85, 247, 0.5) !important;
+    border-color: #a855f7 !important;
+    color: #a855f7 !important;
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.6) !important;
+    border-radius: 6px !important;
+    width: 44px !important;
+    height: 44px !important;
 }
 
 
@@ -1011,8 +1103,8 @@ footer {
 
 .modal-content {
   background: #141414;
-  width: 85%;
-  max-width: 700px;
+  width: 90%;
+  max-width: 850px;
   max-height: none;
   min-height: auto;
   border-radius: 10px;
@@ -1021,6 +1113,7 @@ footer {
   box-shadow: 0 0 30px rgba(0,0,0,0.5);
   display: flex;
   flex-direction: column;
+  margin: 0 auto;
 }
 
 /*.modal iframe {
@@ -1031,6 +1124,15 @@ footer {
 .modal-info {
   padding: 20px;
   color: white;
+  overflow-y: auto;
+  max-height: calc(100vh - 300px);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* Hide scrollbar para Webkit (Chrome, Safari, Edge) */
+.modal-info::-webkit-scrollbar {
+  display: none;
 } 
 
 
@@ -1145,7 +1247,7 @@ footer {
     font-size: 16px;
     pointer-events: none;
     animation: floatUp 1s ease-out forwards;
-    z-index: 100;
+    z-index: 200;
 }
 
 @keyframes floatUp {
@@ -1975,9 +2077,18 @@ footer {
 /* Notificação no mobile */
 @media (max-width: 768px) {
     .notificacao-lista {
-        bottom: 20px;
-        padding: 14px 20px;
-        font-size: 13px;
+        bottom: 80px;
+        left: 50%;
+        transform: translateX(-50%) translateY(120px);
+        padding: 12px 18px;
+        font-size: 12px;
+        max-width: 80%;
+        z-index: 10001;
+        margin: 0 auto;
+    }
+    
+    .notificacao-lista.visible {
+        transform: translateX(-50%) translateY(0);
     }
 }
 
@@ -2023,43 +2134,40 @@ footer {
     object-fit: contain;
 }
 
-/* Customizar scrollbar do modal */
-#container-info-pc::-webkit-scrollbar {
-    width: 8px;
-}
-
-#container-info-pc::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
-}
-
-#container-info-pc::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #a855f7, #7e3fff);
-    border-radius: 4px;
-    box-shadow: inset 0 0 6px rgba(168, 85, 247, 0.3);
-}
-
-#container-info-pc::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, #d946ef, #a855f7);
-    box-shadow: inset 0 0 8px rgba(217, 70, 239, 0.5);
-}
-
 #container-info-pc {
     width: 100%;
     display: none;
-    padding: 15px 20px;
-    max-height: 500px;
+    padding: 0 0 30px 0; /* Padding extra no fim para não colar */
+    max-height: 80vh; /* Altura generosa para não encostar no chão */
     overflow-y: auto;
+    overflow-x: hidden;
+    background-color: #181818;
+    border-radius: 10px;
+    /* Esconde a scrollbar em todos os navegadores */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+}
+
+#container-info-pc::-webkit-scrollbar {
+    display: none; /* Chrome, Safari e Opera */
 }
 
 #modal-poster-pc {
     width: 100%;
-    max-height: 350px;
-    object-fit: contain;
-    object-position: center;
-    border-radius: 6px;
+    height: 320px; 
+    object-fit: cover;
+    object-position: top center;
+    border-radius: 10px 10px 0 0;
     display: block;
-    margin: 0 0 15px 0;
+    margin: 0 0 20px 0;
+}
+
+/* Espaçamento para o texto não colar nas laterais */
+#container-info-pc h2, 
+#container-info-pc p, 
+#container-info-pc div {
+    padding-left: 25px;
+    padding-right: 25px;
 }
 
 /* OTIMIZAÇÃO PARA TELEVISORES (1920px+) */
@@ -2155,15 +2263,18 @@ footer {
     }
     
     .notificacao-lista {
-        padding: 20px 32px;
-        font-size: 16px;
+        padding: 16px 32px;
+        font-size: 15px;
         bottom: 50px;
-        right: 50px;
-        transform: translateX(0) translateY(120px);
+        left: 50%;
+        transform: translateX(-50%) translateY(120px);
+        z-index: 10001;
+        max-width: 90%;
+        margin: 0;
     }
     
     .notificacao-lista.visible {
-        transform: translateX(0) translateY(0);
+        transform: translateX(-50%) translateY(0);
     }
     
     footer {

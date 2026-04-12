@@ -53,7 +53,9 @@ export function createCard(item) {
 
     const iframe = document.createElement('iframe');
     iframe.frameBorder = "0";
-    iframe.allow = "autoplay; encrypted-media";
+    iframe.allow = "autoplay; encrypted-media; picture-in-picture";
+    iframe.allowFullscreen = true;
+    iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
 
     const videoId = getYouTubeId(item.youtube || item.video || item.trailer);
 
@@ -141,9 +143,99 @@ export function createCard(item) {
 
             playTimeout = setTimeout(() => {
                 if (videoId) {
-                    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0&modestbranding=1&loop=1&playlist=${videoId}&mute=0`;
+                    // Parâmetros para autoplay funcionar: mute=1 obrigatório para autoplay sem interação
+                    // origin é adicionado para evitar bloqueios de segurança do navegador
+                    const origin = window.location.origin;
+                    const youtubeUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0&modestbranding=1&loop=1&playlist=${videoId}&fs=0&rel=0&enablejsapi=1&origin=${encodeURIComponent(origin)}`;
+                    iframe.src = youtubeUrl;
                     iframe.classList.add('playing');
                     img.classList.add('playing-video');
+                    
+                    // Adicionar botão de mute/unmute via postMessage
+                    if (!card.querySelector('.preview-mute-button')) {
+                        const muteButton = document.createElement('button');
+                        muteButton.className = 'preview-mute-button';
+                        muteButton.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                        muteButton.style.position = 'absolute';
+                        muteButton.style.top = '10px';
+                        muteButton.style.right = '10px';
+                        muteButton.style.background = 'rgba(0,0,0,0.7)';
+                        muteButton.style.color = '#aaa';
+                        muteButton.style.border = 'none';
+                        muteButton.style.padding = '8px 10px';
+                        muteButton.style.borderRadius = '4px';
+                        muteButton.style.fontSize = '14px';
+                        muteButton.style.cursor = 'pointer';
+                        muteButton.style.zIndex = '45';
+                        muteButton.style.transition = 'all 0.2s ease';
+                        muteButton.style.display = 'flex';
+                        muteButton.style.alignItems = 'center';
+                        muteButton.style.justifyContent = 'center';
+                        
+                        let isMuted = true; // Começa mutado
+                        
+                        muteButton.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            isMuted = !isMuted;
+                            
+                            // Tentar capturar o tempo atual do vídeo via postMessage
+                            try {
+                                iframe.contentWindow.postMessage({
+                                    event: 'command',
+                                    func: 'getCurrentTime'
+                                }, '*');
+                            } catch (error) {
+                                console.warn('Não conseguiu capturar tempo do vídeo');
+                            }
+                            
+                            // Usar o tempo capturado (com fallback de 2 segundos)
+                            const syncTime = Math.floor(lastVideoTime) || 2;
+                            
+                            // Aguardar um pouco e recarregar o iframe
+                            setTimeout(() => {
+                                const origin = window.location.origin;
+                                let newUrl;
+                                
+                                if (!isMuted) {
+                                    // Usuário quer SOM: remover mute, iniciar do tempo capturado
+                                    newUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&controls=0&modestbranding=1&loop=1&playlist=${videoId}&fs=0&rel=0&enablejsapi=1&start=${syncTime}&origin=${encodeURIComponent(origin)}`;
+                                } else {
+                                    // Usuário quer MUDO: voltar ao padrão
+                                    newUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0&modestbranding=1&loop=1&playlist=${videoId}&fs=0&rel=0&enablejsapi=1&origin=${encodeURIComponent(origin)}`;
+                                }
+                                
+                                // Recarregar o iframe com nova URL
+                                iframe.src = newUrl;
+                                
+                                // Atualizar visual do botão
+                                if (isMuted) {
+                                    muteButton.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                                    muteButton.style.color = '#aaa';
+                                    muteButton.style.background = 'rgba(0,0,0,0.7)';
+                                } else {
+                                    muteButton.innerHTML = '<i class="fas fa-volume-up"></i>';
+                                    muteButton.style.color = '#a855f7';
+                                    muteButton.style.background = 'rgba(168, 85, 247, 0.2)';
+                                }
+                            }, 50);
+                        });
+                        
+                        muteButton.addEventListener('mouseenter', () => {
+                            muteButton.style.background = isMuted ? 'rgba(255, 255, 255, 0.15)' : 'rgba(168, 85, 247, 0.35)';
+                        });
+                        
+                        muteButton.addEventListener('mouseleave', () => {
+                            muteButton.style.background = isMuted ? 'rgba(0,0,0,0.7)' : 'rgba(168, 85, 247, 0.2)';
+                        });
+                        
+                        card.appendChild(muteButton);
+                    }
+                    
+                    // Fallback: se o iframe não carregar, manter a imagem visível
+                    iframe.load_error = (e) => {
+                        iframe.classList.remove('playing');
+                        img.classList.remove('playing-video');
+                    };
 
                     liveProgressInterval = setInterval(() => {
                         tempProgress = (tempProgress >= 100) ? 0 : tempProgress + 1;
@@ -169,6 +261,10 @@ export function createCard(item) {
             iframe.src = "";
             card.classList.remove('origin-left');
             card.classList.remove('origin-right');
+            
+            // Remover botão de mute
+            const muteButton = card.querySelector('.preview-mute-button');
+            if (muteButton) muteButton.remove();
 
             const finalProgress = localStorage.getItem(chaveProgresso) || progressEstatico;
             pbValue.style.width = `${finalProgress}%`;
@@ -178,3 +274,35 @@ export function createCard(item) {
 
     return card;
 }
+
+// Variável global para armazenar o tempo atual do vídeo
+let lastVideoTime = 2;
+
+// Listener global para receber mensagens do YouTube via postMessage
+window.addEventListener('message', (event) => {
+    try {
+        // YouTube pode responder com diferentes formatos
+        if (event.data.event === 'onReady' || event.data.event === 'onStateChange') {
+            // Ignorar eventos do player que não nos interessam
+            return;
+        }
+        
+        // Se a resposta contém currentTime
+        if (event.data && typeof event.data.currentTime === 'number') {
+            lastVideoTime = event.data.currentTime;
+        }
+        // Se é uma string JSON com currentTime
+        else if (typeof event.data === 'string' && event.data.includes('currentTime')) {
+            try {
+                const data = JSON.parse(event.data);
+                if (data.currentTime) {
+                    lastVideoTime = data.currentTime;
+                }
+            } catch (e) {
+                // Não é JSON válido, ignorar
+            }
+        }
+    } catch (error) {
+        console.warn('Erro ao processar postMessage do YouTube:', error);
+    }
+});

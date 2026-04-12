@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DoctorFlix</title>
     <link rel="stylesheet" href="css/style.css">
+    <!-- Canvas Confetti Library (Easter Egg) -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.0/dist/confetti.browser.min.js"></script>
 </head>
 
 <body>
@@ -112,6 +114,35 @@
   </div>
 </div>
 
+<!-- Modal de Confirmação Customizado -->
+<div id="confirmation-modal" class="confirmation-modal hidden">
+  <div class="confirmation-container">
+    <div class="confirmation-header">
+      <span class="confirmation-icon">⚠️</span>
+      <h3 id="confirmation-title">Confirmação</h3>
+    </div>
+    <p id="confirmation-message"></p>
+    <div class="confirmation-buttons">
+      <button id="confirm-cancel" class="btn-cancel">Cancelar</button>
+      <button id="confirm-ok" class="btn-ok">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Personalizado - Nenhum Perfil para Gerenciar -->
+<div id="no-profiles-modal" class="no-profiles-modal hidden">
+  <div class="no-profiles-container">
+    <div class="no-profiles-header">
+      <h2>Oops!</h2>
+    </div>
+    <div class="no-profiles-content">
+      <p id="no-profiles-message">Nenhum perfil criado para gerenciar</p>
+    </div>
+    <div class="no-profiles-buttons">
+      <button id="no-profiles-btn" class="btn-understood">Entendido</button>
+    </div>
+  </div>
+</div>
 
     <script src="js/index.js"></script>
      

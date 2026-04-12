@@ -233,7 +233,7 @@ window.abrirModal = function(filme, modo) {
             } else {
                 if (containerInfoPc) containerInfoPc.style.display = 'block';
                 const poster = document.getElementById('modal-poster-pc');
-                if (poster) poster.src = filme.imgVertical || filme.img;
+                if (poster) poster.src = filme.img || filme.imgVertical;
             }
             preencherModalInfo(filme, false);
         }
@@ -464,6 +464,35 @@ document.addEventListener('DOMContentLoaded', () => {
             const btnInfo = document.querySelector('.btn-info');
             if (btnPlay) btnPlay.onclick = () => window.abrirModal(item, 'assistir');
             if (btnInfo) btnInfo.onclick = () => window.abrirModal(item, 'info');
+            
+            // Sincronizar botões do hero com localStorage
+            const sincronizarBotoesHero = () => {
+                const { lista, likes } = getPerfilData();
+                const estaNaLista = lista.includes(item.id);
+                const deuLike = likes.includes(item.id);
+                
+                const btnHeroList = document.querySelector('.btn-hero-list');
+                const btnHeroLike = document.querySelector('.btn-hero-like');
+                
+                if (btnHeroList) {
+                    estaNaLista ? btnHeroList.classList.add('active') : btnHeroList.classList.remove('active');
+                    btnHeroList.onclick = (e) => {
+                        e.preventDefault();
+                        window.toggleMinhaLista(item.id, btnHeroList);
+                        setTimeout(sincronizarBotoesHero, 50);
+                    };
+                }
+                
+                if (btnHeroLike) {
+                    deuLike ? btnHeroLike.classList.add('active') : btnHeroLike.classList.remove('active');
+                    btnHeroLike.onclick = (e) => {
+                        e.preventDefault();
+                        window.toggleLike(item.id, btnHeroLike);
+                        setTimeout(sincronizarBotoesHero, 50);
+                    };
+                }
+            };
+            sincronizarBotoesHero();
         };
         atualizarHero(heroIndex);
         heroIntervalId = setInterval(() => {
@@ -583,13 +612,15 @@ const StorageMgr = {
 window.toggleLike = (id, btn) => {
     let likes = StorageMgr.getLikes();
     const filme = categories.flatMap(c => c.items).find(i => i.id === id);
-    if (likes.includes(id)) { 
+    const wasLiked = likes.includes(id);
+    
+    if (wasLiked) { 
         likes = likes.filter(i => i !== id); 
-        btn.style.setProperty('color', 'white', 'important');
+        if (btn) btn.style.setProperty('color', 'white', 'important');
     }
     else { 
         likes.push(id); 
-        btn.style.setProperty('color', '#a855f7', 'important');
+        if (btn) btn.style.setProperty('color', '#a855f7', 'important');
         animacaoLikeSocial(btn);
         // Notificar quando dá like
         if (filme) {
@@ -601,13 +632,27 @@ window.toggleLike = (id, btn) => {
         }
     }
     StorageMgr.setLikes(likes);
+    
+    // Sincronizar hero se este filme estiver no hero
+    const heroTitle = document.querySelector('.hero-title');
+    if (heroTitle && filme && heroTitle.textContent === filme.title) {
+        const btnHeroLike = document.querySelector('.btn-hero-like');
+        if (btnHeroLike) {
+            if (!wasLiked) {
+                btnHeroLike.classList.add('active');
+            } else {
+                btnHeroLike.classList.remove('active');
+            }
+        }
+    }
 };
 
 window.toggleMinhaLista = (id, btn) => {
     let lista = StorageMgr.getLista();
-    const icon = btn.querySelector('i');
+    const icon = btn ? btn.querySelector('i') : null;
     const filme = categories.flatMap(c => c.items).find(i => i.id === id);
     let adicionou = false;
+    
     if (lista.includes(id)) { 
         lista = lista.filter(i => i !== id); 
         if(icon) icon.className = 'fas fa-plus'; 
@@ -625,6 +670,23 @@ window.toggleMinhaLista = (id, btn) => {
         }
     }
     StorageMgr.setLista(lista);
+    
+    // Sincronizar hero se este filme estiver no hero
+    const heroTitle = document.querySelector('.hero-title');
+    if (heroTitle && filme && heroTitle.textContent === filme.title) {
+        const btnHeroList = document.querySelector('.btn-hero-list');
+        if (btnHeroList) {
+            if (adicionou) {
+                btnHeroList.classList.add('active');
+                const heroIcon = btnHeroList.querySelector('i');
+                if (heroIcon) heroIcon.className = 'fas fa-check';
+            } else {
+                btnHeroList.classList.remove('active');
+                const heroIcon = btnHeroList.querySelector('i');
+                if (heroIcon) heroIcon.className = 'fas fa-plus';
+            }
+        }
+    }
     
     // Mostrar notificação se adicionou
     if (adicionou) {
