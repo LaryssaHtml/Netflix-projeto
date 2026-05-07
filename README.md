@@ -12,6 +12,8 @@
 
 >  Um projeto inspirado na Netflix que fiz na imersão Front-End da Alura, desenvolvido para fins de estudo e portfólio. O foco está na criação de uma interface moderna, interativa e responsiva utilizando HTML, CSS e JavaScript.
 
+Link do site: <a href="https://laryssahtml.github.io/Netflix-projeto/">DoctorFlix</a>
+
 ### Ajustes e melhorias
 
  Projeto em fase final de desenvolvimento.
